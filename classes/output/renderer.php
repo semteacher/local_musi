@@ -37,4 +37,39 @@ class renderer extends plugin_renderer_base {
         $o .= $this->render_from_template('local_musi/dashboard', $data);
         return $o;
     }
+
+    /** Function to render the card_content_stats1
+     * @param any $data
+     * @return string
+     */
+    public function render_card_content($data) {
+        $o = '';
+        $data = $data->export_for_template($this);
+        $o .= $this->render_from_template('local_musi/card_content', $data);
+        return $o;
+    }
+
+    /** Function to render the page_teacher
+     * @param any $data
+     * @return string
+     */
+    public function render_teacherpage($data) {
+        $o = '';
+        $data = $data->export_for_template($this);
+        $o .= $this->render_from_template('local_musi/page_teacher', $data);
+        return $o;
+    }
+
+    /** Function to render the page_teacher
+     * @param any $data
+     * @return string
+     */
+    public function render_col_teacher($data) {
+        $o = '';
+        $data = $data->export_for_template($this);
+        $o .= $this->render_from_template('local_musi/col_teacher', $data);
+        return $o;
+    }
+
+
 }

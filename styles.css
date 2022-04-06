@@ -1,3 +1,7 @@
-.local_musi-dashboard .carddeck .card {
-    max-width: 18rem;
+.local_musi-dashboard .card-deck .card {
+    max-width: 15rem;
+}
+
+.card-img-teacher {
+    width: 300px;
 }

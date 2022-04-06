@@ -42,16 +42,96 @@ class dashboard implements renderable, templatable {
     public $cards = [];
 
     /**
-     * Constructor.
+     * Constructor
+     *
+     * @param card|null $card
      */
-    public function __construct($card = null) {
+    public function __construct() {
 
+        $this->create_standard_dashboard();
+    }
+
+
+
+    /**
+     * Create standard dashboard.
+     *
+     * @return void
+     */
+    public function create_standard_dashboard() {
+
+        // Add the card with the list of sports.
+        $this->card_sports();
+
+        // Add the card with information about courses and bookings.
+        $this->card_stats1();
+
+        // Add the card with information about the entities on this system.
+        $this->card_entities();
+;    }
+
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function card_sports() {
+        $card = new card(
+            get_string('listofsports', 'local_musi'),
+            get_string('listofsports', 'local_musi'),
+            get_string('listofsports_desc', 'local_musi')
+        );
+        $this->add_card($card);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function card_entities() {
+        $card = new card(
+            get_string('numberofentities', 'local_musi'),
+            get_string('numberofentities', 'local_musi'),
+            get_string('numberofentities_desc', 'local_musi')
+        );
+        $this->add_card($card);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function card_stats1() {
+        global $PAGE;
+
+        $output = $PAGE->get_renderer('local_musi');
+        $data = new card_content_stats1();
+
+        $card = new card(
+            get_string('numberofcourses', 'local_musi'),
+            $output->render_card_content($data),
+            get_string('numberofcourses_desc', 'local_musi')
+        );
+        $this->add_card($card);
+    }
+
+    /**
+     * Add dashboard card.
+     *
+     * @param card|null $card
+     * @return void
+     */
+    public function add_card(card $card = null) {
         if ($card) {
             $this->cards[] = $card;
         } else {
             $this->cards[] = new card();
         }
     }
+
 
     /**
      * @param renderer_base $output

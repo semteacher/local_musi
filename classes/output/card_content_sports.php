@@ -36,31 +36,32 @@ use templatable;
  * @copyright 2021 Georg Maißer {@link http://www.wunderbyte.at}
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class card implements renderable, templatable {
+class card_content_entities implements renderable, templatable {
 
-    /** @var string $title */
-    public $titel = null;
-
-    /** @var string $content */
-    public $content = null;
-
-    /** @var string $footer */
-    public $footer = null;
-
-     /** @var modle_url $img */
-     public $img = null;
-
-     /** @var modle_url $img */
-     public $link = null;
+    /** @var stdClass $title */
+    public $data = null;
 
     /**
-     * Constructor.
+     * In the Constructor, we gather all the data we need ans store it in the data property.
      */
-    public function __construct($title = null, $content = null, $footer = null) {
+    public function __construct() {
 
-        $this->title = $title ?? "dummy title";
-        $this->content = $content ?? "dummy content";
-        $this->footer = $footer ?? "dummy footer";
+        $this->data = self::return_entities_stats();
+    }
+
+    /**
+     * Generate the stats for this website
+     *
+     * @return stdClass
+     */
+    private static function return_entities_stats() {
+        global $DB;
+
+        $data = new stdClass();
+
+        $data->typeofsports = $DB->count_records('local_musi_sports');
+
+        return $data;
     }
 
     /**
@@ -69,11 +70,13 @@ class card implements renderable, templatable {
      */
     public function export_for_template(renderer_base $output) {
 
-        $returnarray = array(
-                'title' => $this->title,
-                'content' => $this->content,
-                'footer' => $this->footer
-        );
+        // We transform the data object to an array where we can read key & value.
+        foreach ($this->data as $key => $value) {
+            $returnarray['item'][] = [
+                'key' => get_string($key, 'local_musi'),
+                'value' => $value
+            ];
+        }
 
         return $returnarray;
     }

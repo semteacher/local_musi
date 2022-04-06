@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template local_musi/dashboard
+    @template local_musi/card
 
     Classes required for JS:
     * none
@@ -25,12 +25,14 @@
 }}
 
 <div class="card">
-    {{#image}}<img src="..." class="card-img-top" alt="...">{{/image}}
-    <div class="card-body">
-      <h5 class="card-title">{{title}}</h5>
-      <p class="card-text">{{content}}</p>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">{{footer}}</small>
-    </div>
+    {{#link}}<a href="{{.}}">{{/link}}
+        {{#image}}<img src="..." class="card-img-top" alt="...">{{/image}}
+        <div class="card-body">
+        <h5 class="card-title">{{{title}}}</h5>
+        <p class="card-text">{{{content}}}</p>
+        </div>
+        <div class="card-footer">
+        <small class="text-muted">{{{footer}}}</small>
+        </div>
+    {{#link}}</a>{{/link}}
   </div>

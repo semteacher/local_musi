@@ -36,3 +36,27 @@ $string['shortcodeslistofmybookingoptionsascards'] = 'Meine Kurse als Karten';
 
 // List of all courses
 $string['allcourses'] = 'Alle Kurse';
+
+// Cards.
+$string['listofsports'] = 'Liste der Sportarten';
+$string['listofsports_desc'] = 'Zeige und editiere die Liste der Sportarten auf diesem System.';
+
+$string['numberofcourses'] = 'Anzahl der Kurse';
+$string['numberofcourses_desc'] = 'Informationen über die Kurse und Buchungen auf der Plattform.';
+
+$string['numberofentities'] = 'Anzahl der Sportstätten';
+$string['numberofentities_desc'] = 'Informationen über die Sportstätten auf der Plattform.';
+
+$string['coursesbooked'] = 'Gebuchte Kurse';
+$string['coursesincart'] = 'Im Shopping Cart';
+$string['courseswaitinglist'] = 'Auf der Warteliste';
+$string['coursesdeleted'] = 'Gelöschte Kurse';
+$string['coursesboughtcard'] = 'Gekaufte mit Karte';
+$string['coursespending'] = 'Warten auf Bestätigung';
+$string['coursesboughtcashier'] = 'Gekaufte KassierIn';
+
+// Edit sports.
+$string['editsports'] = 'Bearbeite Sportarten';
+
+// Teachers
+$string['teacher'] = 'KursleiterIn';
