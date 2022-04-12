@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 $string['dashboard'] = 'Dashboard';
 $string['messageprovider:sendmessages'] = 'Send Messages';
 $string['musi:cansendmessages'] = 'Can send messages';
-$string['pluginname'] = 'Musi Dashboard';
+$string['pluginname'] = 'M:USI Dashboard';
 
 $string['shortcodeslistofbookingoptions'] = 'All courses as list';
 $string['shortcodeslistofbookingoptionsascards'] = 'All courses as cards';
@@ -58,5 +58,6 @@ $string['coursesboughtcashier'] = 'Bought cashier';
 // Edit sports.
 $string['editsports'] = 'Edit sports';
 
-// Teachers
+// Teachers.
 $string['teacher'] = 'Teacher';
+$string['courses'] = 'Courses';
