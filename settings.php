@@ -29,5 +29,21 @@ if ($hassiteconfig) {
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
     if ($ADMIN->fulltree) {
         // TODO: Define the plugin settings page - {@link https://docs.moodle.org/dev/Admin_settings}.
+
+        $settings = new admin_settingpage('Musi', '');
+        $ADMIN->add('localplugins', new admin_category('local_musi', get_string('pluginname', 'local_musi')));
+        $ADMIN->add('local_musi', $settings);
+
+        $settings->add(
+            new admin_setting_heading('shortcodessetdefaultinstance',
+                get_string('shortcodessetdefaultinstance', 'local_musi'),
+                get_string('shortcodessetdefaultinstancedesc', 'local_musi')));
+
+        $settings->add(
+            new admin_setting_configtext('local_musi/shortcodessetinstance',
+                get_string('shortcodessetinstance', 'local_musi'),
+                get_string('shortcodessetinstancedesc', 'local_musi'),
+                '', PARAM_INT));
+
     }
 }
