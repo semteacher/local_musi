@@ -25,13 +25,16 @@ use local_musi\output\page_teacher;
 
 require_once(__DIR__ . '/../../config.php');
 
+// No guest autologin.
+require_login(0, false);
+
 global $DB, $PAGE, $OUTPUT, $USER;
 
 if (!$context = context_system::instance()) {
     throw new moodle_exception('badcontext');
 }
 
-$teacherid = required_param('teacherid', PARAM_INT); // teacherid
+$teacherid = required_param('teacherid', PARAM_INT);
 
 // Check if optionid is valid.
 $PAGE->set_context($context);
