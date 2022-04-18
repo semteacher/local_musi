@@ -23,6 +23,7 @@ require_once(__DIR__ . '/../../lib.php');
 require_once($CFG->libdir.'/tablelib.php');
 
 use coding_exception;
+use context_module;
 use dml_exception;
 use local_wunderbyte_table\wunderbyte_table;
 use mod_booking\booking;
@@ -52,6 +53,8 @@ class musi_table extends wunderbyte_table {
     private $booking = null;
 
     private $buyforuser = null;
+
+    private $context = null;
 
     /**
      * Constructor
@@ -120,6 +123,11 @@ class musi_table extends wunderbyte_table {
         // First we check if the user is booked already.
         $bookinganswer = singleton_service::get_instance_of_booking_answers($settings, $values->id);
 
+        // Make sure we have the context when we need it.
+        if (!$this->context) {
+            $this->context = context_module::instance($settings->cmid);
+        }
+
         $bookingstatus = $bookinganswer->user_status($this->buyforuser->id);
 
         if ($bookingstatus == STATUSPARAM_BOOKED) {
@@ -129,7 +137,7 @@ class musi_table extends wunderbyte_table {
         }
 
         // We pass on the id of the booking option.
-        $data = new col_price($values, $settings, $this->buyforuser);
+        $data = new col_price($values, $settings, $this->buyforuser, $this->context);
 
         return $this->output_booking->render_col_price($data);
     }
@@ -171,7 +179,16 @@ class musi_table extends wunderbyte_table {
         if (!empty($values->id)) {
             $bookingsoptionsettings = singleton_service::get_instance_of_booking_option_settings($values->id);
             if (!empty($bookingsoptionsettings)) {
-                $data->editoptionurl = $bookingsoptionsettings->editoptionurl;
+
+                if (!$this->context) {
+                    $this->context = context_module::instance($bookingsoptionsettings->cmid);
+                }
+
+                // If the user has no capability to editoptions, we make the URL null.
+                if ((has_capability('mod/booking:updatebooking', $this->context) ||
+                        has_capability('mod/booking:addeditownoption', $this->context))) {
+                    $data->editoptionurl = $bookingsoptionsettings->editoptionurl;
+                }
             }
         }
 
