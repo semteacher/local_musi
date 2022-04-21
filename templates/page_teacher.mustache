@@ -33,10 +33,15 @@
                 <div class="card-body">
                     <h1 class="card-title font-weight-bold">{{firstname}} {{lastname}}</h1>
                     <p class="card-description">{{{description}}}</p>
+
+                </div>
+                <div class="card-footer">
+                    <p class="card-phone1">{{#str}}phone{{/str}}: {{phone1}}</p>
+
                     <nav>
                     <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
                         {{#optiontables}}
-                        <a class="nav-link rounded" id="nav-tab-{{tablename}}" data-toggle="tab" href="#nav-table-{{tablename}}" role="tab" aria-controls="nav-tab-{{tablename}}">
+                        <a class="nav-link rounded {{class}}" id="nav-tab-{{tablename}}" data-toggle="tab" href="#nav-table-{{tablename}}" role="tab" aria-controls="nav-tab-{{tablename}}">
                             {{#str}}courses, local_musi{{/str}} - {{bookinginstancename}}
                         </a>
                         {{/optiontables}}
@@ -44,12 +49,10 @@
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                         {{#optiontables}}
-                        <div class="tab-pane fade" id="nav-table-{{tablename}}" role="tabpanel" aria-labelledby="nav-tab-{{tablename}}">{{{table}}}</div>
+                        <div class="tab-pane fade {{class}}" id="nav-table-{{tablename}}" role="tabpanel" aria-labelledby="nav-tab-{{tablename}}">{{{table}}}</div>
                         {{/optiontables}}
                     </div>
-                </div>
-                <div class="card-footer">
-                    <p class="card-phone1">{{#str}}phone{{/str}}: {{phone1}}</p>
+
                 </div>
             {{#link}}</a>{{/link}}
         </div>

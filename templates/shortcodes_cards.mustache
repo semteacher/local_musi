@@ -68,12 +68,9 @@
 <ul class="wunderbyte-table-grid">
  {{#rows}}
     <div class="list-group-item wunderbyteTableJavascript"
-    {{#itemcategory}}
-        data-category="{{value}}"
-    {{/itemcategory}}
-    {{#itemday}}
-        data-day="{{value}}"
-    {{/itemday}}
+    {{#datafields}}
+        data-{{key}}="{{value}}"
+    {{/datafields}}
     >
         <div class="{{cardimageclass}}">
           {{#cardimage}}
@@ -94,8 +91,8 @@
                    {{{key}}}
                   {{/keystring}}
                   {{#keystring}}
-                    {{.}}
-                  {{/keystring}}:
+                    {{.}}:
+                  {{/keystring}}
                   {{#columnkeyclass}}</span>{{/columnkeyclass}}
 
                     <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}{{#key}} {{key}}{{/key}}">
@@ -126,8 +123,8 @@
                     {{{key}}}
                     {{/keystring}}
                     {{#keystring}}
-                      {{.}}
-                    {{/keystring}}:
+                      {{.}}:
+                    {{/keystring}}
                     {{#columnkeyclass}}</span>{{/columnkeyclass}}
                     <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}{{#key}} {{key}}{{/key}}">
                       {{{value}}}
@@ -155,8 +152,8 @@
                     {{{key}}}
                     {{/keystring}}
                     {{#keystring}}
-                      {{.}}
-                    {{/keystring}}:
+                      {{.}}:
+                    {{/keystring}}
                     {{#columnkeyclass}}</span>{{/columnkeyclass}}
                     <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}{{#key}} {{key}}{{/key}}">
                       {{{value}}}

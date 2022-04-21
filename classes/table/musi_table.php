@@ -163,7 +163,7 @@ class musi_table extends wunderbyte_table {
                                                                   'cmid' => $this->booking->cmid,
                                                                   'userid' => $this->buyforuser->id]);
             $data->url = $url->out(false);
-            $data->cmid;
+            $data->cmid = $this->booking->cmid;
         } else {
             $data->url = '#';
         }
@@ -355,5 +355,26 @@ class musi_table extends wunderbyte_table {
     public function finish_html() {
         $table = new \local_wunderbyte_table\output\table($this);
         echo $this->output_booking->render_bookingoptions_table($table);
+    }
+
+    /**
+     * With this function, the table can be printed without lazy loading.
+     * Can be overridden in child class with own renderer.
+     *
+     * @param int $pagesize
+     * @param bool $useinitialsbar
+     * @param string $downloadhelpbutton
+     * @return string
+     */
+    public function nolazyout($pagesize, $useinitialsbar, $downloadhelpbutton = '') {
+
+        global $PAGE;
+        $this->pagesize = $pagesize;
+        $this->useinitialsbar = $useinitialsbar;
+        $this->downloadhelpbutton = $downloadhelpbutton;
+
+        $tableobject = $this->printtable($pagesize, $useinitialsbar);
+        $output = $PAGE->get_renderer('local_musi');
+        return $output->render_card_table($tableobject);
     }
 }

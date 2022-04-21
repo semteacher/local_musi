@@ -25,6 +25,7 @@
 namespace local_musi\output;
 
 use context_system;
+use format_site;
 use local_musi\table\musi_table;
 use mod_booking\singleton_service;
 use moodle_url;
@@ -100,7 +101,7 @@ class page_teacher implements renderable, templatable {
 
     /**
      * Helper function to create wunderbyte_tables for all options of a specific teacher.
-     * 
+     *
      * @param int userid of a specific teacher
      * @return array an array of tables as string
      */
@@ -115,74 +116,24 @@ class page_teacher implements renderable, templatable {
             ['teacherid' => $teacherid]
         );
 
-        if (!empty($bookingidrecords)) {
-            foreach ($bookingidrecords as $bookingidrecord) {
+        $firsttable = true;
+        foreach ($bookingidrecords as $bookingidrecord) {
 
-                $bookingid = $bookingidrecord->bookingid;
+            $bookingid = $bookingidrecord->bookingid;
 
-                if ($booking = singleton_service::get_instance_of_booking_by_bookingid($bookingid)) {
+            if ($booking = singleton_service::get_instance_of_booking_by_bookingid($bookingid)) {
+                $out = format_text('[allekursekarten id="' . $booking->cmid . '" teacherid="' . $teacherid . '"]', FORMAT_HTML);
 
-                    // Now create the table for each booking instance.
-                    $tablename = bin2hex(random_bytes(12));
-                    $table = new musi_table($tablename, $booking);
+                $class = $firsttable ? 'active show' : '';
+                $firsttable = false;
 
-                    $fields = 'DISTINCT bo.*';
-                    $from = '{booking_options} bo
-                            LEFT JOIN {booking_teachers} bt
-                            ON bo.id = bt.optionid';
-                    $where = 'bo.bookingid = :bookingid
-                            AND bt.userid = :teacherid
-                            GROUP BY bo.id, bo.text
-                            ORDER BY bo.text ASC';
-                    $params = [
-                        'bookingid' => $bookingid,
-                        'teacherid' => $teacherid
-                    ];
-
-                    $table->set_sql($fields, $from, $where, $params);
-
-                    $table->use_pages = false;
-            
-                    // $table->define_cache('nocache');
-            
-                    $table->add_subcolumns('itemcategory', ['sports']);
-                    $table->add_subcolumns('itemday', ['dayofweek']);
-                    $table->add_subcolumns('cardimage', ['image']);
-            
-                    $table->add_subcolumns('cardbody', ['sports', 'text', 'teacher']);
-                    $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-                    $table->add_classes_to_subcolumns('cardbody', ['columvalueclass' => 'h6'], ['sports']);
-                    $table->add_classes_to_subcolumns('cardbody', ['columvalueclass' => 'h5'], ['text']);
-            
-                    $table->add_subcolumns('cardlist', ['dayofweek', 'location', 'bookings']);
-                    $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
-                    $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-                    $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweek']);
-                    $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
-            
-                    $table->add_subcolumns('cardfooter', ['price']);
-                    $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
-            
-                    $table->set_tableclass('cardimageclass', 'w-100');
-            
-                    $table->is_downloading('', 'List of booking options');
-            
-                    $table->tabletemplate = 'local_musi/shortcodes_cards';
-            
-                    ob_start();
-                    $out = $table->out($perpage, true);
-            
-                    $out = ob_get_contents();
-                    ob_end_clean();
-
-                    // Add the table to the array of tables.
-                    $teacheroptiontables[] = [
-                        'bookingid' => $bookingid,
-                        'bookinginstancename' => $booking->settings->name,
-                        'tablename' => $tablename,
-                        'table' => $out
-                    ];
-                }
+                $teacheroptiontables[] = [
+                    'bookingid' => $bookingid,
+                    'bookinginstancename' => $booking->settings->name,
+                    'tablename' => $booking->settings->name,
+                    'table' => $out,
+                    'class' => $class
+                ];
             }
         }
 

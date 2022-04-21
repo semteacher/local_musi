@@ -191,7 +191,12 @@ class shortcodes {
 
         $table = new musi_table($tablename, $booking);
 
-        list($fields, $from, $where, $params) = $booking->get_all_options_sql(null, null, $category, 'bo.*');
+        // If we want to find only the teacher relevant options, we chose different sql.
+        if (isset($args['teacherid']) && (is_int((int)$args['teacherid']))) {
+            list($fields, $from, $where, $params) = $booking->get_all_options_of_teacher_sql((int)$args['teacherid']);
+        } else {
+            list($fields, $from, $where, $params) = $booking->get_all_options_sql(null, null, $category, 'bo.*');
+        }
 
         $table->set_sql($fields, $from, $where, $params);
 
@@ -202,6 +207,8 @@ class shortcodes {
         $table->add_subcolumns('itemcategory', ['sports']);
         $table->add_subcolumns('itemday', ['dayofweek']);
         $table->add_subcolumns('cardimage', ['image']);
+
+        $table->add_subcolumns('datafields', ['sports', 'dayofweek']);
 
         $table->add_subcolumns('cardbody', ['sports', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
@@ -223,13 +230,19 @@ class shortcodes {
 
         $table->tabletemplate = 'local_musi/shortcodes_cards';
 
-        ob_start();
-        $out = $table->out($perpage, true);
+        // If we find "nolazy='1'", we return the table directly, without lazy loading.
+        if(isset($args['nolazy']) && ($args['lazy'] == 1)) {
+            ob_start();
+            $out = $table->out($perpage, true);
 
-        $out = ob_get_contents();
-        ob_end_clean();
+            $out = ob_get_contents();
+            ob_end_clean();
 
-        return $out;
+            return $out;
+        }
+
+        return $table->nolazyout($perpage, true);
+
     }
 
 
@@ -311,15 +324,15 @@ class shortcodes {
 
         $table->is_downloading('', 'List of booking options');
 
-        $table->tabletemplate = 'local_musi/shortcodes_cards';
+        $table->tabletemplate = 'local_musi/shortcodes_responsive_table';
 
-        ob_start();
+        /* ob_start();
         $out = $table->out($perpage, true);
 
         $out = ob_get_contents();
-        ob_end_clean();
+        ob_end_clean(); */
 
-        return $out;
+        return $table->nolazyout($perpage, true);
     }
 
 }
