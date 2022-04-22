@@ -15,12 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Shortcodes for mod booking
+ * Shortcodes for local_musi
  *
  * @package local_musi
  * @subpackage db
  * @since Moodle 3.11
- * @copyright 2021 Georg Maißer
+ * @copyright 2022 Georg Maißer
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace local_musi;
@@ -81,7 +81,7 @@ class shortcodes {
 
         $table = new musi_table($tablename, $booking);
 
-        list($fields, $from, $where, $params) = $booking->get_all_options_sql(null, null, $category, 'bo.*');
+        list($fields, $from, $where, $params) = $booking->get_all_options_sql(null, null, $category);
 
         $table->set_sql($fields, $from, $where, $params);
 
@@ -195,7 +195,7 @@ class shortcodes {
         if (isset($args['teacherid']) && (is_int((int)$args['teacherid']))) {
             list($fields, $from, $where, $params) = $booking->get_all_options_of_teacher_sql((int)$args['teacherid']);
         } else {
-            list($fields, $from, $where, $params) = $booking->get_all_options_sql(null, null, $category, 'bo.*');
+            list($fields, $from, $where, $params) = $booking->get_all_options_sql(null, null, $category);
         }
 
         $table->set_sql($fields, $from, $where, $params);
@@ -231,7 +231,7 @@ class shortcodes {
         $table->tabletemplate = 'local_musi/shortcodes_cards';
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
-        if(isset($args['nolazy']) && ($args['lazy'] == 1)) {
+        if (isset($args['nolazy']) && ($args['lazy'] == 1)) {
             ob_start();
             $out = $table->out($perpage, true);
 
@@ -326,6 +326,7 @@ class shortcodes {
 
         $table->tabletemplate = 'local_musi/shortcodes_responsive_table';
 
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
         /* ob_start();
         $out = $table->out($perpage, true);
 
