@@ -6,6 +6,21 @@
     width: 300px;
 }
 
+.shortcodes_option_info_invisible {
+    display: inline-block;
+    background-color: #fff;
+    color: #999;
+    border: dashed 2px #999;
+    border-radius: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
 
 @media screen and (max-width: 768px) {
     .shortcodes_responsive_table {

@@ -25,6 +25,7 @@ require_once($CFG->libdir.'/tablelib.php');
 use coding_exception;
 use context_module;
 use dml_exception;
+use html_writer;
 use local_wunderbyte_table\wunderbyte_table;
 use mod_booking\booking;
 use mod_booking\output\col_action;
@@ -44,9 +45,9 @@ defined('MOODLE_INTERNAL') || die();
  */
 class musi_table extends wunderbyte_table {
 
-    private $output_booking = null;
+    private $outputbooking = null;
 
-    private $output_musi = null;
+    private $outputmusi = null;
 
     private $bookingsoptionsettings = [];
 
@@ -72,13 +73,32 @@ class musi_table extends wunderbyte_table {
             $this->booking = $booking;
         }
 
-        $this->output_booking = $PAGE->get_renderer('mod_booking');
-        $this->output_musi = $PAGE->get_renderer('local_musi');
+        $this->outputbooking = $PAGE->get_renderer('mod_booking');
+        $this->outputmusi = $PAGE->get_renderer('local_musi');
 
         // We set buyforuser here for better performance.
         $this->buyforuser = price::return_user_to_buy_for();
 
         // Columns and headers are not defined in constructor, in order to keep things as generic as possible.
+    }
+
+    /**
+     * This function is called for each data row to allow processing of the
+     * invisible value.
+     *
+     * @param object $values Contains object with all the values of record.
+     * @return string $invisible Returns visibility of the booking option as string.
+     * @throws coding_exception
+     */
+    public function col_invisible($values) {
+
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+
+        if (!empty($settings->invisible)) {
+            return get_string('invisibleoption', 'mod_booking');
+        } else {
+            return '';
+        }
     }
 
 
@@ -104,7 +124,7 @@ class musi_table extends wunderbyte_table {
 
         $data = new col_teacher($values->id, $settings);
 
-        return $this->output_musi->render_col_teacher($data);
+        return $this->outputmusi->render_col_teacher($data);
     }
 
     /**
@@ -139,7 +159,7 @@ class musi_table extends wunderbyte_table {
         // We pass on the id of the booking option.
         $data = new col_price($values, $settings, $this->buyforuser, $this->context);
 
-        return $this->output_booking->render_col_price($data);
+        return $this->outputbooking->render_col_price($data);
     }
 
     /**
@@ -196,7 +216,7 @@ class musi_table extends wunderbyte_table {
         // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
         /* return $this->output->render_col_text_modal_js($data); */
 
-        return $this->output_booking->render_col_text_link($data);
+        return $this->outputbooking->render_col_text_link($data);
     }
 
 
@@ -213,7 +233,7 @@ class musi_table extends wunderbyte_table {
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
         // Render col_bookings using a template.
         $data = new col_availableplaces($values, $settings, $this->buyforuser);
-        return $this->output_booking->render_col_availableplaces($data);
+        return $this->outputbooking->render_col_availableplaces($data);
     }
 
     /**
@@ -344,7 +364,7 @@ class musi_table extends wunderbyte_table {
         // Currently, this will use dummy teachers.
         $data = new col_action($values->id);
 
-        return $this->output_booking->render_col_action($data);
+        return $this->outputbooking->render_col_action($data);
     }
 
     /**
@@ -354,7 +374,7 @@ class musi_table extends wunderbyte_table {
      */
     public function finish_html() {
         $table = new \local_wunderbyte_table\output\table($this);
-        echo $this->output_booking->render_bookingoptions_table($table);
+        echo $this->outputbooking->render_bookingoptions_table($table);
     }
 
     /**
