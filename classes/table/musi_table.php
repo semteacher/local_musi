@@ -151,10 +151,19 @@ class musi_table extends wunderbyte_table {
 
         $bookingstatus = $bookinganswer->user_status($this->buyforuser->id);
 
+        $openingtag = "<span class='price_mod_booking_" . $values->id . "'>" ;
+        $closingtag = "</span>";
+
         if ($bookingstatus == STATUSPARAM_BOOKED) {
-            return get_string('booked', 'mod_booking');
+            // We need to return a class so shopping_cart will no where to put the addtocartbutton after cancelation.
+            return $openingtag
+                . get_string('booked', 'mod_booking')
+                . $closingtag;
         } else if ($bookingstatus == STATUSPARAM_WAITINGLIST) {
-            return get_string('waitinglist', 'mod_booking');
+            // We need to return a class so shopping_cart will no where to put the addtocartbutton after cancelation.
+            return $openingtag
+            . get_string('waitinglist', 'mod_booking')
+            . $closingtag;
         }
 
         // We pass on the id of the booking option.

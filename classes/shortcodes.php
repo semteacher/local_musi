@@ -165,7 +165,7 @@ class shortcodes {
 
         // If the id argument was not passed on, we have a fallback in the connfig.
         if (!isset($args['id'])) {
-            $args['id'] = get_config('booking', 'shortcodessetinstance');
+            $args['id'] = get_config('local_musi', 'shortcodessetinstance');
         }
 
         // To prevent misconfiguration, id has to be there and int.
@@ -233,7 +233,7 @@ class shortcodes {
         $table->tabletemplate = 'local_musi/shortcodes_cards';
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
-        if (isset($args['nolazy']) && ($args['lazy'] == 1)) {
+        if (isset($args['nolazy']) && ($args['nolazy'] == 1)) {
             ob_start();
             $out = $table->out($perpage, true);
 
