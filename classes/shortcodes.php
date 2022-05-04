@@ -230,6 +230,8 @@ class shortcodes {
 
         $table->is_downloading('', 'List of booking options');
 
+        $table->sortable(true, 'text');
+
         $table->tabletemplate = 'local_musi/shortcodes_cards';
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
