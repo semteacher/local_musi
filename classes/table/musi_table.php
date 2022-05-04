@@ -84,13 +84,14 @@ class musi_table extends wunderbyte_table {
 
     /**
      * This function is called for each data row to allow processing of the
-     * invisible value.
+     * invisible value. It's called 'invisibleoption' so it does not interfere with
+     * the bootstrap class 'invisible'. 
      *
      * @param object $values Contains object with all the values of record.
      * @return string $invisible Returns visibility of the booking option as string.
      * @throws coding_exception
      */
-    public function col_invisible($values) {
+    public function col_invisibleoption($values) {
 
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
 

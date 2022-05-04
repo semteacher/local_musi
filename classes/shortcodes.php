@@ -207,13 +207,13 @@ class shortcodes {
         $table->add_subcolumns('itemcategory', ['sports']);
         $table->add_subcolumns('itemday', ['dayofweek']);
         $table->add_subcolumns('cardimage', ['image']);
-        $table->add_subcolumns('optioninvisible', ['invisible']);
+        $table->add_subcolumns('optioninvisible', ['invisibleoption']);
 
         $table->add_subcolumns('datafields', ['sports', 'dayofweek']);
 
-        $table->add_subcolumns('cardbody', ['invisible', 'sports', 'text', 'teacher']);
+        $table->add_subcolumns('cardbody', ['invisibleoption', 'sports', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'], ['invisible']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'], ['invisibleoption']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 

@@ -95,7 +95,7 @@
                   {{/keystring}}
                   {{#columnkeyclass}}</span>{{/columnkeyclass}}
 
-                    <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}" aria-label="{{#key}}{{.}}{{/key}}">
+                    <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}{{#key}} {{key}}{{/key}}">
                       {{{value}}}
                     </span>
 
@@ -126,7 +126,7 @@
                       {{.}}:
                     {{/keystring}}
                     {{#columnkeyclass}}</span>{{/columnkeyclass}}
-                    <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}">
+                    <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}{{#key}} {{key}}{{/key}}">
                       {{{value}}}
                     </span>
                     <span {{^value}} style="display:none" {{/value}}>
@@ -155,7 +155,7 @@
                       {{.}}:
                     {{/keystring}}
                     {{#columnkeyclass}}</span>{{/columnkeyclass}}
-                    <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}" aria-label="{{#key}}{{.}}{{/key}}">
+                    <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}{{#key}} {{key}}{{/key}}">
                       {{{value}}}
                     </span>
                     <span {{^value}} style="display:none" {{/value}}>
