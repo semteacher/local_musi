@@ -133,6 +133,8 @@ class shortcodes {
 
         $table->is_downloading('', 'List of booking options');
 
+        $table->sortable(true, 'text');
+
         $table->tabletemplate = 'local_musi/shortcodes_table';
 
         ob_start();
@@ -245,7 +247,9 @@ class shortcodes {
             return $out;
         }
 
-        return $table->nolazyout($perpage, true);
+        $out = $table->nolazyout($perpage, true);
+
+        return $out;
 
     }
 
@@ -263,11 +267,9 @@ class shortcodes {
      */
     public static function mycoursescards($shortcode, $args, $content, $env, $next) {
 
-        global $DB;
-
         // If the id argument was not passed on, we have a fallback in the connfig.
         if (!isset($args['id'])) {
-            $args['id'] = get_config('booking', 'shortcodessetinstance');
+            $args['id'] = get_config('local_musi', 'shortcodessetinstance');
         }
 
         // To prevent misconfiguration, id has to be there and int.
@@ -281,11 +283,6 @@ class shortcodes {
 
         if (!isset($args['category']) || !$category = ($args['category'])) {
             $category = '';
-        }
-
-        // We support "lazy" loading and "normal".
-        if (!isset($args['mode']) || !$mode = ($args['mode'])) {
-            $mode = 'normal';
         }
 
         if (!isset($args['perpage'])
@@ -304,16 +301,20 @@ class shortcodes {
 
         $table->use_pages = false;
 
-        $table->define_cache('nocache');
+        $table->define_cache('mod_booking', 'bookingoptionstable');
 
         $table->add_subcolumns('itemcategory', ['sports']);
         $table->add_subcolumns('itemday', ['dayofweek']);
         $table->add_subcolumns('cardimage', ['image']);
+        $table->add_subcolumns('optioninvisible', ['invisibleoption']);
 
-        $table->add_subcolumns('cardbody', ['sports', 'text', 'teacher']);
+        $table->add_subcolumns('datafields', ['sports', 'dayofweek']);
+
+        $table->add_subcolumns('cardbody', ['invisibleoption', 'sports', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columvalueclass' => 'h6'], ['sports']);
-        $table->add_classes_to_subcolumns('cardbody', ['columvalueclass' => 'h5'], ['text']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'], ['invisibleoption']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 
         $table->add_subcolumns('cardlist', ['dayofweek', 'location', 'bookings']);
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
@@ -328,14 +329,20 @@ class shortcodes {
 
         $table->is_downloading('', 'List of booking options');
 
-        $table->tabletemplate = 'local_musi/shortcodes_responsive_table';
+        $table->sortable(true, 'text');
 
-        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-        /* ob_start();
-        $out = $table->out($perpage, true);
+        $table->tabletemplate = 'local_musi/shortcodes_cards';
 
-        $out = ob_get_contents();
-        ob_end_clean(); */
+        // If we find "nolazy='1'", we return the table directly, without lazy loading.
+        if (isset($args['nolazy']) && ($args['nolazy'] == 1)) {
+            ob_start();
+            $out = $table->out($perpage, true);
+
+            $out = ob_get_contents();
+            ob_end_clean();
+
+            return $out;
+        }
 
         return $table->nolazyout($perpage, true);
     }
