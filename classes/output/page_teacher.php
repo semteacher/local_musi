@@ -79,11 +79,9 @@ class page_teacher implements renderable, templatable {
             // Get all booking options where the teacher is teaching and sort them by instance.
             $teacheroptiontables = $this->get_option_tables_for_teacher($teacher->id);
 
-
             $returnarray['teachers'][] = [
                 'firstname' => $teacher->firstname,
                 'lastname' => $teacher->lastname,
-                'phone1' => $teacher->phone1,
                 'description' => format_text($teacher->description, $teacher->descriptionformat),
                 'optiontables' => $teacheroptiontables
             ];
