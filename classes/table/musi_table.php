@@ -221,12 +221,14 @@ class musi_table extends wunderbyte_table {
                 // If the user has no capability to editoptions, the URLs will not be added.
                 if ((has_capability('mod/booking:updatebooking', $this->context) ||
                         has_capability('mod/booking:addeditownoption', $this->context))) {
-
-                    // Get the URL to edit the option.
-                    $data->editoptionurl = $bookingsoptionsettings->editoptionurl;
-
-                    // Get the URL for the optiondates-teachers-report.
-                    $data->optiondatesteachersurl = $bookingsoptionsettings->optiondatesteachersurl;
+                    if (isset($bookingsoptionsettings->editoptionurl)) {
+                        // Get the URL to edit the option.
+                        $data->editoptionurl = $bookingsoptionsettings->editoptionurl;
+                    }
+                    if (isset($bookingsoptionsettings->optiondatesteachersurl)) {
+                        // Get the URL for the optiondates-teachers-report.
+                        $data->optiondatesteachersurl = $bookingsoptionsettings->optiondatesteachersurl;
+                    }
                 }
             }
         }
