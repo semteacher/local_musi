@@ -28,6 +28,7 @@ use dml_exception;
 use html_writer;
 use local_wunderbyte_table\wunderbyte_table;
 use mod_booking\booking;
+use mod_booking\booking_option;
 use mod_booking\output\col_action;
 use mod_booking\output\col_availableplaces;
 use mod_booking\output\col_price;
@@ -85,7 +86,7 @@ class musi_table extends wunderbyte_table {
     /**
      * This function is called for each data row to allow processing of the
      * invisible value. It's called 'invisibleoption' so it does not interfere with
-     * the bootstrap class 'invisible'. 
+     * the bootstrap class 'invisible'.
      *
      * @param object $values Contains object with all the values of record.
      * @return string $invisible Returns visibility of the booking option as string.
@@ -151,7 +152,7 @@ class musi_table extends wunderbyte_table {
 
         $bookingstatus = $bookinganswer->user_status($this->buyforuser->id);
 
-        $openingtag = "<span class='price_mod_booking_" . $values->id . "'>" ;
+        $openingtag = "<span class='price_mod_booking_" . $values->id . "'>";
         $closingtag = "</span>";
 
         if ($bookingstatus == STATUSPARAM_BOOKED) {
@@ -186,6 +187,9 @@ class musi_table extends wunderbyte_table {
             $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id);
         }
 
+        // Get rid of separator and identifier in this view.
+        booking_option::transform_unique_bookingoption_name_to_display_name($values);
+
         $data = new stdClass();
 
         if ($this->booking) {
@@ -214,10 +218,15 @@ class musi_table extends wunderbyte_table {
                     $this->context = context_module::instance($bookingsoptionsettings->cmid);
                 }
 
-                // If the user has no capability to editoptions, we make the URL null.
+                // If the user has no capability to editoptions, the URLs will not be added.
                 if ((has_capability('mod/booking:updatebooking', $this->context) ||
                         has_capability('mod/booking:addeditownoption', $this->context))) {
+
+                    // Get the URL to edit the option.
                     $data->editoptionurl = $bookingsoptionsettings->editoptionurl;
+
+                    // Get the URL for the optiondates-teachers-report.
+                    $data->optiondatesteachersurl = $bookingsoptionsettings->optiondatesteachersurl;
                 }
             }
         }
