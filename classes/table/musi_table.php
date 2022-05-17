@@ -225,6 +225,10 @@ class musi_table extends wunderbyte_table {
                         // Get the URL to edit the option.
                         $data->editoptionurl = $bookingsoptionsettings->editoptionurl;
                     }
+                    if (isset($bookingsoptionsettings->editteachersurl)) {
+                        // Get the URL to edit the teachers for the option.
+                        $data->editteachersurl = $bookingsoptionsettings->editteachersurl;
+                    }
                     if (isset($bookingsoptionsettings->optiondatesteachersurl)) {
                         // Get the URL for the optiondates-teachers-report.
                         $data->optiondatesteachersurl = $bookingsoptionsettings->optiondatesteachersurl;
