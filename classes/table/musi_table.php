@@ -273,6 +273,12 @@ class musi_table extends wunderbyte_table {
 
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
 
+        if (isset($settings->entity) && (count($settings->entity) > 0)) {
+
+            $url = new moodle_url('/local/entities/view.php', ['id' => $settings->entity['id']]);
+            return html_writer::tag('a', $settings->entity['name'], ['href' => $url->out(false)]);
+        }
+
         return $settings->location;
     }
 
