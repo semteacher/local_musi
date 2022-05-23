@@ -30,7 +30,7 @@ if ($hassiteconfig) {
 
      // TODO: Define the plugin settings page - {@link https://docs.moodle.org/dev/Admin_settings}.
 
-     $settings = new admin_settingpage('Musi', '');
+     $settings = new admin_settingpage('Musi', get_string('pluginname', 'local_musi'));
      $ADMIN->add('localplugins', new admin_category('local_musi', get_string('pluginname', 'local_musi')));
      $ADMIN->add('local_musi', $settings);
 
