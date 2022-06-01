@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_musi';
-$plugin->release = '0.1.4';
-$plugin->version = 2022050900;
+$plugin->release = '0.1.5';
+$plugin->version = 2022060100;
 $plugin->requires = 2021051700;
 $plugin->maturity = MATURITY_ALPHA;
