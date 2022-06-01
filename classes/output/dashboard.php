@@ -68,7 +68,10 @@ class dashboard implements renderable, templatable {
 
         // Add the card with information about the entities on this system.
         $this->card_entities();
-;    }
+
+        // Add the card with information about the entities on this system.
+        $this->card_settings();
+    }
 
 
     /**
@@ -91,9 +94,16 @@ class dashboard implements renderable, templatable {
      * @return void
      */
     public function card_entities() {
+
+        global $PAGE;
+
+        $output = $PAGE->get_renderer('local_musi');
+
+        $data = new card_content_entities();
+
         $card = new card(
             get_string('numberofentities', 'local_musi'),
-            get_string('numberofentities', 'local_musi'),
+            $output->render_card_content($data),
             get_string('numberofentities_desc', 'local_musi')
         );
         $this->add_card($card);
@@ -114,6 +124,25 @@ class dashboard implements renderable, templatable {
             get_string('numberofcourses', 'local_musi'),
             $output->render_card_content($data),
             get_string('numberofcourses_desc', 'local_musi')
+        );
+        $this->add_card($card);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function card_settings() {
+        global $PAGE;
+
+        $output = $PAGE->get_renderer('local_musi');
+        $data = new card_content_settings();
+
+        $card = new card(
+            get_string('editsettings', 'local_musi'),
+            $output->render_card_content($data),
+            ''
         );
         $this->add_card($card);
     }

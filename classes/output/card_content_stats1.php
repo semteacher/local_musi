@@ -96,7 +96,7 @@ class card_content_stats1 implements renderable, templatable {
         foreach ($this->data as $key => $value) {
             $returnarray['item'][] = [
                 'key' => get_string($key, 'local_musi'),
-                'value' => $value
+                'value' => !empty($value) ? $value : "-"
             ];
         }
 

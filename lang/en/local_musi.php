@@ -55,6 +55,15 @@ $string['coursesboughtcard'] = 'Bought with card';
 $string['coursespending'] = 'Pending';
 $string['coursesboughtcashier'] = 'Bought cashier';
 
+$string['editsettings'] = 'Edit Settings';
+$string['editentities'] = 'Edit Entities';
+$string['editentitiescategories'] = 'Edit Entities Categories';
+$string['editbookinginstance'] = 'Edit Booking Instance';
+
+$string['editpricecategories'] = 'Edit pricecategories';
+$string['editsemesters'] = 'Edit semesters';
+
+
 // Edit sports.
 $string['editsports'] = 'Edit sports';
 

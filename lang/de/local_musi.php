@@ -55,6 +55,14 @@ $string['coursesboughtcard'] = 'Gekaufte mit Karte';
 $string['coursespending'] = 'Warten auf Bestätigung';
 $string['coursesboughtcashier'] = 'Gekaufte KassierIn';
 
+$string['editsettings'] = 'Bearbeite Einstellungen';
+$string['editentities'] = 'Bearbeite Sportstätten';
+$string['editentitiescategories'] = 'Bearbeite Kategorien der Sportstätten';
+$string['editbookinginstance'] = 'Bearbeite Buchungsinstanz';
+
+$string['editpricecategories'] = 'Bearbeite Preiskategorien';
+$string['editsemesters'] = 'Bearbeite Semester';
+
 // Edit sports.
 $string['editsports'] = 'Bearbeite Sportarten';
 

@@ -25,6 +25,7 @@
 namespace local_musi\output;
 
 use html_writer;
+use mod_booking\singleton_service;
 use moodle_url;
 use renderer_base;
 use renderable;
@@ -38,7 +39,7 @@ use templatable;
  * @copyright 2021 Georg Maißer {@link http://www.wunderbyte.at}
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class card_content_entities implements renderable, templatable {
+class card_content_settings implements renderable, templatable {
 
     /** @var stdClass $title */
     public $data = null;
@@ -48,7 +49,7 @@ class card_content_entities implements renderable, templatable {
      */
     public function __construct() {
 
-        $this->data = self::return_entities_stats();
+        $this->data = self::return_content();
     }
 
     /**
@@ -56,18 +57,25 @@ class card_content_entities implements renderable, templatable {
      *
      * @return stdClass
      */
-    private static function return_entities_stats() {
+    private static function return_content() {
         global $DB;
 
         $data = new stdClass();
 
-        $data->numberofentities = $DB->count_records('local_entities');
+        $optionid = get_config('local_musi', 'shortcodessetinstance');
+        if ($optionid) {
+            $url = new moodle_url('/mod/booking/view.php', ['id' => $optionid]);
+            $data->editbookinginstance = html_writer::link($url->out(false), '=>');
+        } else {
+            $url = new moodle_url('/admin/category.php?category=local_musi');
+            $data->editbookinginstance = html_writer::link($url->out(false), '=>');
+        }
 
-        $url = new moodle_url('/local/entities/entities.php');
-        $data->editentities = html_writer::link($url->out(false), '=>');
+        $url = new moodle_url('/mod/booking/pricecategories.php');
+        $data->editpricecategories = html_writer::link($url->out(false), '=>');
 
-        $url = new moodle_url('/local/entities/customfield.php');
-        $data->editentitiescategories = html_writer::link($url->out(false), '=>');
+        $url = new moodle_url('/mod/booking/semesters.php');
+        $data->editsemesters = html_writer::link($url->out(false), '=>');
 
         return $data;
     }
