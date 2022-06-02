@@ -108,6 +108,10 @@ class musi_table extends wunderbyte_table {
 
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
 
+        if (empty($settings->imageurl)) {
+            return null;
+        }
+
         return $settings->imageurl;
     }
 
