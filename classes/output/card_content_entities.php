@@ -61,13 +61,13 @@ class card_content_entities implements renderable, templatable {
 
         $data = new stdClass();
 
-        $data->numberofentities = $DB->count_records('local_entities');
+        $data->numberofentities = ['value' => $DB->count_records('local_entities')];
 
         $url = new moodle_url('/local/entities/entities.php');
-        $data->editentities = html_writer::link($url->out(false), '=>');
+        $data->editentities = ['link' => $url->out(false)];
 
         $url = new moodle_url('/local/entities/customfield.php');
-        $data->editentitiescategories = html_writer::link($url->out(false), '=>');
+        $data->editentitiescategories = ['link' => $url->out(false)];
 
         return $data;
     }
@@ -80,10 +80,17 @@ class card_content_entities implements renderable, templatable {
 
         // We transform the data object to an array where we can read key & value.
         foreach ($this->data as $key => $value) {
-            $returnarray['item'][] = [
-                'key' => get_string($key, 'local_musi'),
-                'value' => $value
+
+            $item = [
+                'key' => get_string($key, 'local_musi')
             ];
+
+            // We only have value & link at the time as types, but might have more at one point.
+            foreach ($value as $type => $name) {
+                $item[$type] = $name;
+            }
+
+            $returnarray['item'][] = $item;
         }
 
         return $returnarray;

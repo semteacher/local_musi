@@ -62,6 +62,7 @@ $string['editbookinginstance'] = 'Edit Booking Instance';
 
 $string['editpricecategories'] = 'Edit pricecategories';
 $string['editsemesters'] = 'Edit semesters';
+$string['addbookinginstance'] = 'Add standard bookign intance id';
 
 
 // Edit sports.

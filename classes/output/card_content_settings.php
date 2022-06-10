@@ -62,20 +62,21 @@ class card_content_settings implements renderable, templatable {
 
         $data = new stdClass();
 
-        $optionid = get_config('local_musi', 'shortcodessetinstance');
-        if ($optionid) {
-            $url = new moodle_url('/mod/booking/view.php', ['id' => $optionid]);
-            $data->editbookinginstance = html_writer::link($url->out(false), '=>');
+        $cmid = get_config('local_musi', 'shortcodessetinstance');
+
+        if ($cmid) {
+            $url = new moodle_url('/course/modedit.php', ['update' => $cmid]);
+            $data->editbookinginstance = ['link' => $url->out(false)];
         } else {
             $url = new moodle_url('/admin/category.php?category=local_musi');
-            $data->editbookinginstance = html_writer::link($url->out(false), '=>');
+            $data->addbookinginstance = ['link' => $url->out(false)];
         }
 
         $url = new moodle_url('/mod/booking/pricecategories.php');
-        $data->editpricecategories = html_writer::link($url->out(false), '=>');
+        $data->editpricecategories = ['link' => $url->out(false)];
 
         $url = new moodle_url('/mod/booking/semesters.php');
-        $data->editsemesters = html_writer::link($url->out(false), '=>');
+        $data->editsemesters = ['link' => $url->out(false)];
 
         return $data;
     }
@@ -88,10 +89,17 @@ class card_content_settings implements renderable, templatable {
 
         // We transform the data object to an array where we can read key & value.
         foreach ($this->data as $key => $value) {
-            $returnarray['item'][] = [
-                'key' => get_string($key, 'local_musi'),
-                'value' => $value
+
+            $item = [
+                'key' => get_string($key, 'local_musi')
             ];
+
+            // We only have value & link at the time as types, but might have more at one point.
+            foreach ($value as $type => $name) {
+                $item[$type] = $name;
+            }
+
+            $returnarray['item'][] = $item;
         }
 
         return $returnarray;

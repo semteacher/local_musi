@@ -74,14 +74,14 @@ class card_content_stats1 implements renderable, templatable {
         $coursesboughtcashier = $DB->count_records('local_shopping_cart_history', ['payment' => 'cash']);
 
         $data = new stdClass();
-        $data->coursesbooked = $coursesbooked;
-        $data->coursesincart = $coursesincart;
-        $data->courseswaitinglist = $courseswaitinglist;
-        $data->coursesdeleted = $coursesdeleted;
+        $data->coursesbooked = ['value' => $coursesbooked];
+        $data->coursesincart = ['value' => $coursesincart];
+        $data->courseswaitinglist = ['value' => $courseswaitinglist];
+        $data->coursesdeleted = ['value' => $coursesdeleted];
 
-        $data->coursesboughtcard = $coursesboughtcard;
-        $data->coursespending = $coursespending;
-        $data->coursesboughtcashier = $coursesboughtcashier;
+        $data->coursesboughtcard = ['value' => $coursesboughtcard];
+        $data->coursespending = ['value' => $coursespending];
+        $data->coursesboughtcashier = ['value' => $coursesboughtcashier];
 
         return $data;
     }
@@ -94,10 +94,17 @@ class card_content_stats1 implements renderable, templatable {
 
         // We transform the data object to an array where we can read key & value.
         foreach ($this->data as $key => $value) {
-            $returnarray['item'][] = [
-                'key' => get_string($key, 'local_musi'),
-                'value' => !empty($value) ? $value : "-"
+
+            $item = [
+                'key' => get_string($key, 'local_musi')
             ];
+
+            // We only have value & link at the time as types, but might have more at one point.
+            foreach ($value as $type => $name) {
+                $item[$type] = $name;
+            }
+
+            $returnarray['item'][] = $item;
         }
 
         return $returnarray;

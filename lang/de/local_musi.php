@@ -63,6 +63,8 @@ $string['editbookinginstance'] = 'Bearbeite Buchungsinstanz';
 $string['editpricecategories'] = 'Bearbeite Preiskategorien';
 $string['editsemesters'] = 'Bearbeite Semester';
 
+$string['addbookinginstance'] = 'Definiere Standard Buchungsinstanz';
+
 // Edit sports.
 $string['editsports'] = 'Bearbeite Sportarten';
 

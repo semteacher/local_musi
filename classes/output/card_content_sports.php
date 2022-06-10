@@ -59,7 +59,7 @@ class card_content_entities implements renderable, templatable {
 
         $data = new stdClass();
 
-        $data->typeofsports = $DB->count_records('local_musi_sports');
+        $data->typeofsports = ['value' => $DB->count_records('local_musi_sports')];
 
         return $data;
     }
@@ -72,10 +72,17 @@ class card_content_entities implements renderable, templatable {
 
         // We transform the data object to an array where we can read key & value.
         foreach ($this->data as $key => $value) {
-            $returnarray['item'][] = [
-                'key' => get_string($key, 'local_musi'),
-                'value' => $value
+
+            $item = [
+                'key' => get_string($key, 'local_musi')
             ];
+
+            // We only have value & link at the time as types, but might have more at one point.
+            foreach ($value as $type => $name) {
+                $item[$type] = $name;
+            }
+
+            $returnarray['item'][] = $item;
         }
 
         return $returnarray;
