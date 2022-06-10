@@ -83,3 +83,7 @@ $string['shortcodessetinstance'] = 'Set the moodle ID of the booking instance wh
 $string['shortcodessetinstancedesc'] = 'If you use this setting, you can use the shortcode like this: [listofbookings category="philosophy"]
 So no need to specify the ID';
 $string['courses'] = 'Courses';
+
+// Cash hournal
+
+$string['cashjournal'] = "Cash journal";
