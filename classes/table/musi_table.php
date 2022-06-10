@@ -227,7 +227,8 @@ class musi_table extends wunderbyte_table {
                         has_capability('mod/booking:addeditownoption', $this->context))) {
                     if (isset($bookingsoptionsettings->editoptionurl)) {
                         // Get the URL to edit the option.
-                        $data->editoptionurl = $bookingsoptionsettings->editoptionurl;
+
+                        $data->editoptionurl = self::add_return_url($bookingsoptionsettings->editoptionurl);
                     }
                     if (isset($bookingsoptionsettings->editteachersurl)) {
                         // Get the URL to edit the teachers for the option.
@@ -431,5 +432,30 @@ class musi_table extends wunderbyte_table {
         $tableobject = $this->printtable($pagesize, $useinitialsbar);
         $output = $PAGE->get_renderer('local_musi');
         return $output->render_card_table($tableobject);
+    }
+
+
+    private static function add_return_url(string $urlstring):string {
+
+        $returnurl = new moodle_url(
+            $_SERVER['REQUEST_URI'],
+            $_GET
+        );
+
+        $urlcomponents = parse_url($urlstring);
+
+        parse_str($urlcomponents['query'], $params);
+
+        $url = new moodle_url(
+            $urlcomponents['path'],
+            array_merge(
+                $params, [
+                'returnto' => 'url',
+                'returnurl' => $returnurl->out(false)
+                ]
+            )
+        );
+
+        return $url->out(false);
     }
 }
