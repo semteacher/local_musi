@@ -87,3 +87,6 @@ $string['courses'] = 'Courses';
 // Cash hournal
 
 $string['cashjournal'] = "Cash journal";
+
+// access.php
+$string['musi:canedit'] = 'User can edit';
