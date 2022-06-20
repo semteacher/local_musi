@@ -53,14 +53,18 @@ class card implements renderable, templatable {
      /** @var modle_url $img */
      public $link = null;
 
+     /** @var string $headerbgcolor */
+     public $headerbgcolor = '';
+
     /**
      * Constructor.
      */
-    public function __construct($title = null, $content = null, $footer = null) {
+    public function __construct($title = null, $content = null, $footer = null, $headerbgcolor = "bg-primary") {
 
         $this->title = $title ?? "dummy title";
         $this->content = $content ?? "dummy content";
         $this->footer = $footer ?? "dummy footer";
+        $this->headerbgcolor = $headerbgcolor;
     }
 
     /**
@@ -72,7 +76,8 @@ class card implements renderable, templatable {
         $returnarray = array(
                 'title' => $this->title,
                 'content' => $this->content,
-                'footer' => $this->footer
+                'footer' => $this->footer,
+                'headerbgcolor' => $this->headerbgcolor
         );
 
         return $returnarray;

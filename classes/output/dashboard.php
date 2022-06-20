@@ -58,8 +58,8 @@ class dashboard implements renderable, templatable {
      */
     public function create_standard_dashboard() {
 
-        // Add the card with the list of sports.
-        $this->card_sports();
+        // Add the card with information about the entities on this system.
+        $this->card_settings();
 
         // Add the card with information about courses and bookings.
         $this->card_stats1();
@@ -67,8 +67,8 @@ class dashboard implements renderable, templatable {
         // Add the card with information about the entities on this system.
         $this->card_entities();
 
-        // Add the card with information about the entities on this system.
-        $this->card_settings();
+        // Add the card with the list of sports.
+        $this->card_sports();
     }
 
     /**
@@ -80,7 +80,8 @@ class dashboard implements renderable, templatable {
         $card = new card(
             get_string('listofsports', 'local_musi'),
             get_string('listofsports', 'local_musi'),
-            get_string('listofsports_desc', 'local_musi')
+            get_string('listofsports_desc', 'local_musi'),
+            'bg-warning'
         );
         $this->add_card($card);
     }
@@ -101,7 +102,8 @@ class dashboard implements renderable, templatable {
         $card = new card(
             get_string('numberofentities', 'local_musi'),
             $output->render_card_content($data),
-            get_string('numberofentities_desc', 'local_musi')
+            get_string('numberofentities_desc', 'local_musi'),
+            'bg-danger'
         );
         $this->add_card($card);
     }
@@ -120,7 +122,8 @@ class dashboard implements renderable, templatable {
         $card = new card(
             get_string('numberofcourses', 'local_musi'),
             $output->render_card_content($data),
-            get_string('numberofcourses_desc', 'local_musi')
+            get_string('numberofcourses_desc', 'local_musi'),
+            'bg-success'
         );
         $this->add_card($card);
     }
@@ -139,7 +142,7 @@ class dashboard implements renderable, templatable {
         $card = new card(
             get_string('editsettings', 'local_musi'),
             $output->render_card_content($data),
-            ''
+            '', 'bg-primary'
         );
         $this->add_card($card);
     }

@@ -48,7 +48,7 @@ $string['numberofentities'] = 'Number of entities';
 $string['numberofentities_desc'] = 'Information about the sport facilities on the platform.';
 
 $string['coursesbooked'] = 'Courses booked';
-$string['coursesincart'] = 'Course in shopping cart';
+$string['coursesincart'] = 'Courses in shopping cart';
 $string['coursesdeleted'] = 'Deleted courses';
 $string['coursesboughtcard'] = 'Courses bought online';
 $string['coursespending'] = 'Courses pending';
