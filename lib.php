@@ -23,6 +23,13 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+// Define booking status parameters.
+define('MUSI_STATUSPARAM_BOOKED', 0);
+define('MUSI_STATUSPARAM_WAITINGLIST', 1);
+define('MUSI_STATUSPARAM_RESERVED', 2);
+define('MUSI_STATUSPARAM_NOTBOOKED', 4);
+define('MUSI_STATUSPARAM_DELETED', 5);
+
 /**
  * Adds module specific settings to the settings block
  *

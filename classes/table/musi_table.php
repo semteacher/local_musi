@@ -157,16 +157,16 @@ class musi_table extends wunderbyte_table {
 
         $bookingstatus = $bookinganswer->user_status($this->buyforuser->id);
 
-        if ($bookingstatus == STATUSPARAM_BOOKED) {
+        if ($bookingstatus == MUSI_STATUSPARAM_BOOKED) {
             // We need to return a class so shopping_cart will know where to put the addtocartbutton after cancelation.
             return html_writer::span(get_string('booked', 'mod_booking') , "price_mod_booking_" . $values->id);
-        } else if ($bookingstatus == STATUSPARAM_WAITINGLIST) {
+        } else if ($bookingstatus == MUSI_STATUSPARAM_WAITINGLIST) {
             // We need to return a class so shopping_cart will know where to put the addtocartbutton after cancelation.
             return html_writer::span(get_string('waitinglist', 'mod_booking') , "price_mod_booking_" . $values->id);
         }
 
         // If we are not yet booked not on the waiting list...
-        // ... but the list is already fullwe can't buy, but we might be able to get on the notification list.
+        // ... but the list is already full we can't buy, but we might be able to get on the notification list.
 
         $usenotificationlist = get_config('booking', 'usenotificationlist');
 
@@ -309,9 +309,12 @@ class musi_table extends wunderbyte_table {
 
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
 
-        if (isset($settings->customfields)
-            && isset($settings->customfields['sport'])) {
+        if (isset($settings->customfields) && isset($settings->customfields['sport'])) {
+            if (is_array($settings->customfields['sport'])) {
                 return implode(", ", $settings->customfields['sport']);
+            } else {
+                return $settings->customfields['sport'];
+            }
         }
         return '';
     }

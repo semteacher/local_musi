@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['dashboard'] = 'Dashboard';
-$string['messageprovider:sendmessages'] = 'Send Messages';
+$string['messageprovider:sendmessages'] = 'Send messages';
 $string['musi:cansendmessages'] = 'Can send messages';
 $string['pluginname'] = 'M:USI Dashboard';
 
@@ -34,35 +34,34 @@ $string['shortcodeslistofbookingoptions'] = 'All courses as list';
 $string['shortcodeslistofbookingoptionsascards'] = 'All courses as cards';
 $string['shortcodeslistofmybookingoptionsascards'] = 'My courses as cards';
 
-// List of all courses
+// List of all courses.
 $string['allcourses'] = 'All courses';
 
 // Cards.
 $string['listofsports'] = 'List of sports';
-$string['listofsports_desc'] = 'View and edit the list of sports on this system.';
+$string['listofsports_desc'] = 'View and edit the list of sports on this system';
 
-$string['numberofcourses'] = 'Anzahl der Kurse';
-$string['numberofcourses_desc'] = 'Informationen über die Kurse und Buchungen auf der Plattform.';
+$string['numberofcourses'] = 'Number of courses';
+$string['numberofcourses_desc'] = 'Information about courses and bookings on this platform.';
 
-$string['numberofentities'] = 'Anzahl der Sportstätten';
-$string['numberofentities_desc'] = 'Informationen über die Sportstätten auf der Plattform.';
+$string['numberofentities'] = 'Number of entities';
+$string['numberofentities_desc'] = 'Information about the sport facilities on the platform.';
 
-$string['coursesbooked'] = 'Booked';
-$string['coursesincart'] = 'In the Shopping Cart';
-$string['courseswaitinglist'] = 'On the waitinglist';
+$string['coursesbooked'] = 'Courses booked';
+$string['coursesincart'] = 'Course in shopping cart';
 $string['coursesdeleted'] = 'Deleted courses';
-$string['coursesboughtcard'] = 'Bought with card';
-$string['coursespending'] = 'Pending';
-$string['coursesboughtcashier'] = 'Bought cashier';
+$string['coursesboughtcard'] = 'Courses bought online';
+$string['coursespending'] = 'Courses pending';
+$string['coursesboughtcashier'] = 'Courses bought at cashier';
 
-$string['editsettings'] = 'Edit Settings';
-$string['editentities'] = 'Edit Entities';
-$string['editentitiescategories'] = 'Edit Entities Categories';
-$string['editbookinginstance'] = 'Edit Booking Instance';
+$string['editsettings'] = 'Edit settings';
+$string['editentities'] = 'Edit entities';
+$string['editentitiescategories'] = 'Edit categories of entities';
+$string['editbookinginstance'] = 'Edit booking instance';
 
-$string['editpricecategories'] = 'Edit pricecategories';
+$string['editpricecategories'] = 'Edit price categories';
 $string['editsemesters'] = 'Edit semesters';
-$string['addbookinginstance'] = 'Add standard bookign intance id';
+$string['addbookinginstance'] = 'Add standard booking instance ID';
 
 
 // Edit sports.

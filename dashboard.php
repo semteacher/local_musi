@@ -25,6 +25,9 @@ use local_musi\output\dashboard;
 
 require_once(__DIR__ . '/../../config.php');
 
+// No guest autologin.
+require_login(0, false);
+
 global $DB, $PAGE, $OUTPUT, $USER;
 
 if (!$context = context_system::instance()) {

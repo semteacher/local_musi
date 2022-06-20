@@ -51,8 +51,6 @@ class dashboard implements renderable, templatable {
         $this->create_standard_dashboard();
     }
 
-
-
     /**
      * Create standard dashboard.
      *
@@ -72,7 +70,6 @@ class dashboard implements renderable, templatable {
         // Add the card with information about the entities on this system.
         $this->card_settings();
     }
-
 
     /**
      * Undocumented function
@@ -160,7 +157,6 @@ class dashboard implements renderable, templatable {
             $this->cards[] = new card();
         }
     }
-
 
     /**
      * @param renderer_base $output

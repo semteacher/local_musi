@@ -29,12 +29,8 @@ use renderable;
 use stdClass;
 use templatable;
 
-// Define booking status parameters.
-define('STATUSPARAM_BOOKED', 0);
-define('STATUSPARAM_WAITINGLIST', 1);
-define('STATUSPARAM_RESERVED', 2);
-define('STATUSPARAM_NOTBOOKED', 4);
-define('STATUSPARAM_DELETED', 5);
+defined('MOODLE_INTERNAL') || die;
+require_once(__DIR__ . '/../../lib.php');
 
 /**
  * This class prepares data for displaying a booking option instance
@@ -64,10 +60,10 @@ class card_content_stats1 implements renderable, templatable {
     private static function return_booking_stats() {
         global $DB;
 
-        $coursesbooked = $DB->count_records('booking_answers', ['waitinglist' => STATUSPARAM_BOOKED]);
-        $coursesincart = $DB->count_records('booking_answers', ['waitinglist' => STATUSPARAM_RESERVED]);
-        $courseswaitinglist = $DB->count_records('booking_answers', ['waitinglist' => STATUSPARAM_WAITINGLIST]);
-        $coursesdeleted = $DB->count_records('booking_answers', ['waitinglist' => STATUSPARAM_WAITINGLIST]);
+        $coursesbooked = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_BOOKED]);
+        $coursesincart = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_RESERVED]);
+        // M:USI does not use the normal waiting list but observer list instead.
+        $coursesdeleted = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_DELETED]);
 
         $coursesboughtcard = $DB->count_records('local_shopping_cart_history', ['payment' => 'success']);
         $coursespending = $DB->count_records('local_shopping_cart_history', ['payment' => 'pending']);
@@ -76,7 +72,6 @@ class card_content_stats1 implements renderable, templatable {
         $data = new stdClass();
         $data->coursesbooked = ['value' => $coursesbooked];
         $data->coursesincart = ['value' => $coursesincart];
-        $data->courseswaitinglist = ['value' => $courseswaitinglist];
         $data->coursesdeleted = ['value' => $coursesdeleted];
 
         $data->coursesboughtcard = ['value' => $coursesboughtcard];

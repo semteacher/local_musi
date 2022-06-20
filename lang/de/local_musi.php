@@ -34,7 +34,7 @@ $string['shortcodeslistofbookingoptions'] = 'Alle Kurse als Liste';
 $string['shortcodeslistofbookingoptionsascards'] = 'Alle Kurse als Karten';
 $string['shortcodeslistofmybookingoptionsascards'] = 'Meine Kurse als Karten';
 
-// List of all courses
+// List of all courses.
 $string['allcourses'] = 'Alle Kurse';
 
 // Cards.
@@ -48,41 +48,40 @@ $string['numberofentities'] = 'Anzahl der Sportstätten';
 $string['numberofentities_desc'] = 'Informationen über die Sportstätten auf der Plattform.';
 
 $string['coursesbooked'] = 'Gebuchte Kurse';
-$string['coursesincart'] = 'Im Shopping Cart';
-$string['courseswaitinglist'] = 'Auf der Warteliste';
+$string['coursesincart'] = 'Im Warenkorb';
 $string['coursesdeleted'] = 'Gelöschte Kurse';
-$string['coursesboughtcard'] = 'Gekaufte mit Karte';
-$string['coursespending'] = 'Warten auf Bestätigung';
-$string['coursesboughtcashier'] = 'Gekaufte KassierIn';
+$string['coursesboughtcard'] = 'Gekaufte Kurse (Online))';
+$string['coursespending'] = 'Noch unbestätigte Kurse';
+$string['coursesboughtcashier'] = 'Gekaufte Kurse (Kassier_in)';
 
-$string['editsettings'] = 'Bearbeite Einstellungen';
-$string['editentities'] = 'Bearbeite Sportstätten';
-$string['editentitiescategories'] = 'Bearbeite Kategorien der Sportstätten';
-$string['editbookinginstance'] = 'Bearbeite Buchungsinstanz';
+$string['editsettings'] = 'Einstellungen bearbeiten';
+$string['editentities'] = 'Sportstätten bearbeiten';
+$string['editentitiescategories'] = 'Kategorien der Sportstätten bearbeiten';
+$string['editbookinginstance'] = 'Buchungsinstanz bearbeiten';
 
-$string['editpricecategories'] = 'Bearbeite Preiskategorien';
-$string['editsemesters'] = 'Bearbeite Semester';
+$string['editpricecategories'] = 'Preiskategorien bearbeiten';
+$string['editsemesters'] = 'Semester bearbeiten';
 
-$string['addbookinginstance'] = 'Definiere Standard Buchungsinstanz';
+$string['addbookinginstance'] = 'Standard-Buchungsinstanz festlegen';
 
 // Edit sports.
-$string['editsports'] = 'Bearbeite Sportarten';
+$string['editsports'] = 'Sportarten bearbeiten';
 
 // Teachers.
-$string['teacher'] = 'KursleiterIn';
+$string['teacher'] = 'Kursleiter_in';
 
 // Shortcodes.
-$string['shortcodeslistofbookingoptions'] = 'Liste der buchbaren Optionen';
-$string['shortcodeslistofbookingoptionsascards'] = 'Liste der buchbaren Optionen als cards';
-$string['shortcodeslistofmybookingoptionsascards'] = 'Liste meiner gebuchte Optionen als cards';
-$string['shortcodessetdefaultinstance'] = 'Setze eine Standard Instanz für Shortcodes';
+$string['shortcodeslistofbookingoptions'] = 'Liste der buchbaren Kurse';
+$string['shortcodeslistofbookingoptionsascards'] = 'Liste der buchbaren Kurse als Karten';
+$string['shortcodeslistofmybookingoptionsascards'] = 'Liste meiner gebuchte Kurse als Karten';
+$string['shortcodessetdefaultinstance'] = 'Setze eine Standard-Instanz für Shortcodes';
 $string['shortcodessetdefaultinstancedesc'] = 'Damit kann eine Standard-Buchungsinstanz definiert werden, die dann verwendet wird,
 wenn keine ID definiert wurde. Dies erlaubt den schnellen Wechsel (zum Beispiel von einem Semster zum nächsten), wenn es Überblicks-
 Seiten für unterschiedliche Kategorien gibt.';
-$string['shortcodessetinstance'] = 'Definiere die Moodle ID jener Buchungsinstanz, die standardmäßig verwendet werden soll.';
+$string['shortcodessetinstance'] = 'Definiere die Moodle-ID jener Buchungsinstanz, die standardmäßig verwendet werden soll.';
 $string['shortcodessetinstancedesc'] = 'Wenn Du hier einen Wert setzt, kann der Shortcode so verwendet werden: [listofbookings category="philosophy"]
-Es ist also nicht mehr nötig, eine id zu übergeben.';
+Es ist also nicht mehr nötig, eine ID zu übergeben.';
 $string['courses'] = 'Kurse';
 
 // Access.php.
-$string['musi:canedit'] = 'NutzerIn darf verwalten';
+$string['musi:canedit'] = 'Nutzer_in darf verwalten';
