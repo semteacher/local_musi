@@ -84,9 +84,5 @@ $string['shortcodessetinstancedesc'] = 'Wenn Du hier einen Wert setzt, kann der 
 Es ist also nicht mehr nötig, eine id zu übergeben.';
 $string['courses'] = 'Kurse';
 
-// Cash hournal
-
-$string['cashjournal'] = "Kassenjournal";
-
-// access.php
+// Access.php.
 $string['musi:canedit'] = 'NutzerIn darf verwalten';

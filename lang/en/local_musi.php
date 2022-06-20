@@ -84,9 +84,5 @@ $string['shortcodessetinstancedesc'] = 'If you use this setting, you can use the
 So no need to specify the ID';
 $string['courses'] = 'Courses';
 
-// Cash hournal
-
-$string['cashjournal'] = "Cash journal";
-
-// access.php
+// Access.php.
 $string['musi:canedit'] = 'User can edit';
