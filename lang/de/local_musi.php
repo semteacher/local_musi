@@ -50,9 +50,9 @@ $string['numberofentities_desc'] = 'Informationen über die Sportstätten auf de
 $string['coursesbooked'] = 'Gebuchte Kurse';
 $string['coursesincart'] = 'Im Warenkorb';
 $string['coursesdeleted'] = 'Gelöschte Kurse';
-$string['coursesboughtcard'] = 'Gekaufte Kurse (Online))';
+$string['coursesboughtcard'] = 'Gekaufte Kurse (Online)';
 $string['coursespending'] = 'Noch unbestätigte Kurse';
-$string['coursesboughtcashier'] = 'Gekaufte Kurse (Kassier_in)';
+$string['coursesboughtcashier'] = 'Gekaufte Kurse (Kassa)';
 
 $string['editsettings'] = 'Einstellungen bearbeiten';
 $string['editentities'] = 'Sportstätten bearbeiten';
