@@ -57,12 +57,12 @@ $string['coursesboughtcashier'] = 'Courses bought at cashier';
 $string['editsettings'] = 'Edit settings';
 $string['editentities'] = 'Edit entities';
 $string['editentitiescategories'] = 'Edit categories of entities';
-$string['editbookinginstance'] = 'Edit booking instance';
+$string['editbookinginstance'] = 'Edit semester instance';
 
+$string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">No semester instance! Click here to choose one.</span>';
 $string['editpricecategories'] = 'Edit price categories';
 $string['editsemesters'] = 'Edit semesters';
-$string['addbookinginstance'] = 'Add standard booking instance ID';
-
+$string['changebookinginstance'] = 'Change semester instance';
 
 // Edit sports.
 $string['editsports'] = 'Edit sports';

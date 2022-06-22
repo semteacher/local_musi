@@ -57,12 +57,12 @@ $string['coursesboughtcashier'] = 'Gekaufte Kurse (Kassa)';
 $string['editsettings'] = 'Einstellungen bearbeiten';
 $string['editentities'] = 'Sportstätten bearbeiten';
 $string['editentitiescategories'] = 'Kategorien der Sportstätten bearbeiten';
-$string['editbookinginstance'] = 'Buchungsinstanz bearbeiten';
+$string['editbookinginstance'] = 'Semester-Instanz bearbeiten';
 
+$string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">Keine Semester-Instanz! Hier klicken, um eine einzustellen.</span>';
 $string['editpricecategories'] = 'Preiskategorien bearbeiten';
 $string['editsemesters'] = 'Semester bearbeiten';
-
-$string['addbookinginstance'] = 'Standard-Buchungsinstanz festlegen';
+$string['changebookinginstance'] = 'Semester-Instanz ändern';
 
 // Edit sports.
 $string['editsports'] = 'Sportarten bearbeiten';

@@ -78,6 +78,9 @@ class card_content_settings implements renderable, templatable {
         $url = new moodle_url('/mod/booking/semesters.php');
         $data->editsemesters = ['link' => $url->out(false)];
 
+        $url = new moodle_url('/admin/category.php?category=local_musi');
+        $data->changebookinginstance = ['link' => $url->out(false)];
+
         return $data;
     }
 
