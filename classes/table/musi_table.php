@@ -104,7 +104,6 @@ class musi_table extends wunderbyte_table {
         }
     }
 
-
     public function col_image($values) {
 
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
@@ -216,6 +215,9 @@ class musi_table extends wunderbyte_table {
             $data->url = '#';
         }
         $data->title = $values->text;
+        if (!empty($values->titleprefix)) {
+            $data->title = $values->titleprefix . ' - ' . $values->text;
+        }
 
         // We will have a number of modals on this site, therefore we have to distinguish them.
         // This is in case we render modal.

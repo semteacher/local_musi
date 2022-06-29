@@ -223,7 +223,8 @@ class shortcodes {
 
         $table->add_subcolumns('cardbody', ['invisibleoption', 'sports', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'], ['invisibleoption']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'],
+            ['invisibleoption']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 
@@ -320,7 +321,8 @@ class shortcodes {
 
         $table->add_subcolumns('cardbody', ['invisibleoption', 'sports', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'], ['invisibleoption']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'],
+            ['invisibleoption']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 
