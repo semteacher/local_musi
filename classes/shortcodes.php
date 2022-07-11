@@ -82,26 +82,27 @@ class shortcodes {
 
         $table = new musi_table($tablename, $booking);
 
-        list($fields, $from, $where, $params) = $booking->get_all_options_sql(null, null, $category);
+        list($fields, $from, $where, $params, $filter) =
+            $booking->get_all_options_sql(null, null, $category, null, $booking->context);
 
-        $table->set_sql($fields, $from, $where, $params);
+        $table->set_filter_sql($fields, $from, $where, $params, $filter);
 
         $table->use_pages = false;
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('cardbody', ['text', 'dayofweek', 'sports', 'teacher', 'location', 'bookings', 'price']);
+        $table->add_subcolumns('cardbody', ['text', 'dayofweektime', 'sport', 'teacher', 'location', 'bookings', 'price']);
 
         // This avoids showing all keys in list view.
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-md-none']);
 
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-md-3 col-sm-12'], ['text']);
 
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3 text-left'], ['dayofweek']);
-        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweek']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3 text-left'], ['dayofweektime']);
+        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
 
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-6 text-right'], ['sports']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'sports-badge bg-info text-light'], ['sports']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-6 text-right'], ['sport']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'sport-badge bg-info text-light'], ['sport']);
 
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3'], ['teacher']);
 
@@ -203,35 +204,35 @@ class shortcodes {
 
         // If we want to find only the teacher relevant options, we chose different sql.
         if (isset($args['teacherid']) && (is_int((int)$args['teacherid']))) {
-            list($fields, $from, $where, $params) = $booking->get_all_options_of_teacher_sql((int)$args['teacherid']);
+            list($fields, $from, $where, $params, $filter) =
+                $booking->get_all_options_of_teacher_sql((int)$args['teacherid']);
         } else {
-            list($fields, $from, $where, $params) = $booking->get_all_options_sql(null, null, $category);
+            list($fields, $from, $where, $params, $filter) =
+                $booking->get_all_options_sql(null, null, $category, null, $booking->context);
         }
 
-        $table->set_sql($fields, $from, $where, $params);
+        $table->set_filter_sql($fields, $from, $where, $params, $filter);
 
         $table->use_pages = false;
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('itemcategory', ['sports']);
-        $table->add_subcolumns('itemday', ['dayofweek']);
+        $table->add_subcolumns('itemcategory', ['sport']);
+        $table->add_subcolumns('itemday', ['dayofweektime']);
         $table->add_subcolumns('cardimage', ['image']);
         $table->add_subcolumns('optioninvisible', ['invisibleoption']);
 
-        $table->add_subcolumns('datafields', ['sports', 'dayofweek']);
-
-        $table->add_subcolumns('cardbody', ['invisibleoption', 'sports', 'text', 'teacher']);
+        $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'],
             ['invisibleoption']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 
-        $table->add_subcolumns('cardlist', ['dayofweek', 'location', 'bookings']);
+        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings']);
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweek']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
 
         $table->add_subcolumns('cardfooter', ['price']);
@@ -241,9 +242,16 @@ class shortcodes {
 
         $table->is_downloading('', 'List of booking options');
 
+        // Id is not really something one wants to filter, but we need the dataset on the html element.
+        // The key "id" won't be rendered in filter json, though.
+        $table->define_filtercolumns(['id', 'sport']);
+
         $table->sortable(true, 'text');
 
-        $table->tabletemplate = 'local_musi/shortcodes_cards';
+        // This allows us to use infinite scrolling, No pages will be used.
+        $table->infinitescroll = 5;
+
+        $table->tabletemplate = 'local_musi/nolazytable';
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
         if (isset($args['nolazy']) && ($args['nolazy'] == 1)) {
@@ -312,24 +320,22 @@ class shortcodes {
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('itemcategory', ['sports']);
-        $table->add_subcolumns('itemday', ['dayofweek']);
+        $table->add_subcolumns('itemcategory', ['sport']);
+        $table->add_subcolumns('itemday', ['dayofweektime']);
         $table->add_subcolumns('cardimage', ['image']);
         $table->add_subcolumns('optioninvisible', ['invisibleoption']);
 
-        $table->add_subcolumns('datafields', ['sports', 'dayofweek']);
-
-        $table->add_subcolumns('cardbody', ['invisibleoption', 'sports', 'text', 'teacher']);
+        $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'],
-            ['invisibleoption']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' =>
+            'shortcodes_option_info_invisible'], ['invisibleoption']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 
-        $table->add_subcolumns('cardlist', ['dayofweek', 'location', 'bookings']);
+        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings']);
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweek']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
 
         $table->add_subcolumns('cardfooter', ['price']);

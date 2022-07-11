@@ -307,7 +307,7 @@ class musi_table extends wunderbyte_table {
      * @return string $sports Returns course start time as a readable string.
      * @throws coding_exception
      */
-    public function col_sports($values) {
+    public function col_sport($values) {
 
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
 
@@ -446,7 +446,7 @@ class musi_table extends wunderbyte_table {
 
         $tableobject = $this->printtable($pagesize, $useinitialsbar);
         $output = $PAGE->get_renderer('local_musi');
-        return $output->render_card_table($tableobject);
+        return $output->render_nolazytable($tableobject);
     }
 
 
