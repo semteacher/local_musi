@@ -85,3 +85,8 @@ $string['courses'] = 'Kurse';
 
 // Access.php.
 $string['musi:canedit'] = 'Nutzer_in darf verwalten';
+
+// Nav.
+$string['musi'] = 'MUSI';
+$string['cachier'] = 'Kassa';
+$string['entities'] = 'Sportstätten';

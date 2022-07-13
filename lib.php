@@ -61,3 +61,30 @@ function local_musi_get_fontawesome_icon_map() {
         'local_musi:i/dashboard' => 'fa-tachometer'
     ];
 }
+
+/**
+ * Renders the popup.
+ *
+ * @param renderer_base $renderer
+ * @return string The HTML
+ */
+function local_musi_render_navbar_output(\renderer_base $renderer) {
+
+    // Early bail out conditions.
+    if (!isloggedin() || isguestuser() || !has_capability('local/musi:canedit', context_system::instance())) {
+        return;
+    }
+    /*hascapability*/
+    $output = '<div class="popover-region nav-link icon-no-margin dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button"
+    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    '. get_string('musi', 'local_musi') .'
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="/local/shopping_cart/cashier.php"">'. get_string('cachier', 'local_musi') . '</a>
+      <a class="dropdown-item" href="/local/musi/dashboard.php">' . get_string('dashboard', 'local_musi') . '</a>
+      <a class="dropdown-item" href="/local/entities/entities.php">' . get_string('entities', 'local_musi') . '</a>
+    </div>
+  </div>';
+    return $output;
+}
