@@ -90,3 +90,7 @@ $string['musi:canedit'] = 'Nutzer_in darf verwalten';
 $string['musi'] = 'MUSI';
 $string['cachier'] = 'Kassa';
 $string['entities'] = 'Sportstätten';
+
+// Filter
+$string['dayofweek'] = "Wochentag";
+$string['sport'] = "Sportart";

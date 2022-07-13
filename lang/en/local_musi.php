@@ -86,6 +86,10 @@ $string['courses'] = 'Courses';
 // Access.php.
 $string['musi:canedit'] = 'User can edit';
 
+// Filter
+$string['dayofweek'] = "Weekday";
+$string['sport'] = "Sport";
+
 // Nav.
 $string['musi'] = 'MUSI';
 $string['cachier'] = 'Kassa';

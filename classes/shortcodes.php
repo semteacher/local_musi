@@ -25,8 +25,9 @@
  */
 namespace local_musi;
 
+use context_module;
 use local_musi\table\musi_table;
-
+use mod_booking\booking;
 use mod_booking\singleton_service;
 
 /**
@@ -205,10 +206,16 @@ class shortcodes {
         // If we want to find only the teacher relevant options, we chose different sql.
         if (isset($args['teacherid']) && (is_int((int)$args['teacherid']))) {
             list($fields, $from, $where, $params, $filter) =
-                $booking->get_all_options_of_teacher_sql((int)$args['teacherid']);
+                booking::get_options_filter_sql(0, 0, '', null, $booking->context, [],
+                    ['bookingid' => (int)$booking->id,
+                    'teacherobjects' => '%"id":' . $args['teacherid'] . ',%'
+                ]);
         } else {
+
             list($fields, $from, $where, $params, $filter) =
-                $booking->get_all_options_sql(null, null, $category, null, $booking->context);
+                booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], ['bookingid' => (int)$booking->id]);
+
+                // $booking->get_all_options_sql(null, null, $category, null, $booking->context);
         }
 
         $table->set_filter_sql($fields, $from, $where, $params, $filter);
@@ -244,12 +251,28 @@ class shortcodes {
 
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
-        $table->define_filtercolumns(['id', 'sport']);
 
-        $table->sortable(true, 'text');
+        $table->define_filtercolumns(['id', 'sport' => [
+            'localizedname' => get_string('sport', 'local_musi')
+        ], 'dayofweek' => [
+            'localizedname' => get_string('dayofweek', 'local_musi'),
+            'monday' => get_string('monday', 'mod_booking'),
+            'tuesday' => get_string('tuesday', 'mod_booking'),
+            'wednesday' => get_string('wednesday', 'mod_booking'),
+            'thursday' => get_string('thursday', 'mod_booking'),
+            'friday' => get_string('friday', 'mod_booking'),
+            'saturday' => get_string('saturday', 'mod_booking'),
+            'sunday' => get_string('sunday', 'mod_booking')
+        ], 'location' => [
+            'localizedname' => get_string('location', 'mod_booking')
+        ]]);
+
+        $table->define_fulltextsearchcolumns(['text', 'sport', 'description', 'location', 'teacherobjects']);
+
+        $table->sortable(true, 'dayofweek');
 
         // This allows us to use infinite scrolling, No pages will be used.
-        $table->infinitescroll = 5;
+        $table->infinitescroll = 50;
 
         $table->tabletemplate = 'local_musi/nolazytable';
 

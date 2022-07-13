@@ -60,10 +60,17 @@
     }
 }}
 <div class="wunderbyte_table_container_{{idstring}} wunderbyte_table_container">
-     {{> local_wunderbyte_table/filter }}
-    <div class= "wunderbyteTableClass" id='a{{idstring}}'>
-      {{> local_musi/table }}
-    </div>
+     <aside>
+          <div>
+               {{> local_wunderbyte_table/search }}
+          </div>
+          <div>
+               {{> local_wunderbyte_table/filter }}
+          </div>
+     </aside>
+     <div class= "wunderbyteTableClass" id='a{{idstring}}'>
+          {{> local_musi/table }}
+     </div>
 </div>
 
 {{#js}}
