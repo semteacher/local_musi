@@ -212,17 +212,21 @@ class shortcodes {
 
         $table = new musi_table($tablename, $booking);
 
+        $wherearray = ['bookingid' => (int)$booking->id];
+
+        if (!empty($category)) {
+            $wherearray['sport'] = $category;
+        };
+
         // If we want to find only the teacher relevant options, we chose different sql.
         if (isset($args['teacherid']) && (is_int((int)$args['teacherid']))) {
+            $wherearray['teacherobjects'] = '%"id":' . $args['teacherid'] . ',%';
             list($fields, $from, $where, $params, $filter) =
-                booking::get_options_filter_sql(0, 0, '', null, $booking->context, [],
-                    ['bookingid' => (int)$booking->id,
-                    'teacherobjects' => '%"id":' . $args['teacherid'] . ',%'
-                ]);
+                booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray);
         } else {
 
             list($fields, $from, $where, $params, $filter) =
-                booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], ['bookingid' => (int)$booking->id]);
+                booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray);
 
                 // $booking->get_all_options_sql(null, null, $category, null, $booking->context);
         }
@@ -272,9 +276,10 @@ class shortcodes {
                 'friday' => get_string('friday', 'mod_booking'),
                 'saturday' => get_string('saturday', 'mod_booking'),
                 'sunday' => get_string('sunday', 'mod_booking')
-            ], 'location' => [
+            ],  'location' => [
                 'localizedname' => get_string('location', 'mod_booking')
-            ]]);
+            ]
+            ]);
         }
 
         if ($showsearch !== false) {
