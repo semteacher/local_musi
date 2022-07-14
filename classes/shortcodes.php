@@ -194,6 +194,14 @@ class shortcodes {
             $category = '';
         }
 
+        if (!isset($args['filter']) || !$showfilter = ($args['filter'])) {
+            $showfilter = false;
+        }
+
+        if (!isset($args['search']) || !$showsearch = ($args['search'])) {
+            $showsearch = false;
+        }
+
         if (!isset($args['perpage'])
             || !is_int((int)$args['perpage'])
             || !$perpage = ($args['perpage'])) {
@@ -252,25 +260,28 @@ class shortcodes {
 
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
+        if ($showfilter !== false) {
+            $table->define_filtercolumns(['id', 'sport' => [
+                'localizedname' => get_string('sport', 'local_musi')
+            ], 'dayofweek' => [
+                'localizedname' => get_string('dayofweek', 'local_musi'),
+                'monday' => get_string('monday', 'mod_booking'),
+                'tuesday' => get_string('tuesday', 'mod_booking'),
+                'wednesday' => get_string('wednesday', 'mod_booking'),
+                'thursday' => get_string('thursday', 'mod_booking'),
+                'friday' => get_string('friday', 'mod_booking'),
+                'saturday' => get_string('saturday', 'mod_booking'),
+                'sunday' => get_string('sunday', 'mod_booking')
+            ], 'location' => [
+                'localizedname' => get_string('location', 'mod_booking')
+            ]]);
+        }
 
-        $table->define_filtercolumns(['id', 'sport' => [
-            'localizedname' => get_string('sport', 'local_musi')
-        ], 'dayofweek' => [
-            'localizedname' => get_string('dayofweek', 'local_musi'),
-            'monday' => get_string('monday', 'mod_booking'),
-            'tuesday' => get_string('tuesday', 'mod_booking'),
-            'wednesday' => get_string('wednesday', 'mod_booking'),
-            'thursday' => get_string('thursday', 'mod_booking'),
-            'friday' => get_string('friday', 'mod_booking'),
-            'saturday' => get_string('saturday', 'mod_booking'),
-            'sunday' => get_string('sunday', 'mod_booking')
-        ], 'location' => [
-            'localizedname' => get_string('location', 'mod_booking')
-        ]]);
+        if ($showsearch !== false) {
+            $table->define_fulltextsearchcolumns(['text', 'sport', 'description', 'location', 'teacherobjects']);
+        }
 
-        $table->define_fulltextsearchcolumns(['text', 'sport', 'description', 'location', 'teacherobjects']);
-
-        $table->sortable(true, 'dayofweek');
+        $table->sortable(true, 'text');
 
         // It's important to have the baseurl defined, we use it as a return url at one point.
         $baseurl = new moodle_url(
