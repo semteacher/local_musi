@@ -240,7 +240,7 @@ class musi_table extends wunderbyte_table {
                     if (isset($bookingsoptionsettings->editoptionurl)) {
                         // Get the URL to edit the option.
 
-                        $data->editoptionurl = self::add_return_url($bookingsoptionsettings->editoptionurl);
+                        $data->editoptionurl = $this->add_return_url($bookingsoptionsettings->editoptionurl);
                     }
                     if (isset($bookingsoptionsettings->editteachersurl)) {
                         // Get the URL to edit the teachers for the option.
@@ -450,12 +450,9 @@ class musi_table extends wunderbyte_table {
     }
 
 
-    private static function add_return_url(string $urlstring):string {
+    private function add_return_url(string $urlstring):string {
 
-        $returnurl = new moodle_url(
-            $_SERVER['REQUEST_URI'],
-            $_GET
-        );
+        $returnurl = $this->baseurl->out();
 
         $urlcomponents = parse_url($urlstring);
 
@@ -466,7 +463,7 @@ class musi_table extends wunderbyte_table {
             array_merge(
                 $params, [
                 'returnto' => 'url',
-                'returnurl' => $returnurl->out(false)
+                'returnurl' => $returnurl
                 ]
             )
         );

@@ -29,6 +29,7 @@ use context_module;
 use local_musi\table\musi_table;
 use mod_booking\booking;
 use mod_booking\singleton_service;
+use moodle_url;
 
 /**
  * Deals with local_shortcodes regarding booking.
@@ -270,6 +271,14 @@ class shortcodes {
         $table->define_fulltextsearchcolumns(['text', 'sport', 'description', 'location', 'teacherobjects']);
 
         $table->sortable(true, 'dayofweek');
+
+        // It's important to have the baseurl defined, we use it as a return url at one point.
+        $baseurl = new moodle_url(
+            $_SERVER['REQUEST_URI'],
+            $_GET
+        );
+
+        $table->define_baseurl($baseurl->out());
 
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 5;
