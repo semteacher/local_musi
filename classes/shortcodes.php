@@ -202,6 +202,10 @@ class shortcodes {
             $showsearch = false;
         }
 
+        if (!isset($args['infinitescrollpage']) || !$infinitescrollpage = ($args['infinitescrollpage'])) {
+            $infinitescrollpage = 20;
+        }
+
         if (!isset($args['perpage'])
             || !is_int((int)$args['perpage'])
             || !$perpage = ($args['perpage'])) {
@@ -302,7 +306,7 @@ class shortcodes {
         $table->tabletemplate = 'local_musi/nolazytable';
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
-        if (isset($args['nolazy']) && ($args['nolazy'] == 1)) {
+        if (isset($args['lazy']) && ($args['lazy'] == 1)) {
             ob_start();
             $out = $table->out($perpage, true);
 
