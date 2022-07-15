@@ -120,15 +120,22 @@ class page_teacher implements renderable, templatable {
             $bookingid = $bookingidrecord->bookingid;
 
             if ($booking = singleton_service::get_instance_of_booking_by_bookingid($bookingid)) {
-                $out = format_text('[allekursekarten id="' . $booking->cmid . '" teacherid="' . $teacherid . '"]', FORMAT_HTML);
+
+                // We load only the first table directly, the other ones lazy.
+
+                $lazy = $firsttable ? '' : ' lazy="1" ';
+
+                $out = format_text('[allekursekarten id="' . $booking->cmid . '" teacherid="' . $teacherid . '" ' . $lazy . ']', FORMAT_HTML);
 
                 $class = $firsttable ? 'active show' : '';
                 $firsttable = false;
 
+                $tablename = preg_replace("/[^a-z]/", '', $booking->settings->name);
+
                 $teacheroptiontables[] = [
                     'bookingid' => $bookingid,
                     'bookinginstancename' => $booking->settings->name,
-                    'tablename' => $booking->settings->name,
+                    'tablename' => $tablename,
                     'table' => $out,
                     'class' => $class
                 ];
