@@ -202,6 +202,10 @@ class shortcodes {
             $showsearch = false;
         }
 
+        if (!isset($args['sort']) || !$showsort = ($args['sort'])) {
+            $showsort = false;
+        }
+
         if (!isset($args['infinitescrollpage']) || !$infinitescrollpage = ($args['infinitescrollpage'])) {
             $infinitescrollpage = 20;
         }
@@ -288,12 +292,15 @@ class shortcodes {
             $table->define_fulltextsearchcolumns(['text', 'sport', 'description', 'location', 'teacherobjects']);
         }
 
-        $table->sortable(true, 'text');
-        $table->define_sortablecolumns(['text' => get_string('coursename', 'local_musi'),
+        if ($showsort !== false) {
+            $table->define_sortablecolumns(['text' => get_string('coursename', 'local_musi'),
                                         'sport' => get_string('sport', 'local_musi'),
                                         'location',
                                         'dayofweek'
                                     ]);
+        } else {
+            $table->sortable(true, 'text');
+        }
 
         // It's important to have the baseurl defined, we use it as a return url at one point.
         $baseurl = new moodle_url(
