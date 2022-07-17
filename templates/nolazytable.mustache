@@ -62,6 +62,9 @@
 <div class="wunderbyte_table_container_{{idstring}} wunderbyte_table_container">
      <aside>
           <div>
+               {{> local_wunderbyte_table/sort }}
+          </div>
+          <div>
                {{> local_wunderbyte_table/search }}
           </div>
           <div>
@@ -76,8 +79,5 @@
 {{#js}}
     require(['local_wunderbyte_table/init'], function(init) {
     init.init('{{idstring}}', '{{encodedtable}}');
-    });
-    require(['local_wunderbyte_table/search'], function(init) {
-    init.init('.wunderbyte_table_container_{{idstring}}', '.search-data-element', '');
     });
 {{/js}}

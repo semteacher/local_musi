@@ -96,3 +96,4 @@ $string['entities'] = 'Sportstätten';
 // Filter
 $string['dayofweek'] = "Wochentag";
 $string['sport'] = "Sportart";
+$string['coursename'] = "Kursname";

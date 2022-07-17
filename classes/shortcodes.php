@@ -231,8 +231,6 @@ class shortcodes {
 
             list($fields, $from, $where, $params, $filter) =
                 booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray);
-
-                // $booking->get_all_options_sql(null, null, $category, null, $booking->context);
         }
 
         $table->set_filter_sql($fields, $from, $where, $params, $filter);
@@ -291,6 +289,11 @@ class shortcodes {
         }
 
         $table->sortable(true, 'text');
+        $table->define_sortablecolumns(['text' => get_string('coursename', 'local_musi'),
+                                        'sport' => get_string('sport', 'local_musi'),
+                                        'location',
+                                        'dayofweek'
+                                    ]);
 
         // It's important to have the baseurl defined, we use it as a return url at one point.
         $baseurl = new moodle_url(

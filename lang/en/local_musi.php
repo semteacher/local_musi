@@ -93,5 +93,6 @@ $string['sport'] = "Sport";
 
 // Nav.
 $string['musi'] = 'MUSI';
-$string['cachier'] = 'Kassa';
-$string['entities'] = 'Sportstätten';
+$string['cachier'] = 'Cashiers desk';
+$string['entities'] = 'Sport locations';
+$string['coursename'] = "Coursename";
