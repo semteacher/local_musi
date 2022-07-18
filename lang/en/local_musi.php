@@ -58,6 +58,7 @@ $string['editsettings'] = 'Edit settings';
 $string['editentities'] = 'Edit entities';
 $string['editentitiescategories'] = 'Edit categories of entities';
 $string['editbookinginstance'] = 'Edit semester instance';
+$string['editbookings'] = 'Booking Overview';
 
 $string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">No semester instance! Click here to choose one.</span>';
 $string['editpricecategories'] = 'Edit price categories';

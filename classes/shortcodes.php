@@ -272,7 +272,7 @@ class shortcodes {
         $table->sortable(true, 'dayofweek');
 
         // This allows us to use infinite scrolling, No pages will be used.
-        $table->infinitescroll = 50;
+        $table->infinitescroll = 5;
 
         $table->tabletemplate = 'local_musi/nolazytable';
 

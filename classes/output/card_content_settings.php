@@ -67,6 +67,10 @@ class card_content_settings implements renderable, templatable {
         if ($cmid) {
             $url = new moodle_url('/course/modedit.php', ['update' => $cmid]);
             $data->editbookinginstance = ['link' => $url->out(false)];
+
+            $url = new moodle_url('/mod/booking/view.php', ['id' => $cmid, 'whichview' => 'showall']);
+            $data->editbookings = ['link' => $url->out(false)];
+
         } else {
             $url = new moodle_url('/admin/category.php?category=local_musi');
             $data->addbookinginstance = ['link' => $url->out(false)];
