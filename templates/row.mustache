@@ -67,7 +67,9 @@
 >
     <div class="{{cardimageclass}}">
       {{#cardimage}}
-        <img class="w-100" src="{{{value}}}">
+        {{#value}}
+          <img class="w-100" src="{{{value}}}">
+        {{/value}}
       {{/cardimage}}
     </div>
 
