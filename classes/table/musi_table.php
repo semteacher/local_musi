@@ -205,6 +205,9 @@ class musi_table extends wunderbyte_table {
 
         $data = new stdClass();
 
+        $data->id = $values->id;
+        $data->componentname = 'mod_booking';
+
         if ($this->booking) {
             $url = new moodle_url('/mod/booking/optionview.php', ['optionid' => $values->id,
                                                                   'cmid' => $this->booking->cmid,
