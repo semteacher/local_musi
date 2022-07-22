@@ -206,9 +206,10 @@ class shortcodes {
             $showsort = false;
         }
 
-        if (!isset($args['infinitescrollpage']) || !$infinitescrollpage = ($args['infinitescrollpage'])) {
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        /* if (!isset($args['infinitescrollpage']) || !$infinitescrollpage = ($args['infinitescrollpage'])) {
             $infinitescrollpage = 20;
-        }
+        } */
 
         if (!isset($args['perpage'])
             || !is_int((int)$args['perpage'])
@@ -343,7 +344,7 @@ class shortcodes {
 
     /**
      * Prints out list of bookingoptions.
-     * Argumtents can be 'category' or 'perpage'.
+     * Arguments can be 'id', 'category' or 'perpage'.
      *
      * @param string $shortcode
      * @param array $args
@@ -432,5 +433,4 @@ class shortcodes {
 
         return $table->nolazyout($perpage, true);
     }
-
 }
