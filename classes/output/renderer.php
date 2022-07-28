@@ -49,7 +49,7 @@ class renderer extends plugin_renderer_base {
         return $o;
     }
 
-    /** Function to render the page_teacher
+    /** Function to render the page of a single teacher
      * @param any $data
      * @return string
      */
@@ -60,7 +60,18 @@ class renderer extends plugin_renderer_base {
         return $o;
     }
 
-    /** Function to render the page_teacher
+    /** Function to render the page showing all teachers
+     * @param any $data
+     * @return string
+     */
+    public function render_allteacherspage($data) {
+        $o = '';
+        $data = $data->export_for_template($this);
+        $o .= $this->render_from_template('local_musi/page_allteachers', $data);
+        return $o;
+    }
+
+    /** Function to render the teacher column.
      * @param any $data
      * @return string
      */

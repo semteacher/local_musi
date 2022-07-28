@@ -70,6 +70,9 @@ $string['editsports'] = 'Edit sports';
 
 // Teachers.
 $string['teacher'] = 'Teacher';
+$string['allteachers'] = 'All teachers';
+$string['showallteachers'] = '&gt;&gt; Show all teachers';
+$string['showcoursesofteacher'] = 'Show courses...';
 
 // Shortcodes.
 $string['shortcodeslistofbookingoptions'] = 'List of booking options';
@@ -87,7 +90,7 @@ $string['courses'] = 'Courses';
 // Access.php.
 $string['musi:canedit'] = 'User can edit';
 
-// Filter
+// Filter.
 $string['dayofweek'] = "Weekday";
 $string['sport'] = "Sport";
 

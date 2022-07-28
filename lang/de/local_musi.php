@@ -70,7 +70,10 @@ $string['changebookinginstance'] = 'Semester-Instanz ändern';
 $string['editsports'] = 'Sportarten bearbeiten';
 
 // Teachers.
-$string['teacher'] = 'Kursleiter_in';
+$string['teacher'] = 'Kursleiter*in';
+$string['allteachers'] = 'Alle Kursleiter*innen';
+$string['showallteachers'] = '&gt;&gt; Alle Kursleiter*innen anzeigen';
+$string['showcoursesofteacher'] = 'Kurse anzeigen...';
 
 // Shortcodes.
 $string['shortcodeslistofbookingoptions'] = 'Liste der buchbaren Kurse';
@@ -93,7 +96,7 @@ $string['musi'] = 'MUSI';
 $string['cachier'] = 'Kassa';
 $string['entities'] = 'Sportstätten';
 
-// Filter
+// Filter.
 $string['dayofweek'] = "Wochentag";
 $string['sport'] = "Sportart";
 $string['coursename'] = "Kursname";

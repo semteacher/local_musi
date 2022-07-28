@@ -26,6 +26,7 @@
 namespace local_musi;
 
 use context_module;
+use local_musi\output\page_allteachers;
 use local_musi\table\musi_table;
 use mod_booking\booking;
 use mod_booking\singleton_service;
@@ -432,5 +433,41 @@ class shortcodes {
         }
 
         return $table->nolazyout($perpage, true);
+    }
+
+    /**
+     * Prints out all teachers as cards.
+     *
+     * @param string $shortcode
+     * @param array $args
+     * @param string|null $content
+     * @param object $env
+     * @param Closure $next
+     * @return void
+     */
+    public static function allteacherscards($shortcode, $args, $content, $env, $next) {
+        global $DB, $PAGE;
+
+        $teacherids = [];
+
+        // Now get all teachers that we're interested in.
+        $sqlteachers =
+            "SELECT DISTINCT bt.userid
+            FROM {booking_teachers} bt
+            LEFT JOIN {user} u
+            ON u.id = bt.userid
+            ORDER BY u.lastname ASC";
+
+        if ($teacherrecords = $DB->get_records_sql($sqlteachers)) {
+            foreach ($teacherrecords as $teacherrecord) {
+                $teacherids[] = $teacherrecord->userid;
+            }
+        }
+
+        // Now prepare the data for all teachers.
+        $data = new page_allteachers($teacherids);
+        $output = $PAGE->get_renderer('local_musi');
+        // And return the rendered page showing all teachers.
+        return $output->render_allteacherspage($data);
     }
 }

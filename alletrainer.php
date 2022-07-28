@@ -17,11 +17,10 @@
  * Add dates to option.
  *
  * @package local_musi
- * @copyright 2022 Georg Maißer <info@wunderbyte.at>
+ * @copyright 2022 Wunderbyte GmbH <info@wunderbyte.at>
+ * @author Bernhard Fischer
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-use local_musi\output\page_teacher;
 
 require_once(__DIR__ . '/../../config.php');
 
@@ -34,27 +33,20 @@ if (!$context = context_system::instance()) {
     throw new moodle_exception('badcontext');
 }
 
-$teacherid = required_param('teacherid', PARAM_INT);
-
 // Check if optionid is valid.
 $PAGE->set_context($context);
 
-$title = get_string('teacher', 'local_musi');
+$title = get_string('allteachers', 'local_musi');
 
-$PAGE->set_url('/local/musi/teacher.php');
+$PAGE->set_url('/local/musi/alletrainer.php');
 $PAGE->navbar->add($title);
 $PAGE->set_title(format_string($title));
 $PAGE->set_heading($title);
 $PAGE->set_pagelayout('standard');
-$PAGE->add_body_class('local_musi-teacher');
+$PAGE->add_body_class('local_musi-allteachers');
 
 echo $OUTPUT->header();
 
-echo '<a href="/local/musi/alletrainer.php" target="_self"><h5>' .
-    get_string('showallteachers', 'local_musi') . '</h5></a>';
-
-$data = new page_teacher([$teacherid]);
-$output = $PAGE->get_renderer('local_musi');
-echo $output->render_teacherpage($data);
+echo format_text("[alletrainerkarten]", FORMAT_HTML);
 
 echo $OUTPUT->footer();

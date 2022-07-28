@@ -1,0 +1,49 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_musi/page_teacher
+
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * data-region
+}}
+
+<div class="card-deck">
+    {{#teachers}}
+    <div class="card">
+        <div class="card-header">
+            <h3>{{firstname}} {{lastname}}</h1>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    {{#image}}<a href="{{link}}"><img src="{{image}}" class="page-allteachers-teacherimage rounded mt-3" width="110"></a>{{/image}}
+                </div>
+                <div class="col-md-8">
+                    {{#description}}<p class="card-text">{{{description}}}</p>{{/description}}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            {{#email}}<p class="page-allteachers-email"><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{email}}">{{email}}</a></p>{{/email}}
+            <a href="{{link}}" class="btn btn-primary">{{#str}} showcoursesofteacher, local_musi {{/str}}</a>
+        </div>
+    </div>
+    {{/teachers}}
+</div>
