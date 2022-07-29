@@ -72,7 +72,13 @@ $string['editsports'] = 'Edit sports';
 $string['teacher'] = 'Teacher';
 $string['allteachers'] = 'All teachers';
 $string['showallteachers'] = '&gt;&gt; Show all teachers';
-$string['showcoursesofteacher'] = 'Show courses...';
+$string['showcoursesofteacher'] = 'Courses';
+$string['messagebutton'] = 'Message';
+$string['messagingteacherimpossible'] = 'You cannot send messages to this teacher
+ because you are not enrolled in any courses of her/him.';
+$string['sendmail'] = 'Mail';
+$string['teachernotfound'] = 'Teacher could not be found or does not exist.';
+$string['notateacher'] = 'The user selected is not teaching any courses and is probably not a teacher.';
 
 // Shortcodes.
 $string['shortcodeslistofbookingoptions'] = 'List of booking options';

@@ -24,26 +24,60 @@
     * data-region
 }}
 
-<div class="card-deck">
+<div class="row">
     {{#teachers}}
-    <div class="card">
-        <div class="card-header">
-            <h3>{{firstname}} {{lastname}}</h1>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-4">
-                    {{#image}}<a href="{{link}}"><img src="{{image}}" class="page-allteachers-teacherimage rounded mt-3" width="110"></a>{{/image}}
+        <div class="card m-1" style="width: 20rem;">
+            <div class="card-header">
+                <h4>{{firstname}} {{lastname}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        {{#image}}<a href="{{link}}"><img src="{{image}}" class="page-allteachers-teacherimage rounded-circle" width="70"></a>{{/image}}
+                    </div>
+                    <div class="col-md-9">
+                        {{#description}}<p class="card-text">{{{description}}}</p>{{/description}}
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    {{#description}}<p class="card-text">{{{description}}}</p>{{/description}}
+                <div class="btn-group page-allteachers-buttons" role="group" aria-label="Basic example">
+                    <a href="{{link}}" class="btn btn-light">
+                        <span>
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                            <div>{{#str}} showcoursesofteacher, local_musi {{/str}}</div>
+                        </span>
+                    </a>
+                    {{#messagingispossible}}
+                    <a id="message-user-button" role="button" data-conversationid="0"
+                    data-userid="{{teacherid}}" class="btn btn-light"
+                    href="/message/index.php?id={{teacherid}}">
+                        <span>
+                            <i class="icon fa fa-comment-o fa-fw iconsmall" title="{{#str}} messagebutton, local_musi {{/str}}"
+                            role="img" aria-label="{{#str}} messagebutton, local_musi {{/str}}"></i>
+                            <div class="header-button-title">{{#str}} messagebutton, local_musi {{/str}}</div>
+                        </span>
+                    </a>
+                    {{/messagingispossible}}
+                    {{^messagingispossible}}
+                    <div data-toggle="tooltip" data-placement="top" title="{{#str}} messagingteacherimpossible, local_musi {{/str}}">
+                        <a id="message-user-button" role="button" class="btn btn-light disabled">
+                            <span>
+                                <i class="icon fa fa-comment-o fa-fw iconsmall" title="{{#str}} messagebutton, local_musi {{/str}}"
+                                role="img" aria-label="{{#str}} messagebutton, local_musi {{/str}}"></i>
+                                <div class="header-button-title">{{#str}} messagebutton, local_musi {{/str}}</div>
+                            </span>
+                        </a>
+                    </div>
+                    {{/messagingispossible}}
+                    {{#email}}
+                    <a href="mailto:{{email}}" class="page-allteachers-email btn btn-light">
+                        <span>
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <div>{{#str}} sendmail, local_musi {{/str}}</div>
+                        </span>
+                    </a>
+                    {{/email}}
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-            {{#email}}<p class="page-allteachers-email"><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{email}}">{{email}}</a></p>{{/email}}
-            <a href="{{link}}" class="btn btn-primary">{{#str}} showcoursesofteacher, local_musi {{/str}}</a>
-        </div>
-    </div>
     {{/teachers}}
 </div>

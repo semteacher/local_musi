@@ -53,7 +53,7 @@ echo $OUTPUT->header();
 echo '<a href="/local/musi/alletrainer.php" target="_self"><h5>' .
     get_string('showallteachers', 'local_musi') . '</h5></a>';
 
-$data = new page_teacher([$teacherid]);
+$data = new page_teacher($teacherid);
 $output = $PAGE->get_renderer('local_musi');
 echo $output->render_teacherpage($data);
 

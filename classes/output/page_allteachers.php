@@ -72,6 +72,7 @@ class page_allteachers implements renderable, templatable {
             // Right now, we just use a few standard pieces of information.
 
             $teacherarr = [
+                'teacherid' => $teacher->id,
                 'firstname' => $teacher->firstname,
                 'lastname' => $teacher->lastname,
                 'description' => format_text($teacher->description, $teacher->descriptionformat)
@@ -79,13 +80,17 @@ class page_allteachers implements renderable, templatable {
 
             if ($teacher->picture) {
                 $picture = new \user_picture($teacher);
-                $picture->size = 110;
+                $picture->size = 70;
                 $imageurl = $picture->get_url($PAGE);
                 $teacherarr['image'] = $imageurl;
             }
 
             if (!empty($teacher->email) && $teacher->maildisplay == 1) {
                 $teacherarr['email'] = $teacher->email;
+            }
+
+            if (page_teacher::teacher_messaging_is_possible($teacher->id)) {
+                $teacherarr['messagingispossible'] = true;
             }
 
             $link = new moodle_url('/local/musi/teacher.php', ['teacherid' => $teacher->id]);

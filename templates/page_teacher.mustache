@@ -24,14 +24,41 @@
     * data-region
 }}
 
-
+{{#error}}
+<div class="alert alert-danger" role="alert">{{{errormessage}}}</div>
+{{/error}}
+{{^error}}
 <div class="card-deck">
-    {{#teachers}}
+    {{#teacher}}
         <div class="card">
             {{#link}}<a href="{{.}}">{{/link}}
                 {{#image}}<img src="{{.}}" class="card-img-teacher rounded-circle p-3">{{/image}}
                 <div class="card-body">
                     <h1 class="card-title font-weight-bold">{{firstname}} {{lastname}}</h1>
+                    {{#messagingispossible}}
+                    <div>
+                        <a id="message-user-button" role="button" data-conversationid="0"
+                        data-userid="{{teacherid}}" class="btn btn-light"
+                        href="/message/index.php?id={{teacherid}}">
+                            <span>
+                                <i class="icon fa fa-comment-o fa-fw iconsmall" title="{{#str}} messagebutton, local_musi {{/str}}"
+                                role="img" aria-label="{{#str}} messagebutton, local_musi {{/str}}"></i>
+                                <span class="header-button-title">{{#str}} messagebutton, local_musi {{/str}}</span>
+                            </span>
+                        </a>
+                    </div>
+                    {{/messagingispossible}}
+                    {{^messagingispossible}}
+                    <div data-toggle="tooltip" data-placement="left" title="{{#str}} messagingteacherimpossible, local_musi {{/str}}">
+                        <a id="message-user-button" role="button" class="btn btn-light disabled">
+                            <span>
+                                <i class="icon fa fa-comment-o fa-fw iconsmall" title="{{#str}} messagebutton, local_musi {{/str}}"
+                                role="img" aria-label="{{#str}} messagebutton, local_musi {{/str}}"></i>
+                                <span class="header-button-title">{{#str}} messagebutton, local_musi {{/str}}</span>
+                            </span>
+                        </a>
+                    </div>
+                    {{/messagingispossible}}
                     <p class="card-description">{{{description}}}</p>
 
                 </div>
@@ -54,5 +81,6 @@
                 </div>
             {{#link}}</a>{{/link}}
         </div>
-    {{/teachers}}
+    {{/teacher}}
 </div>
+{{/error}}

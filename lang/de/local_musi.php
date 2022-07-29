@@ -73,7 +73,13 @@ $string['editsports'] = 'Sportarten bearbeiten';
 $string['teacher'] = 'Kursleiter*in';
 $string['allteachers'] = 'Alle Kursleiter*innen';
 $string['showallteachers'] = '&gt;&gt; Alle Kursleiter*innen anzeigen';
-$string['showcoursesofteacher'] = 'Kurse anzeigen...';
+$string['showcoursesofteacher'] = 'Kurse';
+$string['messagebutton'] = 'Nachricht';
+$string['messagingteacherimpossible'] = 'Sie können dieser Trainerin / diesem Trainer keine Nachrichten senden,
+ weil Sie in keinen Kurs von ihr/ihm eingeschrieben sind.';
+$string['sendmail'] = 'Mail';
+$string['teachernotfound'] = 'Kursleiter*in konnte nicht gefunden werden oder existiert nicht.';
+$string['notateacher'] = 'Die ausgewählte Person unterrichtet keine buchbaren Kurse und kann daher nicht angezeigt werden.';
 
 // Shortcodes.
 $string['shortcodeslistofbookingoptions'] = 'Liste der buchbaren Kurse';
