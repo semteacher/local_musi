@@ -452,7 +452,7 @@ class shortcodes {
 
         // Now get all teachers that we're interested in.
         $sqlteachers =
-            "SELECT DISTINCT bt.userid
+            "SELECT DISTINCT u.lastname, bt.userid
             FROM {booking_teachers} bt
             LEFT JOIN {user} u
             ON u.id = bt.userid

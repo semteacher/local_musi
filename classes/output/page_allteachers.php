@@ -43,17 +43,21 @@ use templatable;
  */
 class page_allteachers implements renderable, templatable {
 
-    /** @var stdClass $title */
-    public $listofteachers = null;
+    /** @var stdClass $listofteachers */
+    public $listofteachers = [];
 
     /**
      * In the constructor, we gather all the data we need and store it in the data property.
      */
     public function __construct(array $teacherids) {
+        global $DB;
 
         // We get the user objects of the provided teachers.
-        $this->listofteachers = user_get_users_by_id($teacherids);
-
+        foreach ($teacherids as $teacherid) {
+            if ($teacheruser = $DB->get_record('user', ['id' => $teacherid])) {
+                $this->listofteachers[] = $teacheruser;
+            }
+        }
     }
 
     /**
@@ -75,6 +79,7 @@ class page_allteachers implements renderable, templatable {
                 'teacherid' => $teacher->id,
                 'firstname' => $teacher->firstname,
                 'lastname' => $teacher->lastname,
+                'orderletter' => substr($teacher->lastname, 0, 1), // First letter of the teacher's last name.
                 'description' => format_text($teacher->description, $teacher->descriptionformat)
             ];
 

@@ -26,9 +26,10 @@
 
 <div class="row">
     {{#teachers}}
-        <div class="card m-1" style="width: 20rem;">
-            <div class="card-header">
-                <h4>{{firstname}} {{lastname}}</h4>
+        <div class="card border border-primary rounded-top m-1 page-allteachers-card">
+            <div class="card-header bg-primary d-flex justify-content-between align-items-center">
+                <div class="text-white h3 mb-0 page-allteachers-teachername">{{firstname}} {{lastname}}</div>
+                <div class="page-allteachers-orderletter bg-light rounded text-primary text-center">{{orderletter}}</div>
             </div>
             <div class="card-body">
                 <div class="row">
