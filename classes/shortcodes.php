@@ -286,6 +286,8 @@ class shortcodes {
                 'sunday' => get_string('sunday', 'mod_booking')
             ],  'location' => [
                 'localizedname' => get_string('location', 'mod_booking')
+            ],  'botags' => [
+                'localizedname' => get_string('tags', 'core')
             ]
             ]);
         }
