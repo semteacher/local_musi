@@ -38,7 +38,7 @@ $PAGE->set_context($context);
 
 $title = get_string('allteachers', 'local_musi');
 
-$PAGE->set_url('/local/musi/alletrainer.php');
+$PAGE->set_url('/local/musi/teachers.php');
 $PAGE->navbar->add($title);
 $PAGE->set_title(format_string($title));
 $PAGE->set_heading($title);

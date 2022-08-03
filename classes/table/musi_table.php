@@ -307,7 +307,7 @@ class musi_table extends wunderbyte_table {
      * sports value.
      *
      * @param object $values Contains object with all the values of record.
-     * @return string $sports Returns course start time as a readable string.
+     * @return string $sports Returns rendered sport.
      * @throws coding_exception
      */
     public function col_sport($values) {
@@ -319,6 +319,40 @@ class musi_table extends wunderbyte_table {
                 return implode(", ", $settings->customfields['sport']);
             } else {
                 return $settings->customfields['sport'];
+            }
+        }
+        return '';
+    }
+
+    /**
+     * This function is called for each data row to allow processing of the
+     * booking option tags (botags).
+     *
+     * @param object $values Contains object with all the values of record.
+     * @return string $sports Returns course start time as a readable string.
+     * @throws coding_exception
+     */
+    public function col_botags($values) {
+
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+
+        $botagsstring = '';
+
+        if (isset($settings->customfields) && isset($settings->customfields['botags'])) {
+            $botagsarray = $settings->customfields['botags'];
+            if (!empty($botagsarray)) {
+                foreach ($botagsarray as $botag) {
+                    if (!empty($botag)) {
+                        $botagsstring .= "<span class='musi-table-botag rounded bg-info text-light pl-1 pr-1 ml-1 mr-1'>$botag</span>";
+                    } else {
+                        continue;
+                    }
+                }
+                if (!empty($botagsstring)) {
+                    return $botagsstring;
+                } else {
+                    return '';
+                }
             }
         }
         return '';
