@@ -28,7 +28,12 @@
     {{#link}}
         <a href="{{.}}" class="text-white">
     {{/link}}
+    {{#data-action}}
+    <div class="{{key}}" data-action="{{.}}">
+    {{/data-action}}
+    {{^data-action}}
     <div class="{{key}}">
+    {{/data-action}}
         {{#key}}
             <span class="key">
                 {{#link}}&#10148; {{{key}}}{{/link}}

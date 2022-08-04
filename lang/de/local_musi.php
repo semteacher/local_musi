@@ -65,6 +65,7 @@ $string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">Keine 
 $string['editpricecategories'] = 'Preiskategorien bearbeiten';
 $string['editsemesters'] = 'Semester bearbeiten';
 $string['changebookinginstance'] = 'Semester-Instanz ändern';
+$string['editbotags'] = 'Tags verwalten';
 
 // Edit sports.
 $string['editsports'] = 'Sportarten bearbeiten';

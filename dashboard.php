@@ -48,6 +48,16 @@ $PAGE->add_body_class('local_musi-dashboard');
 
 echo $OUTPUT->header();
 
+$PAGE->requires->js_call_amd(
+    'local_musi/botagsmodal',
+    'init',
+    [
+        '[data-action=openbotagsmodal]',
+        \local_musi\form\botags_modal_form::class,
+        get_string('editbotags', 'local_musi')
+    ]
+);
+
 // Render the page content via mustache templates.
 $output = $PAGE->get_renderer('local_musi');
 $data = new dashboard();

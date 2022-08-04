@@ -2,6 +2,14 @@
     max-width: 15rem;
 }
 
+#page-local-musi-dashboard .modal-body {
+    overflow-y: visible;
+}
+
+#page-local-musi-dashboard .modal-content {
+    overflow: visible;
+}
+
 .page-allteachers-card {
     width: 23.5rem;
 }

@@ -31,5 +31,14 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
+    <TABLE NAME="local_musi_botags" COMMENT="Tags for booking options">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="botag" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Full name of the tag"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
   </TABLES>
 </XMLDB>

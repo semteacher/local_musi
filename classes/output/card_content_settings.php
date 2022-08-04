@@ -85,6 +85,9 @@ class card_content_settings implements renderable, templatable {
         $url = new moodle_url('/admin/category.php?category=local_musi');
         $data->changebookinginstance = ['link' => $url->out(false)];
 
+        $url = new moodle_url('#');
+        $data->editbotags = ['link' => $url->out(false), 'data-action' => 'openbotagsmodal'];
+
         return $data;
     }
 

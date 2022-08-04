@@ -41,51 +41,71 @@ function xmldb_local_musi_upgrade($oldversion) {
     // You will also have to create the db/install.xml file by using the XMLDB Editor.
     // Documentation for the XMLDB Editor can be found at {@link https://docs.moodle.org/dev/XMLDB_editor}.
 
-        if ($oldversion < 2022040300) {
+    if ($oldversion < 2022040300) {
 
-            // Define table local_musi_sports to be created.
-            $table = new xmldb_table('local_musi_sports');
+        // Define table local_musi_sports to be created.
+        $table = new xmldb_table('local_musi_sports');
 
-            // Adding fields to table local_musi_sports.
-            $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
-            $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
-            $table->add_field('sportscategoryid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
-            $table->add_field('description', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
-            $table->add_field('descriptionformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0');
-            $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
-            $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        // Adding fields to table local_musi_sports.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('sportscategoryid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('description', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
+        $table->add_field('descriptionformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
 
-            // Adding keys to table local_musi_sports.
-            $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        // Adding keys to table local_musi_sports.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
-            // Conditionally launch create table for local_musi_sports.
-            if (!$dbman->table_exists($table)) {
-                $dbman->create_table($table);
-            }
-
-            // Define table local_musi_sportscategory to be created.
-            $table = new xmldb_table('local_musi_sportscategories');
-
-            // Adding fields to table local_musi_sportscategory.
-            $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
-            $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
-            $table->add_field('description', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
-            $table->add_field('descriptionformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0');
-            $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
-            $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
-
-            // Adding keys to table local_musi_sportscategory.
-            $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
-
-            // Conditionally launch create table for local_musi_sportscategory.
-            if (!$dbman->table_exists($table)) {
-                $dbman->create_table($table);
-            }
-
-            // Musi savepoint reached.
-            upgrade_plugin_savepoint(true, 2022040300, 'local', 'musi');
+        // Conditionally launch create table for local_musi_sports.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
         }
 
+        // Define table local_musi_sportscategory to be created.
+        $table = new xmldb_table('local_musi_sportscategories');
+
+        // Adding fields to table local_musi_sportscategory.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('description', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
+        $table->add_field('descriptionformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+
+        // Adding keys to table local_musi_sportscategory.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for local_musi_sportscategory.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Musi savepoint reached.
+        upgrade_plugin_savepoint(true, 2022040300, 'local', 'musi');
+    }
+
+    if ($oldversion < 2022080400) {
+
+        // Define table local_musi_botags to be created.
+        $table = new xmldb_table('local_musi_botags');
+
+        // Adding fields to table local_musi_botags.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('botag', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+
+        // Adding keys to table local_musi_botags.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for local_musi_botags.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Musi savepoint reached.
+        upgrade_plugin_savepoint(true, 2022080400, 'local', 'musi');
+    }
 
     return true;
 }

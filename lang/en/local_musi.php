@@ -64,6 +64,7 @@ $string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">No sem
 $string['editpricecategories'] = 'Edit price categories';
 $string['editsemesters'] = 'Edit semesters';
 $string['changebookinginstance'] = 'Change semester instance';
+$string['editbotags'] = 'Edit tags';
 
 // Edit sports.
 $string['editsports'] = 'Edit sports';
