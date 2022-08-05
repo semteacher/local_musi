@@ -53,7 +53,6 @@ $PAGE->requires->js_call_amd(
     'init',
     [
         '[data-action=openbotagsmodal]',
-        \local_musi\form\botags_modal_form::class,
         get_string('editbotags', 'local_musi')
     ]
 );

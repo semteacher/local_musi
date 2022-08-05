@@ -65,6 +65,26 @@ $string['editpricecategories'] = 'Edit price categories';
 $string['editsemesters'] = 'Edit semesters';
 $string['changebookinginstance'] = 'Change semester instance';
 $string['editbotags'] = 'Edit tags';
+$string['createbotag'] = 'Create new tag...';
+$string['createbotag:helptext'] = '<p>
+<a data-toggle="collapse" href="#collapseTagsHelptext" role="button" aria-expanded="false" aria-controls="collapseTagsHelptext">
+  <i class="fa fa-question-circle" aria-hidden="true"></i><span>&nbsp;Help: How to configure tags...</span>
+</a>
+</p>
+<div class="collapse" id="collapseTagsHelptext">
+<div class="card card-body">
+  <p>In order to use tags, you have to create a <a href="/mod/booking/customfield.php" target="_blank">"Booking customfield for booking options"</a> of the type "Dynamic Dropdown menu" which has the following settings:</p>
+  <ul>
+  <li><strong>Category: </strong>Tags</li>
+  <li><strong>Name: </strong>Tags</li>
+  <li><strong>Short name: </strong>botags</li>
+  <li><strong>SQL query: </strong><code>SELECT botag as id, botag as data FROM {local_musi_botags}</code></li>
+  <li><strong>Auto-complete: </strong><span class="text-success">active</span></li>
+  <li><strong>Multi select: </strong><span class="text-success">active</span></li>
+  </ul>
+  <p>Now you can apply the tags you have created here to your booking options.<br>You need to have created at least one tag, in order to be able to use tagging.</p>
+</div>
+</div>';
 
 // Edit sports.
 $string['editsports'] = 'Edit sports';

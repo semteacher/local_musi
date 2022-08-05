@@ -30,11 +30,11 @@
  */
 import ModalForm from 'core_form/modalform';
 
-export const init = (linkSelector, formClass, modalTitle) => {
+export const init = (linkSelector, modalTitle) => {
     document.querySelector(linkSelector).addEventListener('click', (e) => {
         e.preventDefault();
         const form = new ModalForm({
-            formClass,
+            formClass: "local_musi\\form\\botags_modal_form",
             modalConfig: {title: modalTitle},
             returnFocus: e.currentTarget
         });

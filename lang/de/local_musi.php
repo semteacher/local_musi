@@ -66,6 +66,26 @@ $string['editpricecategories'] = 'Preiskategorien bearbeiten';
 $string['editsemesters'] = 'Semester bearbeiten';
 $string['changebookinginstance'] = 'Semester-Instanz ändern';
 $string['editbotags'] = 'Tags verwalten';
+$string['createbotag'] = 'Neuen Tag anlegen...';
+$string['createbotag:helptext'] = '<p>
+<a data-toggle="collapse" href="#collapseTagsHelptext" role="button" aria-expanded="false" aria-controls="collapseTagsHelptext">
+  <i class="fa fa-question-circle" aria-hidden="true"></i><span>&nbsp;Hilfe: So können Sie Tags konfigurieren...</span>
+</a>
+</p>
+<div class="collapse" id="collapseTagsHelptext">
+<div class="card card-body">
+  <p>Damit Sie Tags verwenden können, müssen Sie ein <a href="/mod/booking/customfield.php" target="_blank">"Benutzerdefiniertes Buchungsoptionsfeld"</a> vom Typ "Dynamic Dropdown menu" mit folgenden Einstellungen anlegen:</p>
+  <ul>
+  <li><strong>Kategorie: </strong>Tags</li>
+  <li><strong>Name: </strong>Tags</li>
+  <li><strong>Kurzname: </strong>botags</li>
+  <li><strong>SQL query: </strong><code>SELECT botag as id, botag as data FROM {local_musi_botags}</code></li>
+  <li><strong>Auto-complete: </strong><span class="text-success">aktiviert</span></li>
+  <li><strong>Multi select: </strong><span class="text-success">aktiviert</span></li>
+  </ul>
+  <p>Nun können Sie die hier angelegten Tags den Buchungsoptionen zuordnen.<br>Sie müssen hier mindestens einen Tag angelegt haben, damit Sie Tagging verwenden können.</p>
+</div>
+</div>';
 
 // Edit sports.
 $string['editsports'] = 'Sportarten bearbeiten';

@@ -37,18 +37,20 @@ class botags_modal_form extends \core_form\dynamic_form {
      * @see moodleform::definition()
      */
     public function definition() {
-        global $DB;
 
         $mform = $this->_form;
 
-        $existingbotags = $DB->get_records('local_musi_botags');
-
-        if (empty($existingbotags)) {
-            $existingbotags = [];
-        }
+        $existingbotagsarray = self::get_existing_botags_array();
 
         $mform->addElement('autocomplete', 'botags', get_string('editbotags', 'local_musi'),
-            $existingbotags, ['tags' => true, 'multiple' => true]);
+            $existingbotagsarray, [
+                'tags' => true,
+                'multiple' => true,
+                'placeholder' => get_string('createbotag', 'local_musi'),
+                'showsuggestions' => false
+            ]);
+
+        $mform->addElement('html', get_string('createbotag:helptext', 'local_musi'));
     }
 
     /**
@@ -62,28 +64,60 @@ class botags_modal_form extends \core_form\dynamic_form {
 
 
     public function set_data_for_dynamic_submission(): void {
+        global $DB;
+
         $data = new stdClass();
 
-        // TODO?
+        $data->botags = self::get_existing_botags_array();
 
         $this->set_data($data);
     }
 
     public function process_dynamic_submission() {
+        global $DB;
+
         $data = $this->get_data();
 
-        // TODO.
+        foreach (self::get_existing_botags_array() as $existingbotagrecord) {
+            if (!in_array($existingbotagrecord, $data->botags)) {
+                $DB->delete_records('local_musi_botags', ['botag' => $existingbotagrecord]);
+            }
+        }
+
+        foreach ($data->botags as $key => $value) {
+            if (!$DB->get_record('local_musi_botags', ['botag' => $value])) {
+                $newbotagrecord = new stdClass;
+                $newbotagrecord->botag = $value;
+                $DB->insert_record('local_musi_botags', $newbotagrecord);
+            }
+        }
 
         return $data;
     }
 
     public function validation($data, $files) {
         $errors = [];
-
         return $errors;
     }
 
     protected function get_page_url_for_dynamic_submission(): \moodle_url {
         return new \moodle_url('/local/musi/dashboard.php');
+    }
+
+    /**
+     * Helper function to return existing botags from DB as array.
+     *
+     * @return array array of existing botags
+     */
+    private static function get_existing_botags_array (): array {
+        global $DB;
+        $existingbotagrecords = $DB->get_records('local_musi_botags');
+        $existingbotagsarray = [];
+        if (!empty($existingbotagrecords)) {
+            foreach ($existingbotagrecords as $existingbotagrecord) {
+                $existingbotagsarray[$existingbotagrecord->botag] = $existingbotagrecord->botag;
+            }
+        }
+        return $existingbotagsarray;
     }
 }
