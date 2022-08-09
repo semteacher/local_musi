@@ -27,6 +27,7 @@ use context_module;
 use dml_exception;
 use html_writer;
 use local_wunderbyte_table\wunderbyte_table;
+use mod_booking\bo_availability\bo_info;
 use mod_booking\booking;
 use mod_booking\booking_option;
 use mod_booking\output\button_notifyme;
@@ -145,6 +146,29 @@ class musi_table extends wunderbyte_table {
 
         // Render col_price using a template.
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+
+        // Get the availability information for this booking option.
+        // boinfo contains availability information, description, visibility information etc.
+        $boinfo = new bo_info($settings);
+
+        // TODO: bo_info needs to support cashier mode, where booking for another user is possible...
+        // ... even if availability for the user is not given.
+        if (list($conditionid, $isavailable, $description) = $boinfo->get_description(true, $settings, $this->buyforuser->id)) {
+
+            // Price blocks normal availability, if it's the only one, we show the cart.
+            if (!$isavailable) {
+                switch ($conditionid) {
+                    case -6:
+                        // We pass on the id of the booking option.
+                        $data = new col_price($values, $settings, $this->buyforuser, $this->context);
+                        return $this->outputbooking->render_col_price($data);
+                        break;
+                    default:
+                        return $description;
+                }
+            }
+            return 'book right away, no price';
+        }
 
         // First we check if the user is booked already.
         $bookinganswer = singleton_service::get_instance_of_booking_answers($settings, $values->id);
