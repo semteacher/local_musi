@@ -294,7 +294,7 @@ class shortcodes {
         }
 
         if ($showsearch !== false) {
-            $table->define_fulltextsearchcolumns(['text', 'sport', 'description', 'location', 'teacherobjects']);
+            $table->define_fulltextsearchcolumns(['titleprefix', 'text', 'sport', 'description', 'location', 'teacherobjects']);
         }
 
         if ($showsort !== false) {
