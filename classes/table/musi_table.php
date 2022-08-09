@@ -163,51 +163,22 @@ class musi_table extends wunderbyte_table {
                         $data = new col_price($values, $settings, $this->buyforuser, $this->context);
                         return $this->outputbooking->render_col_price($data);
                         break;
+                    case -3:
+                        $usenotificationlist = get_config('booking', 'usenotificationlist');
+                        $bookinganswer = singleton_service::get_instance_of_booking_answers($settings);
+                        $bookinginformation = $bookinganswer->return_all_booking_information($this->buyforuser->id);
+
+                        if ($usenotificationlist) {
+                            $data = new button_notifyme($this->buyforuser->id, $values->id, $bookinginformation['notbooked']['onnotifylist']);
+                            return $this->outputbooking->render_notifyme_button($data);
+                            break;
+                        }
                     default:
                         return $description;
                 }
             }
             return 'book right away, no price';
         }
-
-        // First we check if the user is booked already.
-        $bookinganswer = singleton_service::get_instance_of_booking_answers($settings, $values->id);
-
-        // Make sure we have the context when we need it.
-        if (!$this->context) {
-            $this->context = context_module::instance($settings->cmid);
-        }
-
-        $bookingstatus = $bookinganswer->user_status($this->buyforuser->id);
-
-        if ($bookingstatus == MUSI_STATUSPARAM_BOOKED) {
-            // We need to return a class so shopping_cart will know where to put the addtocartbutton after cancelation.
-            return html_writer::span(get_string('booked', 'mod_booking') , "price_mod_booking_" . $values->id);
-        } else if ($bookingstatus == MUSI_STATUSPARAM_WAITINGLIST) {
-            // We need to return a class so shopping_cart will know where to put the addtocartbutton after cancelation.
-            return html_writer::span(get_string('waitinglist', 'mod_booking') , "price_mod_booking_" . $values->id);
-        }
-
-        // If we are not yet booked not on the waiting list...
-        // ... but the list is already full we can't buy, but we might be able to get on the notification list.
-
-        $usenotificationlist = get_config('booking', 'usenotificationlist');
-
-        $bookinginformation = $bookinganswer->return_all_booking_information($this->buyforuser->id);
-        if (isset($bookinginformation['notbooked'])
-            && $bookinginformation['notbooked']['fullybooked']) {
-            if ($usenotificationlist) {
-                $data = new button_notifyme($this->buyforuser->id, $values->id, $bookinginformation['notbooked']['onnotifylist']);
-                return $this->outputbooking->render_notifyme_button($data);
-            } else {
-                return get_string('nobookingpossible', 'mod_booking');
-            }
-        }
-
-        // We pass on the id of the booking option.
-        $data = new col_price($values, $settings, $this->buyforuser, $this->context);
-
-        return $this->outputbooking->render_col_price($data);
     }
 
     /**
