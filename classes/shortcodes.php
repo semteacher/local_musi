@@ -324,7 +324,7 @@ class shortcodes {
         $table->define_baseurl($baseurl->out());
 
         // This allows us to use infinite scrolling, No pages will be used.
-        $table->infinitescroll = 5;
+        $table->infinitescroll = 100;
 
         $table->tabletemplate = 'local_musi/nolazytable';
 
