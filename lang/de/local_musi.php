@@ -33,6 +33,7 @@ $string['pluginname'] = 'M:USI Dashboard';
 $string['shortcodeslistofbookingoptions'] = 'Alle Kurse als Liste';
 $string['shortcodeslistofbookingoptionsascards'] = 'Alle Kurse als Karten';
 $string['shortcodeslistofmybookingoptionsascards'] = 'Meine Kurse als Karten';
+$string['shortcodeslistofteachersascards'] = 'Liste aller trainer als Karten';
 
 // List of all courses.
 $string['allcourses'] = 'Alle Kurse';
