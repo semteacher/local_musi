@@ -158,12 +158,12 @@ class musi_table extends wunderbyte_table {
             // Price blocks normal availability, if it's the only one, we show the cart.
             if (!$isavailable) {
                 switch ($conditionid) {
-                    case -6:
+                    case BO_COND_PRICEISSET:
                         // We pass on the id of the booking option.
                         $data = new col_price($values, $settings, $this->buyforuser, $this->context);
                         return $this->outputbooking->render_col_price($data);
                         break;
-                    case -3:
+                    case BO_COND_FULLYBOOKED:
                         $usenotificationlist = get_config('booking', 'usenotificationlist');
                         $bookinganswer = singleton_service::get_instance_of_booking_answers($settings);
                         $bookinginformation = $bookinganswer->return_all_booking_information($this->buyforuser->id);
