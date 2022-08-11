@@ -175,10 +175,13 @@ class musi_table extends wunderbyte_table {
                         $bookinginformation = $bookinganswer->return_all_booking_information($this->buyforuser->id);
 
                         if ($usenotificationlist) {
-                            $data = new button_notifyme($this->buyforuser->id, $values->id, $bookinginformation['notbooked']['onnotifylist']);
+                            $data = new button_notifyme($this->buyforuser->id, $values->id,
+                                $bookinginformation['notbooked']['onnotifylist']);
                             return $this->outputbooking->render_notifyme_button($data);
-                            break;
+                        } else {
+                            return $description;
                         }
+                        break;
                     default:
                         return $description;
                 }
@@ -344,7 +347,10 @@ class musi_table extends wunderbyte_table {
             if (!empty($botagsarray)) {
                 foreach ($botagsarray as $botag) {
                     if (!empty($botag)) {
-                        $botagsstring .= "<span class='musi-table-botag rounded bg-info text-light pl-1 pr-1 ml-1 mr-1'>$botag</span>";
+                        $botagsstring .=
+                            "<span class='musi-table-botag rounded-sm bg-info text-light pl-1 pr-1 pb-0 pt-0 mr-1'>
+                            $botag
+                            </span>";
                     } else {
                         continue;
                     }
