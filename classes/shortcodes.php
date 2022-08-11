@@ -335,7 +335,7 @@ class shortcodes {
         $table->add_subcolumns('cardimage', ['image']);
         $table->add_subcolumns('optioninvisible', ['invisibleoption']);
 
-        $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher']);
+        $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher', 'botags']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns(
             'cardbody',
@@ -344,13 +344,13 @@ class shortcodes {
         );
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
+        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
 
-        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings', 'botags']);
+        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings']);
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
 
         $table->add_subcolumns('cardfooter', ['price']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
@@ -480,19 +480,19 @@ class shortcodes {
         $table->add_subcolumns('cardimage', ['image']);
         $table->add_subcolumns('optioninvisible', ['invisibleoption']);
 
-        $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher']);
+        $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher', 'botags']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' =>
         'shortcodes_option_info_invisible'], ['invisibleoption']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
+        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
 
-        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings', 'botags']);
+        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings']);
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
 
         $table->add_subcolumns('cardfooter', ['price']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
