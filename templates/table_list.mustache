@@ -60,29 +60,53 @@
     }
 }}
 
-
-<div class="wunderbyte_table_container_{{idstring}} wunderbyte_table_container">
-     <aside>
-          <div>
-               {{> local_wunderbyte_table/sort }}
-          </div>
-          <div>
-               {{> local_wunderbyte_table/search }}
-          </div>
-          <div>
-               {{> local_wunderbyte_table/filter }}
-          </div>
-     </aside>
-     <div class= "wunderbyteTableClass" id='a{{idstring}}'>
-          {{> local_musi/table_list }}
-     </div>
+{{#table}}
+<div class="wunderbyte-table-grid no-overflow rows">
+<table>
+  {{#rows}}
+    <tr class="">
+      {{#cardbody}}
+        {{#columnclass}}<td class="{{.}} {{key}}">{{/columnclass}}
+          <span {{^value}} style="display:none" {{/value}}>
+          {{#columniclassbefore}}
+            <i class="{{.}}" aria-hidden="true"></i>
+          {{/columniclassbefore}}
+          </span>
+          {{#columnkeyclass}}<span class="key {{.}}">{{/columnkeyclass}}
+            {{^keystring}}
+            {{{key}}}
+          {{/keystring}}
+          {{#keystring}}
+            {{.}}
+          {{/keystring}}:
+          {{#columnkeyclass}}</span>{{/columnkeyclass}}
+          <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}} ">
+            {{{value}}}
+          {{#columnvalueclass}}</span>{{/columnvalueclass}}
+          <span {{^value}} style="display:none" {{/value}}>
+          {{#columniclassafter}}
+            <i class="value {{.}}" aria-hidden="true"></i>
+          {{/columniclassafter}}
+          </span>
+        {{#columnclass}}</td>{{/columnclass}}
+      {{/cardbody}}
+    </tr>
+  {{/rows}}
+</table>
 </div>
+{{/table}}
 
 {{#js}}
     require(['local_wunderbyte_table/init'], function(init) {
     init.init('{{idstring}}', '{{encodedtable}}');
     });
-    require(['local_shopping_cart/menu'], function(init) {
+    require(['local_shopping_cart/cart'], function(cart) {
+    cart.buttoninit(null, 'mod_booking');
+    });
+    require(['mod_booking/modal_init'], function(init) {
+    init.init();
+    });
+    require(['mod_booking/button_notifyme'], function(init) {
     init.init();
     });
 {{/js}}

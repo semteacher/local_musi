@@ -493,6 +493,27 @@ class musi_table extends wunderbyte_table {
         return $output->render_nolazytable($tableobject);
     }
 
+    /**
+     * With this function, the table can be printed without lazy loading.
+     * Can be overridden in child class with own renderer.
+     *
+     * @param int $pagesize
+     * @param bool $useinitialsbar
+     * @param string $downloadhelpbutton
+     * @return string
+     */
+    public function nolazylistout($pagesize, $useinitialsbar, $downloadhelpbutton = '') {
+
+        global $PAGE;
+        $this->pagesize = $pagesize;
+        $this->useinitialsbar = $useinitialsbar;
+        $this->downloadhelpbutton = $downloadhelpbutton;
+
+        $tableobject = $this->printtable($pagesize, $useinitialsbar);
+        $output = $PAGE->get_renderer('local_musi');
+        return $output->render_nolazylisttable($tableobject);
+    }
+
 
     private function add_return_url(string $urlstring):string {
 
