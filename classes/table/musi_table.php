@@ -163,6 +163,12 @@ class musi_table extends wunderbyte_table {
                         $data = new col_price($values, $settings, $this->buyforuser, $this->context);
                         return $this->outputbooking->render_col_price($data);
                         break;
+                    case BO_COND_FULLYBOOKEDOVERRIDE:
+                        $data = new col_price($values, $settings, $this->buyforuser, $this->context);
+                        // We add the warning for overbooking.
+                        $returnhtml = html_writer::div($description, 'alert-danger');
+                        return $returnhtml . $this->outputbooking->render_col_price($data);
+                        break;
                     case BO_COND_FULLYBOOKED:
                         $usenotificationlist = get_config('booking', 'usenotificationlist');
                         $bookinganswer = singleton_service::get_instance_of_booking_answers($settings);
