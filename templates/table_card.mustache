@@ -12,7 +12,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template local_wunderbyte_table/table
+    @template local_musi/table
     Template which defines a mooduell view page.
     Classes required for JS:
     * none
@@ -59,28 +59,33 @@
        ]
     }
 }}
-<div class="wunderbyte_table_container_{{idstring}} wunderbyte_table_container">
-     <aside>
-          <div>
-               {{> local_wunderbyte_table/sort }}
-          </div>
-          <div>
-               {{> local_wunderbyte_table/search }}
-          </div>
-          <div>
-               {{> local_wunderbyte_table/filter }}
-          </div>
-     </aside>
-     <div class= "wunderbyteTableClass" id='a{{idstring}}'>
-          {{> local_musi/table }}
-     </div>
+
+{{> local_wunderbyte_table/pagination }}
+
+{{#table}}
+
+<div class="wunderbyte-table-grid no-overflow rows-container">
+  {{#rows}}
+    {{> local_musi/table_card_row }}
+  {{/rows}}
 </div>
+
+{{/table}}
+
+{{> local_wunderbyte_table/pagination }}
+
 
 {{#js}}
     require(['local_wunderbyte_table/init'], function(init) {
     init.init('{{idstring}}', '{{encodedtable}}');
     });
-    require(['local_shopping_cart/menu'], function(init) {
+    require(['local_shopping_cart/cart'], function(cart) {
+    cart.buttoninit(null, 'mod_booking');
+    });
+    require(['mod_booking/modal_init'], function(init) {
+    init.init();
+    });
+    require(['mod_booking/button_notifyme'], function(init) {
     init.init();
     });
 {{/js}}

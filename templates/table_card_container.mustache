@@ -12,7 +12,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template local_musi/table
+    @template local_wunderbyte_table/table
     Template which defines a mooduell view page.
     Classes required for JS:
     * none
@@ -59,22 +59,20 @@
        ]
     }
 }}
-
-
 <div class="wunderbyte_table_container_{{idstring}} wunderbyte_table_container">
      <aside>
           <div>
-               {{> local_wunderbyte_table/sort }}
+               {{> local_wunderbyte_table/component_sort }}
           </div>
           <div>
-               {{> local_wunderbyte_table/search }}
+               {{> local_wunderbyte_table/component_search }}
           </div>
           <div>
-               {{> local_wunderbyte_table/filter }}
+               {{> local_wunderbyte_table/component_filter }}
           </div>
      </aside>
      <div class= "wunderbyteTableClass" id='a{{idstring}}'>
-          {{> local_musi/table_list }}
+          {{> local_musi/table_card }}
      </div>
 </div>
 

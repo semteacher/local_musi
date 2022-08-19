@@ -84,34 +84,13 @@ class renderer extends plugin_renderer_base {
 
     /** Function to render the cards table
      * @param any $data
+     * @param string $data
      * @return string
      */
-    public function render_card_table($data) {
+    public function render_table($data, string $templatename) {
         $o = '';
         $data = $data->export_for_template($this);
-        $o .= $this->render_from_template('local_musi/shortcodes_cards', $data);
-        return $o;
-    }
-
-    /** Function to render the cards table
-     * @param any $data
-     * @return string
-     */
-    public function render_nolazytable($data) {
-        $o = '';
-        $data = $data->export_for_template($this);
-        $o .= $this->render_from_template('local_musi/nolazytable', $data);
-        return $o;
-    }
-
-    /** Function to render the cards table
-     * @param any $data
-     * @return string
-     */
-    public function render_nolazylisttable($data) {
-        $o = '';
-        $data = $data->export_for_template($this);
-        $o .= $this->render_from_template('local_musi/shortcodes_table', $data);
+        $o .= $this->render_from_template($templatename, $data);
         return $o;
     }
 }

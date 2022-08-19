@@ -60,36 +60,30 @@
     }
 }}
 
-{{> local_wunderbyte_table/pagination }}
-
-{{#table}}
-
-<table class="table shortcodes_responsive_table">
-
-  <tbody>
-    {{#rows}}
-      <tr>
-        {{#cardbody}}
-            <td data-label="{{key}}">{{{value}}}</td>
-        {{/cardbody}}
-      </tr>
-    {{/rows}}
-  </tbody>
-</table>
-
-{{/table}}
-
-{{> local_wunderbyte_table/pagination }}
-
-
-{{#js}}
-    require(['local_wunderbyte_table/init'], function(init) {
-    init.init('{{idstring}}', '{{encodedtable}}');
-    });
-    require(['local_shopping_cart/cart'], function(cart) {
-    cart.buttoninit(null, 'mod_booking');
-    });
-    require(['mod_booking/modal_init'], function(init) {
-    init.init();
-    });
-{{/js}}
+<tr class="table row">
+      {{#cardbody}}
+        {{#columnclass}}<td class="{{.}} {{key}}">{{/columnclass}}
+          <span {{^value}} style="display:none" {{/value}}>
+          {{#columniclassbefore}}
+            <i class="{{.}}" aria-hidden="true"></i>
+          {{/columniclassbefore}}
+          </span>
+          {{#columnkeyclass}}<span class="key {{.}}">{{/columnkeyclass}}
+            {{^keystring}}
+            {{{key}}}
+          {{/keystring}}
+          {{#keystring}}
+            {{.}}
+          {{/keystring}}:
+          {{#columnkeyclass}}</span>{{/columnkeyclass}}
+          <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}} ">
+            {{{value}}}
+          {{#columnvalueclass}}</span>{{/columnvalueclass}}
+          <span {{^value}} style="display:none" {{/value}}>
+          {{#columniclassafter}}
+            <i class="value {{.}}" aria-hidden="true"></i>
+          {{/columniclassafter}}
+          </span>
+        {{#columnclass}}</td>{{/columnclass}}
+      {{/cardbody}}
+    </tr>

@@ -23,6 +23,7 @@
  * @copyright 2022 Georg Maißer
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace local_musi;
 
 use context_module;
@@ -85,9 +86,11 @@ class shortcodes {
             $infinitescrollpage = 20;
         } */
 
-        if (!isset($args['perpage'])
+        if (
+            !isset($args['perpage'])
             || !is_int((int)$args['perpage'])
-            || !$perpage = ($args['perpage'])) {
+            || !$perpage = ($args['perpage'])
+        ) {
             $perpage = 1000;
         }
 
@@ -141,46 +144,59 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3 text-right'], ['price']);
 
         // Override naming for columns. one could use getstring for localisation here.
-        $table->add_classes_to_subcolumns('cardbody',
-            ['keystring' => get_string('tableheader_text', 'booking')], ['text']);
-        $table->add_classes_to_subcolumns('cardbody',
-            ['keystring' => get_string('tableheader_teacher', 'booking')], ['teacher']);
-        $table->add_classes_to_subcolumns('cardbody',
-            ['keystring' => get_string('tableheader_maxanswers', 'booking')], ['maxanswers']);
-        $table->add_classes_to_subcolumns('cardbody',
-            ['keystring' => get_string('tableheader_maxoverbooking', 'booking')], ['maxoverbooking']);
-        $table->add_classes_to_subcolumns('cardbody',
-            ['keystring' => get_string('tableheader_coursestarttime', 'booking')], ['coursestarttime']);
-        $table->add_classes_to_subcolumns('cardbody',
-            ['keystring' => get_string('tableheader_courseendtime', 'booking')], ['courseendtime']);
-
-        // $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm']);
-
-        // $table->set_tableclass('listheaderclass', 'card d-none d-md-block');
-
-        // $table->set_tableclass('cardbodyclass', 'list-group-item');
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['keystring' => get_string('tableheader_text', 'booking')],
+            ['text']
+        );
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['keystring' => get_string('tableheader_teacher', 'booking')],
+            ['teacher']
+        );
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['keystring' => get_string('tableheader_maxanswers', 'booking')],
+            ['maxanswers']
+        );
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['keystring' => get_string('tableheader_maxoverbooking', 'booking')],
+            ['maxoverbooking']
+        );
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['keystring' => get_string('tableheader_coursestarttime', 'booking')],
+            ['coursestarttime']
+        );
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['keystring' => get_string('tableheader_courseendtime', 'booking')],
+            ['courseendtime']
+        );
 
         $table->is_downloading('', 'List of booking options');
 
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
         if ($showfilter !== false) {
-            $table->define_filtercolumns(['id', 'sport' => [
-                'localizedname' => get_string('sport', 'local_musi')
-            ], 'dayofweek' => [
-                'localizedname' => get_string('dayofweek', 'local_musi'),
-                'monday' => get_string('monday', 'mod_booking'),
-                'tuesday' => get_string('tuesday', 'mod_booking'),
-                'wednesday' => get_string('wednesday', 'mod_booking'),
-                'thursday' => get_string('thursday', 'mod_booking'),
-                'friday' => get_string('friday', 'mod_booking'),
-                'saturday' => get_string('saturday', 'mod_booking'),
-                'sunday' => get_string('sunday', 'mod_booking')
-            ],  'location' => [
-                'localizedname' => get_string('location', 'mod_booking')
-            ],  'botags' => [
-                'localizedname' => get_string('tags', 'core')
-            ]
+            $table->define_filtercolumns([
+                'id', 'sport' => [
+                    'localizedname' => get_string('sport', 'local_musi')
+                ], 'dayofweek' => [
+                    'localizedname' => get_string('dayofweek', 'local_musi'),
+                    'monday' => get_string('monday', 'mod_booking'),
+                    'tuesday' => get_string('tuesday', 'mod_booking'),
+                    'wednesday' => get_string('wednesday', 'mod_booking'),
+                    'thursday' => get_string('thursday', 'mod_booking'),
+                    'friday' => get_string('friday', 'mod_booking'),
+                    'saturday' => get_string('saturday', 'mod_booking'),
+                    'sunday' => get_string('sunday', 'mod_booking')
+                ],  'location' => [
+                    'localizedname' => get_string('location', 'mod_booking')
+                ],  'botags' => [
+                    'localizedname' => get_string('tags', 'core')
+                ]
             ]);
         }
 
@@ -189,11 +205,12 @@ class shortcodes {
         }
 
         if ($showsort !== false) {
-            $table->define_sortablecolumns(['text' => get_string('coursename', 'local_musi'),
-                                        'sport' => get_string('sport', 'local_musi'),
-                                        'location',
-                                        'dayofweek'
-                                    ]);
+            $table->define_sortablecolumns([
+                'text' => get_string('coursename', 'local_musi'),
+                'sport' => get_string('sport', 'local_musi'),
+                'location',
+                'dayofweek'
+            ]);
         } else {
             $table->sortable(true, 'text');
         }
@@ -206,20 +223,20 @@ class shortcodes {
 
         $table->define_baseurl($baseurl->out());
 
-        $table->tabletemplate = 'local_musi/shortcodes_table';
+        // This allows us to use infinite scrolling, No pages will be used.
+        $table->infinitescroll = 100;
+
+        $table->tabletemplate = 'local_musi/table_list';
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
-        if (isset($args['nolazy']) && ($args['nolazy'] == 1)) {
-            ob_start();
-            $out = $table->out($perpage, true);
+        if (isset($args['lazy']) && ($args['lazy'] == 1)) {
 
-            $out = ob_get_contents();
-            ob_end_clean();
+            list($idstring, $encodedtable, $out) = $table->lazyouthtml($perpage, true);
 
             return $out;
         }
 
-        $out = $table->nolazylistout($perpage, true);
+        $out = $table->out($perpage, true);
 
         return $out;
     }
@@ -278,9 +295,11 @@ class shortcodes {
             $infinitescrollpage = 20;
         } */
 
-        if (!isset($args['perpage'])
+        if (
+            !isset($args['perpage'])
             || !is_int((int)$args['perpage'])
-            || !$perpage = ($args['perpage'])) {
+            || !$perpage = ($args['perpage'])
+        ) {
             $perpage = 1000;
         }
 
@@ -318,8 +337,11 @@ class shortcodes {
 
         $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'],
-            ['invisibleoption']);
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
+            ['invisibleoption']
+        );
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 
@@ -340,22 +362,23 @@ class shortcodes {
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
         if ($showfilter !== false) {
-            $table->define_filtercolumns(['id', 'sport' => [
-                'localizedname' => get_string('sport', 'local_musi')
-            ], 'dayofweek' => [
-                'localizedname' => get_string('dayofweek', 'local_musi'),
-                'monday' => get_string('monday', 'mod_booking'),
-                'tuesday' => get_string('tuesday', 'mod_booking'),
-                'wednesday' => get_string('wednesday', 'mod_booking'),
-                'thursday' => get_string('thursday', 'mod_booking'),
-                'friday' => get_string('friday', 'mod_booking'),
-                'saturday' => get_string('saturday', 'mod_booking'),
-                'sunday' => get_string('sunday', 'mod_booking')
-            ],  'location' => [
-                'localizedname' => get_string('location', 'mod_booking')
-            ],  'botags' => [
-                'localizedname' => get_string('tags', 'core')
-            ]
+            $table->define_filtercolumns([
+                'id', 'sport' => [
+                    'localizedname' => get_string('sport', 'local_musi')
+                ], 'dayofweek' => [
+                    'localizedname' => get_string('dayofweek', 'local_musi'),
+                    'monday' => get_string('monday', 'mod_booking'),
+                    'tuesday' => get_string('tuesday', 'mod_booking'),
+                    'wednesday' => get_string('wednesday', 'mod_booking'),
+                    'thursday' => get_string('thursday', 'mod_booking'),
+                    'friday' => get_string('friday', 'mod_booking'),
+                    'saturday' => get_string('saturday', 'mod_booking'),
+                    'sunday' => get_string('sunday', 'mod_booking')
+                ],  'location' => [
+                    'localizedname' => get_string('location', 'mod_booking')
+                ],  'botags' => [
+                    'localizedname' => get_string('tags', 'core')
+                ]
             ]);
         }
 
@@ -364,11 +387,12 @@ class shortcodes {
         }
 
         if ($showsort !== false) {
-            $table->define_sortablecolumns(['text' => get_string('coursename', 'local_musi'),
-                                        'sport' => get_string('sport', 'local_musi'),
-                                        'location',
-                                        'dayofweek'
-                                    ]);
+            $table->define_sortablecolumns([
+                'text' => get_string('coursename', 'local_musi'),
+                'sport' => get_string('sport', 'local_musi'),
+                'location',
+                'dayofweek'
+            ]);
         } else {
             $table->sortable(true, 'text');
         }
@@ -384,23 +408,19 @@ class shortcodes {
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 100;
 
-        $table->tabletemplate = 'local_musi/nolazytable';
+        $table->tabletemplate = 'local_musi/table_card';
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
         if (isset($args['lazy']) && ($args['lazy'] == 1)) {
-            ob_start();
-            $out = $table->out($perpage, true);
 
-            $out = ob_get_contents();
-            ob_end_clean();
+            list($idstring, $encodedtable, $out) = $table->lazyouthtml($perpage, true);
 
             return $out;
         }
 
-        $out = $table->nolazyout($perpage, true);
+        $out = $table->out($perpage, true);
 
         return $out;
-
     }
 
 
@@ -435,9 +455,11 @@ class shortcodes {
             $category = '';
         }
 
-        if (!isset($args['perpage'])
+        if (
+            !isset($args['perpage'])
             || !is_int((int)$args['perpage'])
-            || !$perpage = ($args['perpage'])) {
+            || !$perpage = ($args['perpage'])
+        ) {
             $perpage = 1000;
         }
 
@@ -461,7 +483,7 @@ class shortcodes {
         $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' =>
-            'shortcodes_option_info_invisible'], ['invisibleoption']);
+        'shortcodes_option_info_invisible'], ['invisibleoption']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 
@@ -586,9 +608,11 @@ class shortcodes {
             $infinitescrollpage = 20;
         } */
 
-        if (!isset($args['perpage'])
+        if (
+            !isset($args['perpage'])
             || !is_int((int)$args['perpage'])
-            || !$perpage = ($args['perpage'])) {
+            || !$perpage = ($args['perpage'])
+        ) {
             $perpage = 1000;
         }
 
@@ -613,8 +637,11 @@ class shortcodes {
 
         $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'shortcodes_option_info_invisible'],
-            ['invisibleoption']);
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
+            ['invisibleoption']
+        );
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
 
@@ -635,22 +662,23 @@ class shortcodes {
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
         if ($showfilter !== false) {
-            $table->define_filtercolumns(['id', 'sport' => [
-                'localizedname' => get_string('sport', 'local_musi')
-            ], 'dayofweek' => [
-                'localizedname' => get_string('dayofweek', 'local_musi'),
-                'monday' => get_string('monday', 'mod_booking'),
-                'tuesday' => get_string('tuesday', 'mod_booking'),
-                'wednesday' => get_string('wednesday', 'mod_booking'),
-                'thursday' => get_string('thursday', 'mod_booking'),
-                'friday' => get_string('friday', 'mod_booking'),
-                'saturday' => get_string('saturday', 'mod_booking'),
-                'sunday' => get_string('sunday', 'mod_booking')
-            ],  'location' => [
-                'localizedname' => get_string('location', 'mod_booking')
-            ],  'botags' => [
-                'localizedname' => get_string('tags', 'core')
-            ]
+            $table->define_filtercolumns([
+                'id', 'sport' => [
+                    'localizedname' => get_string('sport', 'local_musi')
+                ], 'dayofweek' => [
+                    'localizedname' => get_string('dayofweek', 'local_musi'),
+                    'monday' => get_string('monday', 'mod_booking'),
+                    'tuesday' => get_string('tuesday', 'mod_booking'),
+                    'wednesday' => get_string('wednesday', 'mod_booking'),
+                    'thursday' => get_string('thursday', 'mod_booking'),
+                    'friday' => get_string('friday', 'mod_booking'),
+                    'saturday' => get_string('saturday', 'mod_booking'),
+                    'sunday' => get_string('sunday', 'mod_booking')
+                ],  'location' => [
+                    'localizedname' => get_string('location', 'mod_booking')
+                ],  'botags' => [
+                    'localizedname' => get_string('tags', 'core')
+                ]
             ]);
         }
 
@@ -659,11 +687,12 @@ class shortcodes {
         }
 
         if ($showsort !== false) {
-            $table->define_sortablecolumns(['text' => get_string('coursename', 'local_musi'),
-                                        'sport' => get_string('sport', 'local_musi'),
-                                        'location',
-                                        'dayofweek'
-                                    ]);
+            $table->define_sortablecolumns([
+                'text' => get_string('coursename', 'local_musi'),
+                'sport' => get_string('sport', 'local_musi'),
+                'location',
+                'dayofweek'
+            ]);
         } else {
             $table->sortable(true, 'text');
         }
@@ -685,6 +714,5 @@ class shortcodes {
         $table->tabletemplate = 'local_musi/nolazytable';
 
         return [$table, $booking, $category];
-
     }
 }
