@@ -236,7 +236,7 @@ class shortcodes {
             return $out;
         }
 
-        $out = $table->out($perpage, true);
+        $out = $table->outhtml($perpage, true);
 
         return $out;
     }
@@ -418,7 +418,7 @@ class shortcodes {
             return $out;
         }
 
-        $out = $table->out($perpage, true);
+        $out = $table->outhtml($perpage, true);
 
         return $out;
     }
@@ -507,11 +507,8 @@ class shortcodes {
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
         if (isset($args['nolazy']) && ($args['nolazy'] == 1)) {
-            ob_start();
-            $out = $table->out($perpage, true);
 
-            $out = ob_get_contents();
-            ob_end_clean();
+            $out = $table->outhtml($perpage, true);
 
             return $out;
         }
