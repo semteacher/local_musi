@@ -25,7 +25,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_musi';
-$plugin->release = '0.2.0';
-$plugin->version = 2022080900;
+$plugin->release = '0.2.1';
+$plugin->version = 2022082000;
 $plugin->requires = 2021051700;
 $plugin->maturity = MATURITY_ALPHA;
+$plugin->dependencies = array(
+    'local_wunderbyte_table' => 2022082000
+);
