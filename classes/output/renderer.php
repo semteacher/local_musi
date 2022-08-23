@@ -45,7 +45,7 @@ class renderer extends plugin_renderer_base {
     public function render_card_content($data) {
         $o = '';
         $data = $data->export_for_template($this);
-        $o .= $this->render_from_template('local_musi/card_content', $data);
+        $o .= $this->render_from_template('local_musi/dashboard_card_content', $data);
         return $o;
     }
 
