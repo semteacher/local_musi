@@ -88,7 +88,7 @@ class page_teacher implements renderable, templatable {
      * @return array
      */
     public function export_for_template(renderer_base $output) {
-        global $PAGE, $USER;
+        global $PAGE;
 
         if (!isset($PAGE->context)) {
             $PAGE->set_context(context_system::instance());

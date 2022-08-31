@@ -67,6 +67,10 @@ class page_allteachers implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         global $PAGE;
 
+        if (!isset($PAGE->context)) {
+            $PAGE->set_context(context_system::instance());
+        }
+
         $returnarray = [];
 
         // We transform the data object to an array where we can read key & value.
@@ -88,6 +92,13 @@ class page_allteachers implements renderable, templatable {
                 $picture->size = 70;
                 $imageurl = $picture->get_url($PAGE);
                 $teacherarr['image'] = $imageurl;
+            }
+
+            // Add a link to the report of performed teaching units.
+            // But only, if the user has the appropriate capability.
+            if ((has_capability('mod/booking:updatebooking', $PAGE->context))) {
+                $teacherarr['linktoperformedunitsreport'] = '/mod/booking/teacher_performed_units_report.php?teacherid=' .
+                    $teacher->id;
             }
 
             if (!empty($teacher->email) && $teacher->maildisplay == 1) {
