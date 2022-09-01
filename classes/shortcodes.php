@@ -406,7 +406,7 @@ class shortcodes {
         $table->define_baseurl($baseurl->out());
 
         // This allows us to use infinite scrolling, No pages will be used.
-        $table->infinitescroll = 100;
+        $table->infinitescroll = 30;
 
         $table->tabletemplate = 'local_musi/table_card';
 
@@ -503,17 +503,30 @@ class shortcodes {
 
         $table->sortable(true, 'text');
 
-        $table->tabletemplate = 'local_musi/shortcodes_cards';
+        // It's important to have the baseurl defined, we use it as a return url at one point.
+        $baseurl = new moodle_url(
+            $_SERVER['REQUEST_URI'],
+            $_GET
+        );
+
+        $table->define_baseurl($baseurl->out());
+
+        // This allows us to use infinite scrolling, No pages will be used.
+        $table->infinitescroll = 30;
+
+        $table->tabletemplate = 'local_musi/table_card';
 
         // If we find "nolazy='1'", we return the table directly, without lazy loading.
-        if (isset($args['nolazy']) && ($args['nolazy'] == 1)) {
+        if (isset($args['lazy']) && ($args['lazy'] == 1)) {
 
-            $out = $table->outhtml($perpage, true);
+            list($idstring, $encodedtable, $out) = $table->lazyouthtml($perpage, true);
 
             return $out;
         }
 
-        return $table->nolazyout($perpage, true);
+        $out = $table->outhtml($perpage, true);
+
+        return $out;
     }
 
     /**
