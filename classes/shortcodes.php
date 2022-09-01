@@ -437,6 +437,8 @@ class shortcodes {
      */
     public static function mycoursescards($shortcode, $args, $content, $env, $next) {
 
+        global $USER;
+
         // If the id argument was not passed on, we have a fallback in the connfig.
         if (!isset($args['id'])) {
             $args['id'] = get_config('local_musi', 'shortcodessetinstance');
@@ -455,6 +457,18 @@ class shortcodes {
             $category = '';
         }
 
+        if (!isset($args['filter']) || !$showfilter = ($args['filter'])) {
+            $showfilter = false;
+        }
+
+        if (!isset($args['search']) || !$showsearch = ($args['search'])) {
+            $showsearch = false;
+        }
+
+        if (!isset($args['sort']) || !$showsort = ($args['sort'])) {
+            $showsort = false;
+        }
+
         if (
             !isset($args['perpage'])
             || !is_int((int)$args['perpage'])
@@ -467,9 +481,26 @@ class shortcodes {
 
         $table = new musi_table($tablename, $booking);
 
-        list($fields, $from, $where, $params) = $booking->get_my_options_sql(null, null, $category);
+        $wherearray = ['bookingid' => (int)$booking->id];
 
-        $table->set_sql($fields, $from, $where, $params);
+        if (!empty($category)) {
+            $wherearray['sport'] = $category;
+        };
+
+        $userid = $USER->id;
+
+        // If we want to find only the teacher relevant options, we chose different sql.
+        if (isset($args['teacherid']) && (is_int((int)$args['teacherid']))) {
+            $wherearray['teacherobjects'] = '%"id":' . $args['teacherid'] . ',%';
+            list($fields, $from, $where, $params, $filter) =
+                booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray, $userid);
+        } else {
+
+            list($fields, $from, $where, $params, $filter) =
+                booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray, $userid);
+        }
+
+        $table->set_filter_sql($fields, $from, $where, $params, $filter);
 
         $table->use_pages = false;
 
@@ -482,9 +513,12 @@ class shortcodes {
 
         $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher', 'botags']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' =>
-        'shortcodes_option_info_invisible'], ['invisibleoption']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sport']);
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
+            ['invisibleoption']
+        );
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
 
@@ -501,7 +535,43 @@ class shortcodes {
 
         $table->is_downloading('', 'List of booking options');
 
-        $table->sortable(true, 'text');
+        // Id is not really something one wants to filter, but we need the dataset on the html element.
+        // The key "id" won't be rendered in filter json, though.
+        if ($showfilter !== false) {
+            $table->define_filtercolumns([
+                'id', 'sport' => [
+                    'localizedname' => get_string('sport', 'local_musi')
+                ], 'dayofweek' => [
+                    'localizedname' => get_string('dayofweek', 'local_musi'),
+                    'monday' => get_string('monday', 'mod_booking'),
+                    'tuesday' => get_string('tuesday', 'mod_booking'),
+                    'wednesday' => get_string('wednesday', 'mod_booking'),
+                    'thursday' => get_string('thursday', 'mod_booking'),
+                    'friday' => get_string('friday', 'mod_booking'),
+                    'saturday' => get_string('saturday', 'mod_booking'),
+                    'sunday' => get_string('sunday', 'mod_booking')
+                ],  'location' => [
+                    'localizedname' => get_string('location', 'mod_booking')
+                ],  'botags' => [
+                    'localizedname' => get_string('tags', 'core')
+                ]
+            ]);
+        }
+
+        if ($showsearch !== false) {
+            $table->define_fulltextsearchcolumns(['titleprefix', 'text', 'sport', 'description', 'location', 'teacherobjects']);
+        }
+
+        if ($showsort !== false) {
+            $table->define_sortablecolumns([
+                'text' => get_string('coursename', 'local_musi'),
+                'sport' => get_string('sport', 'local_musi'),
+                'location',
+                'dayofweek'
+            ]);
+        } else {
+            $table->sortable(true, 'text');
+        }
 
         // It's important to have the baseurl defined, we use it as a return url at one point.
         $baseurl = new moodle_url(
