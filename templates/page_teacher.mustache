@@ -60,6 +60,13 @@
                     </div>
                     {{/messagingispossible}}
                     <p class="card-description">{{{description}}}</p>
+                    {{#linktoperformedunitsreport}}
+                    <a href="{{linktoperformedunitsreport}}" class="btn btn-light" target="_self">
+                        <span>
+                            <i class="fa fa-clock-o" aria-hidden="true"></i> {{#str}} hours {{/str}}
+                        </span>
+                    </a>
+                    {{/linktoperformedunitsreport}}
 
                 </div>
                 <div class="card-footer">

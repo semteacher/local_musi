@@ -128,6 +128,13 @@ class page_teacher implements renderable, templatable {
             $returnarray['messagingispossible'] = true;
         }
 
+        // Add a link to the report of performed teaching units.
+        // But only, if the user has the appropriate capability.
+        if ((has_capability('mod/booking:updatebooking', $PAGE->context))) {
+            $returnarray['linktoperformedunitsreport'] = '/mod/booking/teacher_performed_units_report.php?teacherid=' .
+                $this->teacher->id;
+        }
+
         return $returnarray;
     }
 
