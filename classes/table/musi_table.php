@@ -209,9 +209,6 @@ class musi_table extends wunderbyte_table {
             $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id);
         }
 
-        // Get rid of separator and identifier in this view.
-        booking_option::transform_unique_bookingoption_name_to_display_name($values);
-
         $data = new stdClass();
 
         $data->id = $values->id;
