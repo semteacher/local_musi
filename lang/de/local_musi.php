@@ -61,6 +61,7 @@ $string['editentitiescategories'] = 'Kategorien der Sportstätten bearbeiten';
 $string['editbookinginstance'] = 'Semester-Instanz bearbeiten';
 $string['editbookings'] = 'Booking-Übersicht';
 $string['viewteachers'] = 'Trainer*innen-Übersicht';
+$string['sapdailysums'] = 'SAP-Buchungsdateien';
 
 $string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">Keine Semester-Instanz! Hier klicken, um eine einzustellen.</span>';
 $string['editpricecategories'] = 'Preiskategorien bearbeiten';

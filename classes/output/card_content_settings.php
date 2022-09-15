@@ -91,6 +91,9 @@ class card_content_settings implements renderable, templatable {
         $url = new moodle_url('#');
         $data->editbotags = ['link' => $url->out(false), 'data-action' => 'openbotagsmodal'];
 
+        $url = new moodle_url('/local/musi/createsapdailysums.php');
+        $data->sapdailysums = ['link' => $url->out(false)];
+
         return $data;
     }
 
