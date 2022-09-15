@@ -56,9 +56,7 @@ $component = 'local_musi';
 $filearea = 'musi_sap_dailysums';
 $itemid = 0;
 $filepath = '/';
-//$filename = date('Y-m-d', strtotime('yesterday')) . '_musi_sap_dailysums.txt';
-// Workaround: currently we do it every minute for testing.
-$filename = date('Y-m-d_Hi', time()) . '_musi_sap_dailysums.txt';
+$filename = date('Y-m-d', strtotime('yesterday')) . '_musi_sap_dailysums.txt';
 
 // Retrieve the file from the Files API.
 $file = $fs->get_file($contextid, $component, $filearea, $itemid, $filepath, $filename);
@@ -95,9 +93,8 @@ foreach ($files as $file) {
     echo html_writer::link($url, $file->get_filename());
     echo '<br/>';
 
+    // If we want to delete all files, we can use this line.
     // $file->delete(); // Workaround: delete files.
 }
 
 echo $OUTPUT->footer();
-
-

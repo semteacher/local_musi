@@ -126,6 +126,7 @@ class sap_daily_sums {
                 $content .= '#X#';
                 $content .= str_pad('', 14, " ");
                 // TODO: Klären wie mit Credits umgegangen wird.
+                // TODO: Sollen Auszahlungen von Gutschriften geloggt werden?
                 $content .= '#50#'; // 40 bei Gutschriften!
                 $content .= 'US0';
                 $content .= '#';
