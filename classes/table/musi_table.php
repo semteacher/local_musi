@@ -155,6 +155,15 @@ class musi_table extends wunderbyte_table {
         // ... even if availability for the user is not given.
         if (list($conditionid, $isavailable, $description) = $boinfo->get_description(true, $settings, $this->buyforuser->id)) {
 
+            // In some cases, we stick to the original.
+            $originaldescription = $description;
+
+            if (has_capability('mod/booking:bookforothers', $this->context)) {
+                $data = new col_price($values, $settings, $this->buyforuser, $this->context);
+                $description = html_writer::div($description, 'alert-danger');
+                $description .= $this->outputbooking->render_col_price($data);
+            }
+
             // Price blocks normal availability, if it's the only one, we show the cart.
             if (!$isavailable) {
                 switch ($conditionid) {
@@ -168,11 +177,8 @@ class musi_table extends wunderbyte_table {
                         $data = new col_price($values, $settings, $this->buyforuser, $this->context);
                         return $this->outputbooking->render_col_price($data);
                         break;
-                    case BO_COND_FULLYBOOKEDOVERRIDE:
-                        $data = new col_price($values, $settings, $this->buyforuser, $this->context);
-                        // We add the warning for overbooking.
-                        $returnhtml = html_writer::div($description, 'alert-danger');
-                        return $returnhtml . $this->outputbooking->render_col_price($data);
+                    case BO_COND_ALREADYBOOKED:
+                        return $originaldescription;
                         break;
                     case BO_COND_FULLYBOOKED:
                         $usenotificationlist = get_config('booking', 'usenotificationlist');
