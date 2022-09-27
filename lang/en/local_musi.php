@@ -26,8 +26,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['dashboard'] = 'Dashboard';
-$string['messageprovider:sendmessages'] = 'Send messages';
-$string['musi:cansendmessages'] = 'Can send messages';
 $string['pluginname'] = 'M:USI Dashboard';
 
 $string['shortcodeslistofbookingoptions'] = 'All courses as list';
