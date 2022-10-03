@@ -79,6 +79,9 @@ class card_content_settings implements renderable, templatable {
         $url = new moodle_url('/local/musi/teachers.php');
         $data->viewteachers = ['link' => $url->out(false)];
 
+        $url = new moodle_url('/mod/booking/teachers_instance_report.php', ['cmid' => $cmid]);
+        $data->teachersinstancereport = ['link' => $url->out(false)];
+
         $url = new moodle_url('/mod/booking/pricecategories.php');
         $data->editpricecategories = ['link' => $url->out(false)];
 

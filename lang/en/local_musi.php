@@ -53,12 +53,13 @@ $string['coursesboughtcard'] = 'Courses bought online';
 $string['coursespending'] = 'Courses pending';
 $string['coursesboughtcashier'] = 'Courses bought at cashier';
 
-$string['editsettings'] = 'Edit settings';
+$string['settingsandreports'] = 'Settings & Reports';
 $string['editentities'] = 'Edit entities';
 $string['editentitiescategories'] = 'Edit categories of entities';
 $string['editbookinginstance'] = 'Edit semester instance';
 $string['editbookings'] = 'Booking overview';
-$string['viewteachers'] = 'Trainer overview';
+$string['viewteachers'] = 'Teacher overview';
+$string['teachersinstancereport'] = 'Teachers instance report (courses, missing hours, substitutions)';
 $string['sapdailysums'] = 'SAP booking files';
 
 $string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">No semester instance! Click here to choose one.</span>';

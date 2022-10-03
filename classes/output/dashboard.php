@@ -140,7 +140,7 @@ class dashboard implements renderable, templatable {
         $data = new card_content_settings();
 
         $card = new card(
-            get_string('editsettings', 'local_musi'),
+            get_string('settingsandreports', 'local_musi'),
             $output->render_card_content($data),
             '', 'bg-primary'
         );

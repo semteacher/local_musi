@@ -53,12 +53,13 @@ $string['coursesboughtcard'] = 'Gekaufte Kurse (Online)';
 $string['coursespending'] = 'Noch unbestätigte Kurse';
 $string['coursesboughtcashier'] = 'Gekaufte Kurse (Kassa)';
 
-$string['editsettings'] = 'Einstellungen bearbeiten';
+$string['settingsandreports'] = 'Einstellungen & Berichte';
 $string['editentities'] = 'Sportstätten bearbeiten';
 $string['editentitiescategories'] = 'Kategorien der Sportstätten bearbeiten';
 $string['editbookinginstance'] = 'Semester-Instanz bearbeiten';
 $string['editbookings'] = 'Booking-Übersicht';
 $string['viewteachers'] = 'Trainer*innen-Übersicht';
+$string['teachersinstancereport'] = 'Trainer:innen-Gesamtbericht (Kurse, Fehlstunden, Vertretungen)';
 $string['sapdailysums'] = 'SAP-Buchungsdateien';
 
 $string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">Keine Semester-Instanz! Hier klicken, um eine einzustellen.</span>';
