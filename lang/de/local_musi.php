@@ -92,15 +92,15 @@ $string['createbotag:helptext'] = '<p>
 $string['editsports'] = 'Sportarten bearbeiten';
 
 // Teachers.
-$string['teacher'] = 'Kursleiter*in';
-$string['allteachers'] = 'Alle Kursleiter*innen';
-$string['showallteachers'] = '&gt;&gt; Alle Kursleiter*innen anzeigen';
+$string['teacher'] = 'Trainer:in';
+$string['allteachers'] = 'Alle Trainer:innen';
+$string['showallteachers'] = '&gt;&gt; Alle Trainer:innen anzeigen';
 $string['showcoursesofteacher'] = 'Kurse';
 $string['messagebutton'] = 'Nachricht';
 $string['messagingteacherimpossible'] = 'Sie können dieser Trainerin / diesem Trainer keine Nachrichten senden,
  weil Sie in keinen Kurs von ihr/ihm eingeschrieben sind.';
 $string['sendmail'] = 'Mail';
-$string['teachernotfound'] = 'Kursleiter*in konnte nicht gefunden werden oder existiert nicht.';
+$string['teachernotfound'] = 'Trainer:in konnte nicht gefunden werden oder existiert nicht.';
 $string['notateacher'] = 'Die ausgewählte Person unterrichtet keine buchbaren Kurse und kann daher nicht angezeigt werden.';
 
 // Shortcodes.
@@ -117,7 +117,7 @@ Es ist also nicht mehr nötig, eine ID zu übergeben.';
 $string['courses'] = 'Kurse';
 
 // Access.php.
-$string['musi:canedit'] = 'Nutzer_in darf verwalten';
+$string['musi:canedit'] = 'Nutzer:in darf verwalten';
 
 // Nav.
 $string['musi'] = 'MUSI';
