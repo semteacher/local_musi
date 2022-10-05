@@ -25,6 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+global $DB;
+
 if ($hassiteconfig) {
     // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 
@@ -34,18 +36,35 @@ if ($hassiteconfig) {
      $ADMIN->add('localplugins', new admin_category('local_musi', get_string('pluginname', 'local_musi')));
      $ADMIN->add('local_musi', $settings);
 
-     $settings->add(
-         new admin_setting_heading('shortcodessetdefaultinstance',
-             get_string('shortcodessetdefaultinstance', 'local_musi'),
-             get_string('shortcodessetdefaultinstancedesc', 'local_musi')));
-
-     $settings->add(
-         new admin_setting_configtext('local_musi/shortcodessetinstance',
-             get_string('shortcodessetinstance', 'local_musi'),
-             get_string('shortcodessetinstancedesc', 'local_musi'),
-             '', PARAM_INT));
-
     if ($ADMIN->fulltree) {
+        $settings->add(
+            new admin_setting_heading('shortcodessetdefaultinstance',
+                get_string('shortcodessetdefaultinstance', 'local_musi'),
+                get_string('shortcodessetdefaultinstancedesc', 'local_musi')));
 
+        $allowedinstances = [];
+
+        if ($records = $DB->get_records_sql(
+            "SELECT cm.id cmid, b.name bookingname
+            FROM {course_modules} cm
+            LEFT JOIN {booking} b
+            ON b.id = cm.instance
+            WHERE cm.module IN (
+                SELECT id
+                FROM {modules} m
+                WHERE m.name = 'booking'
+            )"
+        )) {
+            foreach ($records as $record) {
+                $allowedinstances[$record->cmid] = $record->bookingname;
+                $defaultcmid = $record->cmid; // Last cmid will be the default one.
+            }
+        }
+
+        $settings->add(
+            new admin_setting_configselect('local_musi/shortcodessetinstance',
+                get_string('shortcodessetinstance', 'local_musi'),
+                get_string('shortcodessetinstancedesc', 'local_musi'),
+                $defaultcmid, $allowedinstances));
     }
 }
