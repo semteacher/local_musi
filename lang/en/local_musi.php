@@ -114,6 +114,8 @@ pages, but you need to change the booking options form one semester to the next.
 $string['shortcodessetinstance'] = 'Set the booking instance which should be used by default';
 $string['shortcodessetinstancedesc'] = 'If you use this setting, you can use the shortcode like this: [listofbookings category="philosophy"]
 So no need to specify the ID';
+$string['shortcodesnobookinginstance'] = '<div class="text-danger font-weight-bold">No booking instance created yet!</div>';
+$string['shortcodesnobookinginstancedesc'] = 'You need to create at least one booking instance within a moodle course before you can choose one.';
 $string['courses'] = 'Courses';
 
 // Access.php.

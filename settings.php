@@ -61,10 +61,20 @@ if ($hassiteconfig) {
             }
         }
 
-        $settings->add(
-            new admin_setting_configselect('local_musi/shortcodessetinstance',
-                get_string('shortcodessetinstance', 'local_musi'),
-                get_string('shortcodessetinstancedesc', 'local_musi'),
-                $defaultcmid, $allowedinstances));
+        if (empty($allowedinstances)) {
+            // If we have no instances, show an explanation text.
+            $settings->add(new admin_setting_description(
+                'shortcodesnobookinginstance',
+                get_string('shortcodesnobookinginstance', 'local_musi'),
+                get_string('shortcodesnobookinginstancedesc', 'local_musi')
+            ));
+        } else {
+            // Show select for cmids of booking instances.
+            $settings->add(
+                new admin_setting_configselect('local_musi/shortcodessetinstance',
+                    get_string('shortcodessetinstance', 'local_musi'),
+                    get_string('shortcodessetinstancedesc', 'local_musi'),
+                    $defaultcmid, $allowedinstances));
+        }
     }
 }
