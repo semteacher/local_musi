@@ -32,6 +32,8 @@ if (!$context = context_system::instance()) {
     throw new moodle_exception('badcontext');
 }
 
+$type = optional_param('type', 'liste', PARAM_TEXT);
+
 // Check if optionid is valid.
 $PAGE->set_context($context);
 
@@ -46,6 +48,14 @@ $PAGE->add_body_class('local_musi-allcourses');
 
 echo $OUTPUT->header();
 
-echo format_text("[allekursekarten]", FORMAT_HTML);
+switch ($type) {
+    case 'karten':
+        echo format_text("[allekursekarten]", FORMAT_HTML);
+        break;
+    case 'liste':
+    default:
+        echo format_text("[allekurseliste]", FORMAT_HTML);
+        break;
+}
 
 echo $OUTPUT->footer();

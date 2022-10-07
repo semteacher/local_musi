@@ -30,13 +30,14 @@ use stdClass;
 use templatable;
 
 /**
- * This class prepares data for displaying a booking option instance
+ * This class prepares data for displaying sports categories data.
  *
  * @package local_musi
- * @copyright 2021 Georg Maißer {@link http://www.wunderbyte.at}
+ * @copyright 2022 Wunderbyte GmbH {@link http://www.wunderbyte.at}
+ * @author Georg Maißer, Bernhard Fischer
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class card_content_entities implements renderable, templatable {
+class card_content_sports implements renderable, templatable {
 
     /** @var stdClass $title */
     public $data = null;
@@ -46,7 +47,7 @@ class card_content_entities implements renderable, templatable {
      */
     public function __construct() {
 
-        $this->data = self::return_entities_stats();
+        $this->data = self::return_sports_stats();
     }
 
     /**
@@ -54,12 +55,12 @@ class card_content_entities implements renderable, templatable {
      *
      * @return stdClass
      */
-    private static function return_entities_stats() {
+    private static function return_sports_stats() {
         global $DB;
 
         $data = new stdClass();
 
-        $data->typeofsports = ['value' => $DB->count_records('local_musi_sports')];
+        $data->countofsports = ['value' => $DB->count_records('local_musi_sports')];
 
         return $data;
     }
