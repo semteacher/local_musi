@@ -296,10 +296,10 @@ class musi_table extends wunderbyte_table {
 
     /**
      * This function is called for each data row to allow processing of the
-     * coursestarttime value.
+     * location value.
      *
      * @param object $values Contains object with all the values of record.
-     * @return string $coursestarttime Returns course start time as a readable string.
+     * @return string location
      * @throws coding_exception
      */
     public function col_location($values) {
@@ -309,7 +309,13 @@ class musi_table extends wunderbyte_table {
         if (isset($settings->entity) && (count($settings->entity) > 0)) {
 
             $url = new moodle_url('/local/entities/view.php', ['id' => $settings->entity['id']]);
-            return html_writer::tag('a', $settings->entity['name'], ['href' => $url->out(false)]);
+
+            // If there is a shortname of the entity, we'll show the shortname, otherwise we show the full name.
+            $nametobeshown = $settings->entity['name'];
+            if (!empty($settings->entity['shortname'])) {
+                $nametobeshown = $settings->entity['shortname'];
+            }
+            return html_writer::tag('a', $nametobeshown, ['href' => $url->out(false)]);
         }
 
         return $settings->location;
