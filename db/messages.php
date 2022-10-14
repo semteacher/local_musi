@@ -26,5 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $messageproviders = [
-    // Currently there are none.
+
+    'Send Messages' => array(
+        'capability' => 'cansendmessages'
+    ),
 ];
