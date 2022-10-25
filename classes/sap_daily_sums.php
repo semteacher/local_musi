@@ -111,26 +111,72 @@ class sap_daily_sums {
         $content = '';
         if ($records = $DB->get_records_sql($sql, $params)) {
             foreach ($records as $record) {
+                /*
+                 * Mandant - 3 Stellen alphanumerisch - immer "101"
+                 * Buchungskreis - 4 Stellen alphanumerisch - immer "VIE1"
+                 * Währung - 3 Stellen alphanumerisch - immer "EUR"
+                 * Belegart - 2 Stellen alphanumerisch - Immer "DR"
+                 */
                 $content .= "101#VIE1#EUR#DR#";
-                $content .= str_pad($record->identifier, 16, " ", STR_PAD_LEFT);
-                $content .= '#';
-                $content .= date('d.m.Y', $record->timemodified); // Buchungsdatum.
-                $content .= '#';
-                $content .= date('d.m.Y', $record->timecreated); // Belegdatum.
-                $content .= '#';
-                $content .= str_pad('US', 25, " ", STR_PAD_LEFT);
-                $content .= '#';
+
+                // Referenzbelegnummer - 16 Stellen alphanumerisch.
+                $content .= str_pad($record->identifier, 16, " ", STR_PAD_LEFT) . '#';
+
+                // Buchungsdatum - 10 Stellen.
+                $content .= date('d.m.Y', $record->timemodified) . '#';
+
+                // Belegdatum - 10 Stellen.
+                $content .= date('d.m.Y', $record->timecreated) . '#';
+
+                // Belegkopftext - 25 Stellen alphanumerisch - in unserem Fall immer "US".
+                $content .= str_pad('US', 25, " ", STR_PAD_LEFT) . '#';
+
+                // Betrag - 14 Stellen alphanumerisch - Netto-Betrag.
                 $renderedprice = (string) $record->price;
                 $renderedprice = str_replace('.', ',', $renderedprice);
-                $content .= str_pad($renderedprice, 14, " ", STR_PAD_LEFT);
-                $content .= '#X#';
-                $content .= str_pad('', 14, " ");
-                // TODO: Klären wie mit Credits umgegangen wird.
-                // TODO: Sollen Auszahlungen von Gutschriften geloggt werden?
-                $content .= '#50#'; // 40 bei Gutschriften!
-                $content .= 'US0';
-                $content .= '#';
-                $content .= str_pad($record->paymentbrand, 3, " ", STR_PAD_LEFT);
+                $content .= str_pad($renderedprice, 14, " ", STR_PAD_LEFT) . '#';
+
+                // Steuer rechnen - 1 Stelle alphanumerisch - immer "X".
+                $content .= 'X#';
+
+                /* Steuerbetrag - 14 Stellen alphanumerisch - derzeit sind keine Geschäftsfälle mit Umsatzsteuer vorgesehen,
+                daher bleibt das Feld immer leer. */
+                $content .= str_pad('', 14, " ") . '#';
+
+                /* Werbeabgabe - 14 Stellen alphanumerisch - kein bekannter Geschäftsfall im Moment,
+                daher bleibt das Feld immer leer. */
+                $content .= str_pad('', 14, " ") . '#';
+
+                // Buchungsschlüssel - 2 Stellen alphanumerisch - 50 - bei Rechnungen, 40 - bei Gutschriften
+                // Derzeit können nur Rechnungen geloggt werden, daher immer 50.
+                $content .= '50#';
+
+                // Geschäftsfall-Code - 3 Stellen alphanumerisch - immer "US0".
+                $content .= 'US0#';
+
+                switch ($record->payment) {
+                    case PAYMENT_METHOD_ONLINE:
+                        // Zahlungscode - 3 Stellen alphanumerisch.
+                        $content .= str_pad($record->paymentbrand, 3, " ", STR_PAD_LEFT) . '#';
+                        break;
+                    case PAYMENT_METHOD_CASHIER:
+                    case PAYMENT_METHOD_CASHIER_CASH:
+                        // BA = Barzahlung.
+                        $content .= str_pad('BA', 3, " ", STR_PAD_LEFT) . '#';
+                        break;
+                    case PAYMENT_METHOD_CASHIER_DEBITCARD:
+                    case PAYMENT_METHOD_CASHIER_CREDITCARD:
+                        // BK = Bankomat-Zahlung
+                        // Kreditkartentyp kann an dieser Stelle nicht bestimmt werden, daher wird immer BK geloggt.
+                        $content .= str_pad('BK', 3, " ", STR_PAD_LEFT) . '#';
+                        break;
+                    default:
+                        // Unknown.
+                        $content .= str_pad('', 3, " ", STR_PAD_LEFT) . '#';
+                        break;
+                }
+
+                // Zeilenumbruch.
                 $content .= "\r\n";
             }
         }
