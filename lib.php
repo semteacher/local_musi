@@ -75,6 +75,12 @@ function local_musi_render_navbar_output(\renderer_base $renderer) {
         return;
     }
     /*hascapability*/
+
+    // Moodle URLs for dropdown menu.
+    $cashierurl = new moodle_url('/local/shopping_cart/cashier.php');
+    $dashboardurl = new moodle_url('/local/musi/dashboard.php');
+    $entitiesurl = new moodle_url('/local/entities/entities.php');
+
     $output = '<div class="popover-region nav-link icon-no-margin dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button"
     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
