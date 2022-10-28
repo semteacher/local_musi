@@ -87,7 +87,7 @@ class sap_daily_sums {
         // SQL query. The subselect will fix the "Did you remember to make the first column something...
         // ...unique in your call to get_records?" bug.
         $sql = "SELECT scl.id, scl.identifier, scl.price, scl.discount, scl.credits, scl.fee, scl.currency,
-                u.lastname, u.firstname, u.email, scl.itemid, scl.itemname, scl.payment, scl.paymentstatus, " .
+                u.id userid, u.lastname, u.firstname, u.email, scl.itemid, scl.itemname, scl.payment, scl.paymentstatus, " .
                 $DB->sql_concat("um.firstname", "' '", "um.lastname") . " as usermodified, scl.timecreated, scl.timemodified,
                 p.gateway$selectorderidpart
                 FROM {local_shopping_cart_ledger} scl
@@ -124,8 +124,6 @@ class sap_daily_sums {
                  */
                 $content .= "101#VIE1#EUR#DR#";
                 // Referenzbelegnummer - 16 Stellen alphanumerisch.
-                // TODO: Muss der Identifier aus der merchantTransactionId geholt werden?
-                // TODO: Falls ja, wie kommt der (richtige) Identifier in die merchantTransactionId???
                 $content .= str_pad($record->identifier, 16, " ", STR_PAD_LEFT) . '#';
                 // Buchungsdatum - 10 Stellen.
                 $content .= date('d.m.Y', $record->timemodified) . '#';
@@ -156,11 +154,98 @@ class sap_daily_sums {
                 } else {
                     $content .= str_pad('', 3, " ", STR_PAD_LEFT) . '#';
                 }
-                // Zeilenumbruch.
+                // Buchungstext - 50 Stellen alphanumerisch.
+                $buchungstext = " US $record->userid " . self::clean_string_for_sap($record->lastname);
+                if (strlen($buchungstext) > 50) {
+                    $buchungstext = substr($buchungstext, 0, 50);
+                }
+                $content .= str_pad($buchungstext, 50, " ", STR_PAD_LEFT) . '#';
+                // Zuordnung - analog "Referenzbelegnummer" - 18 Stellen alphanumerisch.
+                $content .= str_pad($record->identifier, 18, " ", STR_PAD_LEFT) . '#';
+                // Kostenstelle - 10 Stellen - leer.
+                $content .= str_pad('', 10, " ", STR_PAD_LEFT) . '#';
+                // Innenauftrag - 12 Stellen - USI Wien immer "ET592002".
+                $content .= str_pad('ET592002', 12, " ", STR_PAD_LEFT) . '#';
+                // Anrede - 15 Stellen.
+                $content .= str_pad('', 15, " ", STR_PAD_LEFT) . '#';
+                // Name 1 - 35 Stellen.
+                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                // Name 2 - 35 Stellen.
+                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                // Name 3 - 35 Stellen.
+                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                // Name 4 - 35 Stellen.
+                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                // Straße / Hausnummer - 35 Stellen.
+                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                // Ort - 35 Stellen.
+                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                // Postleitzahl - 10 Stellen.
+                $content .= str_pad('', 10, " ", STR_PAD_LEFT) . '#';
+                // Land - 2 Stellen.
+                $content .= str_pad('', 2, " ", STR_PAD_LEFT) . '#';
+                // Zahlungsbedingung - 4 Stellen.
+                $content .= str_pad('', 4, " ", STR_PAD_LEFT) . '#';
+                // ENDE: Zeilenumbruch.
                 $content .= "\r\n";
             }
         }
 
         return $content;
+    }
+
+    /**
+     * Helper function to replace special characters like "ä" with "ae" etc.
+     * And convert to uppercase letters.
+     * @param string $inputstring the input string
+     * @param return string the cleaned output string
+     */
+    public static function clean_string_for_sap(string $stringwithspecialchars) {
+
+        // At first replace special chars.
+        $umlaute = [
+            "/ß/" ,
+            "/ä/", "/à/", "/á/", "/â/", "/æ/", "/ã/", "/å/", "/ā/",
+            "/Ä/", "/À/", "/Á/", "/Â/", "/Æ/", "/Ã/", "/Å/", "/Ā/",
+            "/é/", "/è/", "/ê/", "/ë/", "/ė/",
+            "/É/", "/È/", "/Ê/", "/Ë/", "/Ė/",
+            "/î/", "/ï/", "/í/", "/ī/", "/ì/",
+            "/Î/", "/Ï/", "/Í/", "/Ī/", "/Ì/",
+            "/ö/", "/ô/", "/ò/", "/ó/", "/õ/", "/œ/", "/ø/", "/ō/",
+            "/Ö/", "/Ô/", "/Ò/", "/Ó/", "/Õ/", "/Œ/", "/Ø/", "/Ō/",
+            "/ü/", "/û/", "/ù/", "/ú/", "/ū/",
+            "/Ü/", "/Û/", "/Ù/", "/Ú/", "/Ū/",
+            "/ç/", "/ć/", "/č/",
+            "/Ç/", "/Ć/", "/Č/",
+        ];
+
+        $replace = [
+            "ss" ,
+            "ae", "a", "a", "a", "ae", "a", "a", "a",
+            "Ae", "A", "A", "A", "Ae", "A", "A", "A",
+            "e", "e", "e", "e", "e",
+            "E", "E", "E", "E", "E",
+            "i", "i", "i", "i", "i",
+            "I", "I", "I", "I", "I",
+            "oe", "o", "o", "o", "o", "o", "o", "o",
+            "Oe", "O", "O", "O", "O", "Oe", "O", "O",
+            "ue", "u", "u", "u", "u",
+            "Ue", "U", "U", "U", "U",
+            "c", "c", "c",
+            "C", "C", "C",
+        ];
+
+        $string = preg_replace($umlaute, $replace, $stringwithspecialchars);
+
+        // Now remove any remaining special chars.
+        $string = preg_replace("/[^A-Za-z0-9 ]/", '', $string);
+
+        // Now make sure, it's encoded as UTF-8.
+        $string = utf8_encode($string);
+
+        // At last, make it UPPERCASE.
+        $string = strtoupper($string);
+
+        return $string;
     }
 }
