@@ -36,10 +36,17 @@ if (!$context = context_system::instance()) {
 
 // Check if optionid is valid.
 $PAGE->set_context($context);
+$PAGE->set_url('/local/musi/dashboard.php');
+
+if ((has_capability('mod/booking:updatebooking', $context) || has_capability('mod/booking:addeditownoption', $context)) == false) {
+    echo $OUTPUT->header();
+    echo $OUTPUT->heading(get_string('accessdenied', 'mod_booking'), 4);
+    echo get_string('nopermissiontoaccesspage', 'mod_booking');
+    echo $OUTPUT->footer();
+    die();
+}
 
 $title = get_string('pluginname', 'local_musi');
-
-$PAGE->set_url('/local/musi/dashboard.php');
 $PAGE->navbar->add($title);
 $PAGE->set_title(format_string($title));
 $PAGE->set_heading($title);
