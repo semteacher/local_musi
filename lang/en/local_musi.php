@@ -77,7 +77,7 @@ $string['createbotag:helptext'] = '<p>
 </p>
 <div class="collapse" id="collapseTagsHelptext">
 <div class="card card-body">
-  <p>In order to use tags, you have to create a <a href="/mod/booking/customfield.php" target="_blank">"Booking customfield for booking options"</a> of the type "Dynamic Dropdown menu" which has the following settings:</p>
+  <p>In order to use tags, you have to create a Booking customfield for booking options of the type "Dynamic Dropdown menu" which has the following settings:</p>
   <ul>
   <li><strong>Category: </strong>Tags</li>
   <li><strong>Name: </strong>Tags</li>

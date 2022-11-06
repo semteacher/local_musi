@@ -77,7 +77,7 @@ $string['createbotag:helptext'] = '<p>
 </p>
 <div class="collapse" id="collapseTagsHelptext">
 <div class="card card-body">
-  <p>Damit Sie Tags verwenden können, müssen Sie ein <a href="/mod/booking/customfield.php" target="_blank">"Benutzerdefiniertes Buchungsoptionsfeld"</a> vom Typ "Dynamic Dropdown menu" mit folgenden Einstellungen anlegen:</p>
+  <p>Damit Sie Tags verwenden können, müssen Sie ein Benutzerdefiniertes Buchungsoptionsfeld vom Typ "Dynamic Dropdown menu" mit folgenden Einstellungen anlegen:</p>
   <ul>
   <li><strong>Kategorie: </strong>Tags</li>
   <li><strong>Name: </strong>Tags</li>

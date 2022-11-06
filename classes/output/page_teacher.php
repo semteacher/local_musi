@@ -88,7 +88,7 @@ class page_teacher implements renderable, templatable {
      * @return array
      */
     public function export_for_template(renderer_base $output) {
-        global $PAGE;
+        global $PAGE, $CFG;
 
         if (!isset($PAGE->context)) {
             $PAGE->set_context(context_system::instance());
@@ -131,10 +131,11 @@ class page_teacher implements renderable, templatable {
         // Add a link to the report of performed teaching units.
         // But only, if the user has the appropriate capability.
         if ((has_capability('mod/booking:updatebooking', $PAGE->context))) {
-            $returnarray['linktoperformedunitsreport'] = '/mod/booking/teacher_performed_units_report.php?teacherid=' .
-                $this->teacher->id;
+            $url = new moodle_url('/mod/booking/teacher_performed_units_report.php', ['teacherid' => $this->teacher->id]);
+            $returnarray['linktoperformedunitsreport'] = $url->out();
         }
-
+        // Include wwwroot for links.
+        $returnarray['wwwroot'] = $CFG->wwwroot;
         return $returnarray;
     }
 

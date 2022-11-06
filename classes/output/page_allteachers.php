@@ -97,8 +97,8 @@ class page_allteachers implements renderable, templatable {
             // Add a link to the report of performed teaching units.
             // But only, if the user has the appropriate capability.
             if ((has_capability('mod/booking:updatebooking', $PAGE->context))) {
-                $teacherarr['linktoperformedunitsreport'] = '/mod/booking/teacher_performed_units_report.php?teacherid=' .
-                    $teacher->id;
+                $url = new moodle_url('/mod/booking/teacher_performed_units_report.php', ['teacherid' => $teacher->id]);
+                $teacherarr['linktoperformedunitsreport'] = $url->out();
             }
 
             if (!empty($teacher->email) && $teacher->maildisplay == 1) {
@@ -111,6 +111,9 @@ class page_allteachers implements renderable, templatable {
 
             $link = new moodle_url('/local/musi/teacher.php', ['teacherid' => $teacher->id]);
             $teacherarr['link'] = $link->out(false);
+
+            $messagelink = new moodle_url('/message/index.php', ['id' => $teacher->id]);
+            $teacherarr['messagelink'] = $messagelink->out(false);
 
             $returnarray['teachers'][] = $teacherarr;
         }

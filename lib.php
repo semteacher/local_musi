@@ -69,7 +69,7 @@ function local_musi_get_fontawesome_icon_map() {
  * @return string The HTML
  */
 function local_musi_render_navbar_output(\renderer_base $renderer) {
-
+    global $CFG;
     // Early bail out conditions.
     if (!isloggedin() || isguestuser() || !has_capability('local/musi:canedit', context_system::instance())) {
         return;
@@ -81,9 +81,9 @@ function local_musi_render_navbar_output(\renderer_base $renderer) {
     '. get_string('musi', 'local_musi') .'
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="/local/shopping_cart/cashier.php"">'. get_string('cachier', 'local_musi') . '</a>
-      <a class="dropdown-item" href="/local/musi/dashboard.php">' . get_string('dashboard', 'local_musi') . '</a>
-      <a class="dropdown-item" href="/local/entities/entities.php">' . get_string('entities', 'local_musi') . '</a>
+      <a class="dropdown-item" href="' . $CFG->wwwroot . '/local/shopping_cart/cashier.php"">'. get_string('cachier', 'local_musi') . '</a>
+      <a class="dropdown-item" href="' . $CFG->wwwroot . '/local/musi/dashboard.php">' . get_string('dashboard', 'local_musi') . '</a>
+      <a class="dropdown-item" href="' . $CFG->wwwroot . '/local/entities/entities.php">' . get_string('entities', 'local_musi') . '</a>
     </div>
   </div>';
     return $output;

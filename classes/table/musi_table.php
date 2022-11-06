@@ -129,9 +129,7 @@ class musi_table extends wunderbyte_table {
 
         // Render col_teacher using a template.
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
-
         $data = new col_teacher($values->id, $settings);
-
         return $this->outputmusi->render_col_teacher($data);
     }
 

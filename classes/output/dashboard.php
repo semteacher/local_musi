@@ -166,11 +166,9 @@ class dashboard implements renderable, templatable {
      * @return array
      */
     public function export_for_template(renderer_base $output) {
-
         $returnarray = array(
                 'cards' => (array)$this->cards
         );
-
         return $returnarray;
     }
 }

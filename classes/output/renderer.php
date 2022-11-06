@@ -39,7 +39,7 @@ class renderer extends plugin_renderer_base {
     }
 
     /** Function to render the card_content_stats1
-     * @param any $data
+     * @param mixed $data
      * @return string
      */
     public function render_card_content($data) {

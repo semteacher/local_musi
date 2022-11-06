@@ -50,7 +50,7 @@ $PAGE->add_body_class('local_musi-teacher');
 
 echo $OUTPUT->header();
 
-echo '<a href="/local/musi/teachers.php" target="_self"><h5>' .
+echo '<a href="' . $CFG->wwwroot . '/local/musi/teachers.php" target="_self"><h5>' .
     get_string('showallteachers', 'local_musi') . '</h5></a>';
 
 $data = new page_teacher($teacherid);
