@@ -70,28 +70,30 @@ function local_musi_get_fontawesome_icon_map() {
  */
 function local_musi_render_navbar_output(\renderer_base $renderer) {
     global $CFG;
+
     // Early bail out conditions.
     if (!isloggedin() || isguestuser() || !has_capability('local/musi:canedit', context_system::instance())) {
         return;
     }
-    /*hascapability*/
-
-    // Moodle URLs for dropdown menu.
-    $cashierurl = new moodle_url('/local/shopping_cart/cashier.php');
-    $dashboardurl = new moodle_url('/local/musi/dashboard.php');
-    $entitiesurl = new moodle_url('/local/entities/entities.php');
 
     $output = '<div class="popover-region nav-link icon-no-margin dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button"
-    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    '. get_string('musi', 'local_musi') .'
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="' . $CFG->wwwroot . '/local/shopping_cart/cashier.php"">'. get_string('cachier', 'local_musi') . '</a>
-      <a class="dropdown-item" href="' . $CFG->wwwroot . '/local/musi/dashboard.php">' . get_string('dashboard', 'local_musi') . '</a>
-      <a class="dropdown-item" href="' . $CFG->wwwroot . '/local/entities/entities.php">' . get_string('entities', 'local_musi') . '</a>
-    </div>
-  </div>';
+        <button class="btn btn-secondary dropdown-toggle" type="button"
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        '. get_string('musi', 'local_musi') .'
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="'
+                . $CFG->wwwroot . '/local/shopping_cart/cashier.php"">'
+                . get_string('cachier', 'local_musi') . '</a>
+            <a class="dropdown-item" href="'
+                . $CFG->wwwroot . '/local/musi/dashboard.php">'
+                . get_string('dashboard', 'local_musi') . '</a>
+            <a class="dropdown-item" href="'
+                . $CFG->wwwroot . '/local/entities/entities.php">'
+                . get_string('entities', 'local_musi') . '</a>
+        </div>
+    </div>';
+
     return $output;
 }
 
