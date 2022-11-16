@@ -226,7 +226,7 @@ class shortcodes {
         $table->define_baseurl($baseurl->out());
 
         // This allows us to use infinite scrolling, No pages will be used.
-        $table->infinitescroll = 100;
+        $table->infinitescroll = 60;
 
         $table->tabletemplate = 'local_musi/table_list';
 

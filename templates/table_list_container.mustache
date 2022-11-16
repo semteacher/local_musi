@@ -60,21 +60,33 @@
     }
 }}
 
+<div class="wunderbyte_table_container_{{idstring}}">
+     <div>
+          <div class="row mb-2">
+               <div class="col-md-6">
+                    <div>
+                         {{> local_wunderbyte_table/component_toggle }}
+                         {{> local_wunderbyte_table/component_reload }}
+                         {{> local_wunderbyte_table/component_print }}
+                    </div>
 
-<div class="wunderbyte_table_container_{{idstring}} wunderbyte_table_container">
-     <aside class="wunderbyte_table_components">
-          <div>
+               </div>
+               <div class="col-md-6 text-right align-self-end">
+                    {{> local_wunderbyte_table/component_search }}
+               </div>
+          </div>
+     </div>
+
+
+     <div class="wunderbyte_table_container">
+          <aside class="wunderbyte_table_components {{^showcomponentstoggle}} inactive {{/showcomponentstoggle}}">
                {{> local_wunderbyte_table/component_sort }}
-          </div>
-          <div>
-               {{> local_wunderbyte_table/component_search }}
-          </div>
-          <div>
                {{> local_wunderbyte_table/component_filter }}
+               {{> local_wunderbyte_table/component_infinitescroll }}
+          </aside>
+          <div class= "wunderbyteTableClass" id='a{{idstring}}'>
+               {{> local_musi/table_list }}
           </div>
-     </aside>
-     <div class= "wunderbyteTableClass" id='a{{idstring}}'>
-          {{> local_musi/table_list }}
      </div>
 </div>
 
