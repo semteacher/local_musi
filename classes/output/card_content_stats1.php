@@ -75,7 +75,7 @@ class card_content_stats1 implements renderable, templatable {
         $coursesbooked = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_BOOKED]);
         $coursesincart = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_RESERVED]);
         // M:USI does not use the normal waiting list but observer list instead.
-        $coursesdeleted = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_DELETED]);
+        $bookinganswersdeleted = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_DELETED]);
 
         $coursesboughtcard = $DB->count_records('local_shopping_cart_history', ['payment' => PAYMENT_SUCCESS]);
         $coursespending = $DB->count_records('local_shopping_cart_history', ['payment' => PAYMENT_PENDING]);
@@ -93,7 +93,7 @@ class card_content_stats1 implements renderable, templatable {
         $data->coursesavailable = ['value' => $coursesavailable];
         $data->coursesbooked = ['value' => $coursesbooked];
         $data->coursesincart = ['value' => $coursesincart];
-        $data->coursesdeleted = ['value' => $coursesdeleted];
+        $data->bookinganswersdeleted = ['value' => $bookinganswersdeleted];
 
         $data->coursesboughtcard = ['value' => $coursesboughtcard];
         $data->coursespending = ['value' => $coursespending];

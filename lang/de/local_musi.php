@@ -55,7 +55,8 @@ $string['coursesdeleted'] = 'Gelöschte Kurse';
 $string['coursesboughtcard'] = 'Gekaufte Kurse (Online)';
 $string['coursespending'] = 'Noch unbestätigte Kurse';
 $string['coursesboughtcashier'] = 'Gekaufte Kurse (Kassa)';
-$tring['paymentsaborted'] = 'Abgebrochene Zahlungen';
+$string['paymentsaborted'] = 'Abgebrochene Zahlungen';
+$string['bookinganswersdeleted'] = "Gelöschte Buchungen";
 
 $string['settingsandreports'] = 'Einstellungen & Berichte';
 $string['editentities'] = 'Sportstätten bearbeiten';

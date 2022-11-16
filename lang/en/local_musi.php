@@ -56,6 +56,7 @@ $string['coursesboughtcard'] = 'Courses bought online';
 $string['coursespending'] = 'Courses pending';
 $string['coursesboughtcashier'] = 'Courses bought at cashier';
 $string['paymentsaborted'] = 'Aborted payments';
+$string['bookinganswersdeleted'] = "Deleted booking answers";
 
 $string['settingsandreports'] = 'Settings & Reports';
 $string['editentities'] = 'Edit entities';

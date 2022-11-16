@@ -29,6 +29,7 @@ use html_writer;
 use local_wunderbyte_table\wunderbyte_table;
 use mod_booking\bo_availability\bo_info;
 use mod_booking\booking;
+use mod_booking\booking_answers;
 use mod_booking\booking_option;
 use mod_booking\optiondates_handler;
 use mod_booking\output\button_notifyme;
@@ -159,8 +160,10 @@ class musi_table extends wunderbyte_table {
 
             if (has_capability('mod/booking:bookforothers', $this->context)) {
                 $data = new col_price($values, $settings, $this->buyforuser, $this->context);
-                $description = html_writer::div($description, 'alert-danger');
+                $description = html_writer::div($description, 'alert alert-danger');
                 $description .= $this->outputbooking->render_col_price($data);
+            } else {
+                $description = html_writer::div($description, 'alert alert-warning');
             }
 
             // Price blocks normal availability, if it's the only one, we show the cart.
@@ -178,6 +181,9 @@ class musi_table extends wunderbyte_table {
                         break;
                     case BO_COND_ALREADYBOOKED:
                         return $originaldescription;
+                        break;
+                    case BO_COND_ISCANCELLED:
+                        return $description;
                         break;
                     case BO_COND_FULLYBOOKED:
                         $usenotificationlist = get_config('booking', 'usenotificationlist');
@@ -444,7 +450,10 @@ class musi_table extends wunderbyte_table {
         // Link is empty on default.
         $link = '';
 
-        if ($DB->get_records('booking_answers', ['optionid' => $values->optionid])) {
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->optionid);
+        $bookinganswers = singleton_service::get_instance_of_booking_answers($settings, 0);
+
+        if (count($bookinganswers->usersonlist) > 0) {
             // Add a link to redirect to the booking option.
             $link = new moodle_url($CFG->wwwroot . '/mod/booking/report.php', array(
                 'id' => $values->cmid,
