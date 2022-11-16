@@ -50,11 +50,11 @@ echo $OUTPUT->header();
 
 switch ($type) {
     case 'karten':
-        echo format_text("[allekursekarten]", FORMAT_HTML);
+        echo format_text("[allekursekarten filter=1 sort=1 search=1]", FORMAT_HTML);
         break;
     case 'liste':
     default:
-        echo format_text("[allekurseliste]", FORMAT_HTML);
+        echo format_text("[allekurseliste filter=1 sort=1 search=1]", FORMAT_HTML);
         break;
 }
 

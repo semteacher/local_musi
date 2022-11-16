@@ -29,11 +29,8 @@ use html_writer;
 use local_wunderbyte_table\wunderbyte_table;
 use mod_booking\bo_availability\bo_info;
 use mod_booking\booking;
-use mod_booking\booking_answers;
-use mod_booking\booking_option;
 use mod_booking\optiondates_handler;
 use mod_booking\output\button_notifyme;
-use mod_booking\output\col_action;
 use mod_booking\output\col_availableplaces;
 use mod_booking\output\col_price;
 use mod_booking\output\col_teacher;
@@ -217,31 +214,42 @@ class musi_table extends wunderbyte_table {
      * @throws dml_exception
      */
     public function col_text($values) {
-        global $OUTPUT;
 
         if (!$this->booking) {
             $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id);
         }
 
-        $data = new stdClass();
-
-        $data->id = $values->id;
-        $data->componentname = 'mod_booking';
-
         if ($this->booking) {
             $url = new moodle_url('/mod/booking/optionview.php', ['optionid' => $values->id,
                                                                   'cmid' => $this->booking->cmid,
                                                                   'userid' => $this->buyforuser->id]);
-            $data->url = $url->out(false);
-            $data->cmid = $this->booking->cmid;
         } else {
-            $data->url = '#';
+            $url = '#';
         }
-        $data->title = $values->text;
+
+        $title = $values->text;
         if (!empty($values->titleprefix)) {
-            $data->title = $values->titleprefix . ' - ' . $values->text;
+            $title = $values->titleprefix . ' - ' . $values->text;
         }
-        return $data->title;
+
+        if (!$this->is_downloading()) {
+            $title = "<a href='$url' target='_blank'><h3>$title</h3></a>";
+        }
+
+        return $title;
+    }
+
+    /**
+     * This function is called for each data row to allow processing of the
+     * divider value.
+     *
+     * @param object $values Contains object with all the values of record.
+     * @return string $string Return name of the booking option.
+     * @throws dml_exception
+     */
+    public function col_divider($values) {
+
+        return "<hr>";
     }
 
 
@@ -458,13 +466,7 @@ class musi_table extends wunderbyte_table {
         $data->componentname = 'mod_booking';
 
         if ($this->booking) {
-            $url = new moodle_url('/mod/booking/optionview.php', ['optionid' => $values->id,
-                                                                  'cmid' => $this->booking->cmid,
-                                                                  'userid' => $this->buyforuser->id]);
-            $data->url = $url->out(false);
             $data->cmid = $this->booking->cmid;
-        } else {
-            $data->url = '#';
         }
 
         // We will have a number of modals on this site, therefore we have to distinguish them.
