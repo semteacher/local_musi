@@ -135,7 +135,6 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3 text-right'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'sport-badge bg-info text-light'], ['sport']);
 
-        $table->add_classes_to_subcolumns('row', ['columnclass' => 'col-md-3 col-sm-12']);
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3'], ['teacher']);
 
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3'], ['location']);
