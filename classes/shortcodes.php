@@ -121,7 +121,8 @@ class shortcodes {
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('cardbody', ['text', 'dayofweektime', 'sport', 'teacher', 'location', 'bookings', 'price']);
+        $table->add_subcolumns('cardbody', ['text', 'dayofweektime', 'sport', 'teacher', 'location', 'bookings',
+            'price', 'action']);
 
         // This avoids showing all keys in list view.
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-md-none']);
@@ -131,9 +132,10 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3 text-left'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
 
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-6 text-right'], ['sport']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3 text-right'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'sport-badge bg-info text-light'], ['sport']);
 
+        $table->add_classes_to_subcolumns('row', ['columnclass' => 'col-md-3 col-sm-12']);
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3'], ['teacher']);
 
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-3'], ['location']);

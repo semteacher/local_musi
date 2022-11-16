@@ -60,9 +60,9 @@
     }
 }}
 
-<tr class="table row">
+<div class="row">
       {{#cardbody}}
-        {{#columnclass}}<td class="{{.}} {{key}}">{{/columnclass}}
+        {{#columnclass}}<div class="{{.}} {{key}}">{{/columnclass}}
           <span {{^value}} style="display:none" {{/value}}>
           {{#columniclassbefore}}
             <i class="{{.}}" aria-hidden="true"></i>
@@ -84,6 +84,6 @@
             <i class="value {{.}}" aria-hidden="true"></i>
           {{/columniclassafter}}
           </span>
-        {{#columnclass}}</td>{{/columnclass}}
+        {{#columnclass}}</div>{{/columnclass}}
       {{/cardbody}}
-    </tr>
+        </div>

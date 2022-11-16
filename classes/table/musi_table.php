@@ -157,7 +157,9 @@ class musi_table extends wunderbyte_table {
 
             // In some cases, we stick to the original.
             $originaldescription = $description;
-
+            if (!$this->context) {
+                $this->context = context_module::instance($settings->cmid);
+            }
             if (has_capability('mod/booking:bookforothers', $this->context)) {
                 $data = new col_price($values, $settings, $this->buyforuser, $this->context);
                 $description = html_writer::div($description, 'alert alert-danger');
@@ -239,60 +241,7 @@ class musi_table extends wunderbyte_table {
         if (!empty($values->titleprefix)) {
             $data->title = $values->titleprefix . ' - ' . $values->text;
         }
-
-        // We will have a number of modals on this site, therefore we have to distinguish them.
-        // This is in case we render modal.
-        $data->modalcounter = $values->id;
-        $data->modaltitle = $values->text;
-        $data->userid = $this->buyforuser->id;
-
-        // Get the URL to edit the option.
-        if (!empty($values->id)) {
-            $bookingsoptionsettings = singleton_service::get_instance_of_booking_option_settings($values->id);
-            if (!empty($bookingsoptionsettings)) {
-
-                if (!$this->context) {
-                    $this->context = context_module::instance($bookingsoptionsettings->cmid);
-                }
-
-                // If the user has no capability to editoptions, the URLs will not be added.
-                if ((has_capability('mod/booking:updatebooking', $this->context) ||
-                        has_capability('mod/booking:addeditownoption', $this->context))) {
-                    if (isset($bookingsoptionsettings->editoptionurl)) {
-                        // Get the URL to edit the option.
-
-                        $data->editoptionurl = $this->add_return_url($bookingsoptionsettings->editoptionurl);
-                    }
-                    if (isset($bookingsoptionsettings->editteachersurl)) {
-                        // Get the URL to edit the teachers for the option.
-                        $data->editteachersurl = $bookingsoptionsettings->editteachersurl;
-                    }
-                    if (isset($bookingsoptionsettings->optiondatesteachersurl)) {
-                        // Get the URL for the optiondates-teachers-report.
-                        $data->optiondatesteachersurl = $bookingsoptionsettings->optiondatesteachersurl;
-                    }
-                }
-            }
-        }
-
-        // If booking option is cancelled, we want to show the "undo cancel" button instead.
-        if ($values->status == 1) {
-            $data->undocancel = true;
-            $data->undocancellink = html_writer::link('#',
-            '<i class="fa fa-undo" aria-hidden="true"></i> ' .
-                get_string('undocancelthisbookingoption', 'mod_booking'),
-                [
-                    'class' => 'dropdown-item undocancelallusers',
-                    'data-id' => $values->id,
-                    'data-componentname' => 'mod_booking',
-                    'onclick' =>
-                        "require(['mod_booking/confirm_cancel'], function(init) {
-                            init.init('" . $values->id . "', '" . $values->status . "');
-                        });"
-                ]);
-        }
-
-        return $this->outputbooking->render_col_text_link($data);
+        return $data->title;
     }
 
 
@@ -499,12 +448,65 @@ class musi_table extends wunderbyte_table {
      */
     public function col_action($values) {
 
-        // Render col_action using a template.
+        if (!$this->booking) {
+            $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id);
+        }
 
-        // Currently, this will use dummy teachers.
-        $data = new col_action($values->id);
+        $data = new stdClass();
 
-        return $this->outputbooking->render_col_action($data);
+        $data->id = $values->id;
+        $data->componentname = 'mod_booking';
+
+        if ($this->booking) {
+            $url = new moodle_url('/mod/booking/optionview.php', ['optionid' => $values->id,
+                                                                  'cmid' => $this->booking->cmid,
+                                                                  'userid' => $this->buyforuser->id]);
+            $data->url = $url->out(false);
+            $data->cmid = $this->booking->cmid;
+        } else {
+            $data->url = '#';
+        }
+
+        // We will have a number of modals on this site, therefore we have to distinguish them.
+        // This is in case we render modal.
+        $data->modalcounter = $values->id;
+        $data->modaltitle = $values->text;
+        $data->userid = $this->buyforuser->id;
+
+        // Get the URL to edit the option.
+        if (!empty($values->id)) {
+            $bookingsoptionsettings = singleton_service::get_instance_of_booking_option_settings($values->id);
+            if (!empty($bookingsoptionsettings)) {
+
+                if (!$this->context) {
+                    $this->context = context_module::instance($bookingsoptionsettings->cmid);
+                }
+
+                // If the user has no capability to editoptions, the URLs will not be added.
+                if ((has_capability('mod/booking:updatebooking', $this->context) ||
+                        has_capability('mod/booking:addeditownoption', $this->context))) {
+                    if (isset($bookingsoptionsettings->editoptionurl)) {
+                        // Get the URL to edit the option.
+
+                        $data->editoptionurl = $this->add_return_url($bookingsoptionsettings->editoptionurl);
+                    }
+                    if (isset($bookingsoptionsettings->editteachersurl)) {
+                        // Get the URL to edit the teachers for the option.
+                        $data->editteachersurl = $bookingsoptionsettings->editteachersurl;
+                    }
+                    if (isset($bookingsoptionsettings->optiondatesteachersurl)) {
+                        // Get the URL for the optiondates-teachers-report.
+                        $data->optiondatesteachersurl = $bookingsoptionsettings->optiondatesteachersurl;
+                    }
+                }
+            }
+        }
+
+        // To easily switch to modal view again.
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        /* return $this->output->render_col_text_modal_js($data); */
+
+        return $this->outputbooking->render_col_text_link($data);
     }
 
     /**
