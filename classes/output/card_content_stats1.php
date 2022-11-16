@@ -60,22 +60,44 @@ class card_content_stats1 implements renderable, templatable {
     private static function return_booking_stats() {
         global $DB;
 
+        if ($activeinstance = get_config('local_musi', 'shortcodessetinstance')) {
+            $sql = "SELECT COUNT(*)
+                FROM {booking_options} bo
+                JOIN {course_modules} cm ON bo.bookingid=cm.instance
+                JOIN {modules} m ON cm.module=m.id
+                WHERE m.name='booking'
+                AND cm.id=:cmid";
+            $coursesavailable = $DB->count_records_sql($sql, ['cmid' => $activeinstance]);
+        } else {
+            $coursesavailable = 0;
+        }
+
         $coursesbooked = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_BOOKED]);
         $coursesincart = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_RESERVED]);
         // M:USI does not use the normal waiting list but observer list instead.
         $coursesdeleted = $DB->count_records('booking_answers', ['waitinglist' => MUSI_STATUSPARAM_DELETED]);
 
-        $coursesboughtcard = $DB->count_records('local_shopping_cart_history', ['payment' => 'success']);
-        $coursespending = $DB->count_records('local_shopping_cart_history', ['payment' => 'pending']);
-        $coursesboughtcashier = $DB->count_records('local_shopping_cart_history', ['payment' => 'cash']);
+        $coursesboughtcard = $DB->count_records('local_shopping_cart_history', ['payment' => PAYMENT_SUCCESS]);
+        $coursespending = $DB->count_records('local_shopping_cart_history', ['payment' => PAYMENT_PENDING]);
+        $paymentsaborted = $DB->count_records('local_shopping_cart_history', ['payment' => PAYMENT_ABORTED]);
+
+        // We have a couple of payment methods for cashier, they are all bigger than 3 (PAYMENT_METHOD_CASHIER_CASH)
+        $sql = "SELECT COUNT (*)
+            FROM {local_shopping_cart_history}
+            WHERE payment >= :cashpayment";
+        $params = ['cashpayment' => PAYMENT_METHOD_CASHIER_CASH];
+
+        $coursesboughtcashier = $DB->count_records_sql($sql, $params);
 
         $data = new stdClass();
+        $data->coursesavailable = ['value' => $coursesavailable];
         $data->coursesbooked = ['value' => $coursesbooked];
         $data->coursesincart = ['value' => $coursesincart];
         $data->coursesdeleted = ['value' => $coursesdeleted];
 
         $data->coursesboughtcard = ['value' => $coursesboughtcard];
         $data->coursespending = ['value' => $coursespending];
+        $data->paymentsaborted = ['value' => $paymentsaborted];
         $data->coursesboughtcashier = ['value' => $coursesboughtcashier];
 
         return $data;

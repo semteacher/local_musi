@@ -48,12 +48,14 @@ $string['numberofcourses_desc'] = 'Information about courses and bookings on thi
 $string['numberofentities'] = 'Number of entities';
 $string['numberofentities_desc'] = 'Information about the sport facilities on the platform.';
 
+$string['coursesavailable'] = 'Courses available';
 $string['coursesbooked'] = 'Courses booked';
 $string['coursesincart'] = 'Courses in shopping cart';
 $string['coursesdeleted'] = 'Deleted courses';
 $string['coursesboughtcard'] = 'Courses bought online';
 $string['coursespending'] = 'Courses pending';
 $string['coursesboughtcashier'] = 'Courses bought at cashier';
+$string['paymentsaborted'] = 'Aborted payments';
 
 $string['settingsandreports'] = 'Settings & Reports';
 $string['editentities'] = 'Edit entities';

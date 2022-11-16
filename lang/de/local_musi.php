@@ -48,12 +48,14 @@ $string['numberofcourses_desc'] = 'Informationen über die Kurse und Buchungen a
 $string['numberofentities'] = 'Anzahl der Sportstätten';
 $string['numberofentities_desc'] = 'Informationen über die Sportstätten auf der Plattform.';
 
+$string['coursesavailable'] = "Buchbare Kurse";
 $string['coursesbooked'] = 'Gebuchte Kurse';
 $string['coursesincart'] = 'Im Warenkorb';
 $string['coursesdeleted'] = 'Gelöschte Kurse';
 $string['coursesboughtcard'] = 'Gekaufte Kurse (Online)';
 $string['coursespending'] = 'Noch unbestätigte Kurse';
 $string['coursesboughtcashier'] = 'Gekaufte Kurse (Kassa)';
+$tring['paymentsaborted'] = 'Abgebrochene Zahlungen';
 
 $string['settingsandreports'] = 'Einstellungen & Berichte';
 $string['editentities'] = 'Sportstätten bearbeiten';
