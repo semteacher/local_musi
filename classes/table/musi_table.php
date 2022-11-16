@@ -215,6 +215,7 @@ class musi_table extends wunderbyte_table {
      * @throws dml_exception
      */
     public function col_text($values) {
+        global $OUTPUT;
 
         if (!$this->booking) {
             $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id);
@@ -274,9 +275,22 @@ class musi_table extends wunderbyte_table {
             }
         }
 
-        // To easily switch to modal view again.
-        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-        /* return $this->output->render_col_text_modal_js($data); */
+        // If booking option is cancelled, we want to show the "undo cancel" button instead.
+        if ($values->status == 1) {
+            $data->undocancel = true;
+            $data->undocancellink = html_writer::link('#',
+            '<i class="fa fa-undo" aria-hidden="true"></i> ' .
+                get_string('undocancelthisbookingoption', 'mod_booking'),
+                [
+                    'class' => 'dropdown-item undocancelallusers',
+                    'data-id' => $values->id,
+                    'data-componentname' => 'mod_booking',
+                    'onclick' =>
+                        "require(['mod_booking/confirm_cancel'], function(init) {
+                            init.init('" . $values->id . "', '" . $values->status . "');
+                        });"
+                ]);
+        }
 
         return $this->outputbooking->render_col_text_link($data);
     }
