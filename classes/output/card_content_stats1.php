@@ -81,8 +81,8 @@ class card_content_stats1 implements renderable, templatable {
         $coursespending = $DB->count_records('local_shopping_cart_history', ['payment' => PAYMENT_PENDING]);
         $paymentsaborted = $DB->count_records('local_shopping_cart_history', ['payment' => PAYMENT_ABORTED]);
 
-        // We have a couple of payment methods for cashier, they are all bigger than 3 (PAYMENT_METHOD_CASHIER_CASH)
-        $sql = "SELECT COUNT (*)
+        // We have a couple of payment methods for cashier, they are all bigger (or equal) than 3 (PAYMENT_METHOD_CASHIER_CASH).
+        $sql = "SELECT COUNT(*)
             FROM {local_shopping_cart_history}
             WHERE payment >= :cashpayment";
         $params = ['cashpayment' => PAYMENT_METHOD_CASHIER_CASH];
