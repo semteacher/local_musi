@@ -24,6 +24,7 @@
 
 namespace local_musi\output;
 
+use moodle_url;
 use renderer_base;
 use renderable;
 use stdClass;
@@ -60,7 +61,21 @@ class card_content_sports implements renderable, templatable {
 
         $data = new stdClass();
 
-        $data->countofsports = ['value' => $DB->count_records('local_musi_sports')];
+        $sportspages = $DB->get_records_sql(
+            "SELECT cm.id, p.name
+            FROM {page} p
+            JOIN {course_modules} cm
+            ON cm.instance = p.id
+            JOIN {modules} m
+            ON m.id = cm.module
+            WHERE m.name = 'page'
+            AND (p.content LIKE '%allekurse%category%'
+            OR p.intro LIKE '%allekurse%category%')");
+
+        foreach ($sportspages as $sportspage) {
+            $url = new moodle_url('/mod/page/view.php', ['id' => $sportspage->id]);
+            $data->{$sportspage->name} = ['link' => $url->out(false)];
+        }
 
         return $data;
     }
@@ -75,7 +90,7 @@ class card_content_sports implements renderable, templatable {
         foreach ($this->data as $key => $value) {
 
             $item = [
-                'key' => get_string($key, 'local_musi')
+                'key' => $key
             ];
 
             // We only have value & link at the time as types, but might have more at one point.

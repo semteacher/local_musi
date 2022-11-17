@@ -77,11 +77,15 @@ class dashboard implements renderable, templatable {
      * @return void
      */
     public function card_sports() {
+        global $PAGE;
+        $output = $PAGE->get_renderer('local_musi');
+        $data = new card_content_sports();
+
         $card = new card(
             get_string('listofsports', 'local_musi'),
-            get_string('listofsports', 'local_musi'),
+            $output->render_card_content($data),
             get_string('listofsports_desc', 'local_musi'),
-            'bg-warning'
+            'bg-light'
         );
         $this->add_card($card);
     }
@@ -92,18 +96,15 @@ class dashboard implements renderable, templatable {
      * @return void
      */
     public function card_entities() {
-
         global $PAGE;
-
         $output = $PAGE->get_renderer('local_musi');
-
         $data = new card_content_entities();
 
         $card = new card(
             get_string('entities', 'local_musi'),
             $output->render_card_content($data),
             get_string('numberofentities_desc', 'local_musi'),
-            'bg-danger'
+            'bg-light'
         );
         $this->add_card($card);
     }
@@ -123,7 +124,7 @@ class dashboard implements renderable, templatable {
             get_string('numberofcourses', 'local_musi'),
             $output->render_card_content($data),
             get_string('numberofcourses_desc', 'local_musi'),
-            'bg-success'
+            'bg-light'
         );
         $this->add_card($card);
     }
@@ -142,7 +143,7 @@ class dashboard implements renderable, templatable {
         $card = new card(
             get_string('settingsandreports', 'local_musi'),
             $output->render_card_content($data),
-            '', 'bg-primary'
+            '', 'bg-light'
         );
         $this->add_card($card);
     }
