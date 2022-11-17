@@ -61,6 +61,7 @@ $string['bookinganswersdeleted'] = "Deleted booking answers";
 $string['settingsandreports'] = 'Settings & Reports';
 $string['editentities'] = 'Edit entities';
 $string['editentitiescategories'] = 'Edit categories of entities';
+$string['importentities'] = 'Import entities';
 $string['editbookinginstance'] = 'Edit semester instance';
 $string['editbookings'] = 'Overview of courses';
 $string['viewteachers'] = 'Teacher overview';

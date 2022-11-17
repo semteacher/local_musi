@@ -100,7 +100,7 @@ class dashboard implements renderable, templatable {
         $data = new card_content_entities();
 
         $card = new card(
-            get_string('numberofentities', 'local_musi'),
+            get_string('entities', 'local_musi'),
             $output->render_card_content($data),
             get_string('numberofentities_desc', 'local_musi'),
             'bg-danger'

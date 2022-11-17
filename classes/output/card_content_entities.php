@@ -69,6 +69,9 @@ class card_content_entities implements renderable, templatable {
         $url = new moodle_url('/local/entities/customfield.php');
         $data->editentitiescategories = ['link' => $url->out(false)];
 
+        $url = new moodle_url('/local/entities/import.php');
+        $data->importentities = ['link' => $url->out(false)];
+
         return $data;
     }
 
