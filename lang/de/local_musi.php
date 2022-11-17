@@ -39,10 +39,10 @@ $string['shortcodeslistofteachersascards'] = 'Liste aller Trainer als Karten';
 $string['allcourses'] = 'Alle Kurse';
 
 // Cards.
-$string['listofsports'] = 'Liste der Sportarten';
+$string['listofsports'] = 'Sportarten';
 $string['listofsports_desc'] = 'Zeige und editiere die Liste der Sportarten auf diesem System.';
 
-$string['numberofcourses'] = 'Anzahl der Kurse';
+$string['numberofcourses'] = 'Kurse';
 $string['numberofcourses_desc'] = 'Informationen über die Kurse und Buchungen auf der Plattform.';
 
 $string['numberofentities'] = 'Anzahl der Sportstätten';
@@ -59,6 +59,7 @@ $string['paymentsaborted'] = 'Abgebrochene Zahlungen';
 $string['bookinganswersdeleted'] = "Gelöschte Buchungen";
 
 $string['settingsandreports'] = 'Einstellungen & Berichte';
+$string['settingsandreports_desc'] = 'Verschiedene Einstellungen und Berichte, die für M:USI relevant sind.';
 $string['editentities'] = 'Sportstätten bearbeiten';
 $string['editentitiescategories'] = 'Kategorien der Sportstätten bearbeiten';
 $string['importentities'] = 'Sportstätten importieren';

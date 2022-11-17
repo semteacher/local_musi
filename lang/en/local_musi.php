@@ -39,10 +39,10 @@ $string['shortcodeslistofteachersascards'] = 'List of teachers as cards';
 $string['allcourses'] = 'All courses';
 
 // Cards.
-$string['listofsports'] = 'List of sports';
+$string['listofsports'] = 'Sports';
 $string['listofsports_desc'] = 'View and edit the list of sports on this system';
 
-$string['numberofcourses'] = 'Number of courses';
+$string['numberofcourses'] = 'Courses';
 $string['numberofcourses_desc'] = 'Information about courses and bookings on this platform.';
 
 $string['numberofentities'] = 'Number of entities';
@@ -59,6 +59,7 @@ $string['paymentsaborted'] = 'Aborted payments';
 $string['bookinganswersdeleted'] = "Deleted booking answers";
 
 $string['settingsandreports'] = 'Settings & Reports';
+$string['settingsandreports_desc'] = 'Various settings and reports relevant for M:USI.';
 $string['editentities'] = 'Edit entities';
 $string['editentitiescategories'] = 'Edit categories of entities';
 $string['importentities'] = 'Import entities';

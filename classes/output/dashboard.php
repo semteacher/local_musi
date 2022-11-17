@@ -143,7 +143,8 @@ class dashboard implements renderable, templatable {
         $card = new card(
             get_string('settingsandreports', 'local_musi'),
             $output->render_card_content($data),
-            '', 'bg-light'
+            get_string('settingsandreports_desc', 'local_musi'),
+            'bg-light'
         );
         $this->add_card($card);
     }
