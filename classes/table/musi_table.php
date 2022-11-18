@@ -47,16 +47,19 @@ defined('MOODLE_INTERNAL') || die();
  */
 class musi_table extends wunderbyte_table {
 
+    /** @var renderer_base $outputbooking */
     private $outputbooking = null;
 
+    /** @var renderer_base $outputmusi */
     private $outputmusi = null;
 
-    private $bookingsoptionsettings = [];
-
+    /** @var booking $booking */
     private $booking = null;
 
+    /** @var stdClass $buyforuser */
     private $buyforuser = null;
 
+    /** @var context_module $buyforuser */
     private $context = null;
 
     /**
@@ -65,7 +68,7 @@ class musi_table extends wunderbyte_table {
      *      as a key when storing table properties like sort order in the session.
      * @param booking $booking the booking instance
      */
-    public function __construct($uniqueid, $booking = null) {
+    public function __construct(int $uniqueid, booking $booking = null) {
         parent::__construct($uniqueid);
 
         global $PAGE;
