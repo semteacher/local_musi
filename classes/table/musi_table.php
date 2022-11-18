@@ -64,11 +64,11 @@ class musi_table extends wunderbyte_table {
 
     /**
      * Constructor
-     * @param int $uniqueid all tables have to have a unique id, this is used
+     * @param string $uniqueid all tables have to have a unique id, this is used
      *      as a key when storing table properties like sort order in the session.
      * @param booking $booking the booking instance
      */
-    public function __construct(int $uniqueid, booking $booking = null) {
+    public function __construct(string $uniqueid, booking $booking = null) {
         parent::__construct($uniqueid);
 
         global $PAGE;
