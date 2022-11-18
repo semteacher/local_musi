@@ -204,6 +204,7 @@ class musi_table extends wunderbyte_table {
                         return $description;
                 }
             }
+            // TODO: If no price is set at all, we need to add possibility to book right away without shopping cart!
             return 'book right away, no price';
         }
     }
