@@ -121,7 +121,7 @@ class shortcodes {
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('cardbody', ['sport', 'text', 'action', 'dayofweektime', 'teacher', 'location',
+        $table->add_subcolumns('cardbody', ['sport', 'text', 'action', 'botags', 'dayofweektime', 'teacher', 'location',
             'bookings', 'price', 'divider']);
 
         // This avoids showing all keys in list view.
@@ -133,6 +133,9 @@ class shortcodes {
 
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-md-9 col-sm-9 text-left'], ['text']);
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-right'], ['action']);
+
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-12 text-left'], ['botags']);
+        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tags'], ['botags']);
 
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-left'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
@@ -337,14 +340,16 @@ class shortcodes {
         $table->add_subcolumns('cardimage', ['image']);
         $table->add_subcolumns('optioninvisible', ['invisibleoption']);
 
-        $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher', 'botags']);
+        $table->add_subcolumns('cardbody', ['action', 'invisibleoption', 'sport', 'text', 'botags', 'teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'float-right m-1'], ['action']);
         $table->add_classes_to_subcolumns(
             'cardbody',
             ['columnvalueclass' => 'shortcodes_option_info_invisible'],
             ['invisibleoption']
         );
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6 sport-badge rounded-sm bg-light text-dark
+        pl-1 pr-1 pb-0 pt-0 mr-1'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
 
