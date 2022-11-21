@@ -162,10 +162,10 @@ class musi_table extends wunderbyte_table {
             }
             if (has_capability('mod/booking:bookforothers', $this->context)) {
                 $data = new col_price($values, $settings, $this->buyforuser, $this->context);
-                $description = html_writer::div($description, 'alert alert-danger');
+                $description = html_writer::div($description, 'alert alert-danger text-center');
                 $description .= $this->outputbooking->render_col_price($data);
             } else {
-                $description = html_writer::div($description, 'alert alert-warning');
+                $description = html_writer::div($description, 'alert alert-warning text-center');
             }
 
             // Price blocks normal availability, if it's the only one, we show the cart.
@@ -175,18 +175,14 @@ class musi_table extends wunderbyte_table {
                         // We pass on the id of the booking option.
                         $data = new col_price($values, $settings, $this->buyforuser, $this->context);
                         return $this->outputbooking->render_col_price($data);
-                        break;
                     case BO_COND_PRICEISSET:
                         // We pass on the id of the booking option.
                         $data = new col_price($values, $settings, $this->buyforuser, $this->context);
                         return $this->outputbooking->render_col_price($data);
-                        break;
                     case BO_COND_ALREADYBOOKED:
-                        return $originaldescription;
-                        break;
+                        return html_writer::div($originaldescription, 'alert alert-success text-center');
                     case BO_COND_ISCANCELLED:
                         return $description;
-                        break;
                     case BO_COND_FULLYBOOKED:
                         $usenotificationlist = get_config('booking', 'usenotificationlist');
                         $bookinganswer = singleton_service::get_instance_of_booking_answers($settings);
@@ -499,6 +495,10 @@ class musi_table extends wunderbyte_table {
                     if (isset($bookingsoptionsettings->editteachersurl)) {
                         // Get the URL to edit the teachers for the option.
                         $data->editteachersurl = $bookingsoptionsettings->editteachersurl;
+                    }
+                    if (isset($bookingsoptionsettings->manageresponsesurl)) {
+                        // Get the URL to manage responses (answers) for the option.
+                        $data->manageresponsesurl = $bookingsoptionsettings->manageresponsesurl;
                     }
                     if (isset($bookingsoptionsettings->optiondatesteachersurl)) {
                         // Get the URL for the optiondates-teachers-report.

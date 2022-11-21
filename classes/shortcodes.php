@@ -137,11 +137,11 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-left'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-left'], ['teacher']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-7 col-md-7 text-left'], ['location']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-left'], ['location']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-8 col-md-8 text-left'], ['bookings']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-4 col-md-4 text-right'], ['price']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-left'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-map-ticket'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-right'], ['price']);
 
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-md-12 col-sm-12'], ['divider']);
 

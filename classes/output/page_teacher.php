@@ -167,7 +167,7 @@ class page_teacher implements renderable, templatable {
 
                 $lazy = $firsttable ? '' : ' lazy="1" ';
 
-                $out = format_text('[allekursekarten id="' . $booking->cmid . '" teacherid="'
+                $out = format_text('[allekurseliste search=1 id="' . $booking->cmid . '" teacherid="'
                     . $teacherid . '" ' . $lazy . ']', FORMAT_HTML);
 
                 $class = $firsttable ? 'active show' : '';
