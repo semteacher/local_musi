@@ -37,6 +37,11 @@ $shortcodes = [
         'wraps' => false,
         'description' => 'shortcodeslistofbookingoptionsascards'
     ],
+    'allekursegrid' => [
+        'callback' => 'local_musi\shortcodes::allcoursesgrid',
+        'wraps' => false,
+        'description' => 'shortcodeslistofbookingoptionsascards'
+    ],
     'meinekursekarten' => [
         'callback' => 'local_musi\shortcodes::mycoursescards',
         'wraps' => false,

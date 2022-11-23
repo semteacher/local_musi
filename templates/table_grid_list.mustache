@@ -60,30 +60,27 @@
     }
 }}
 
-<div class="row" {{#datafields}} data-{{key}}="{{value}}" {{/datafields}}>
-      {{#cardbody}}
-        {{#columnclass}}<div class="{{.}} {{key}}">{{/columnclass}}
-          <span {{^value}} style="display:none" {{/value}}>
-          {{#columniclassbefore}}
-            <i class="{{.}}" aria-hidden="true"></i>
-          {{/columniclassbefore}}
-          </span>
-          {{#columnkeyclass}}<span class="key {{.}}">{{/columnkeyclass}}
-            {{^keystring}}
-            {{{key}}}
-          {{/keystring}}
-          {{#keystring}}
-            {{.}}
-          {{/keystring}}:
-          {{#columnkeyclass}}</span>{{/columnkeyclass}}
-          <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}} ">
-            {{{value}}}
-          {{#columnvalueclass}}</span>{{/columnvalueclass}}
-          <span {{^value}} style="display:none" {{/value}}>
-          {{#columniclassafter}}
-            <i class="value {{.}}" aria-hidden="true"></i>
-          {{/columniclassafter}}
-          </span>
-        {{#columnclass}}</div>{{/columnclass}}
-      {{/cardbody}}
+{{#table}}
+<div class="wunderbyte-table-grid">
+     <div class="grid-entries">
+          {{#rows}}
+               {{> local_musi/table_grid_list_row}}
+          {{/rows}}
+     </div>
 </div>
+{{/table}}
+
+{{#js}}
+    require(['local_wunderbyte_table/init'], function(init) {
+    init.init('{{idstring}}', '{{encodedtable}}');
+    });
+    require(['local_shopping_cart/cart'], function(cart) {
+    cart.buttoninit(null, 'mod_booking');
+    });
+    require(['mod_booking/modal_init'], function(init) {
+    init.init();
+    });
+    require(['mod_booking/button_notifyme'], function(init) {
+    init.init();
+    });
+{{/js}}

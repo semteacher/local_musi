@@ -60,30 +60,30 @@
     }
 }}
 
-<div class="row" {{#datafields}} data-{{key}}="{{value}}" {{/datafields}}>
-      {{#cardbody}}
-        {{#columnclass}}<div class="{{.}} {{key}}">{{/columnclass}}
-          <span {{^value}} style="display:none" {{/value}}>
-          {{#columniclassbefore}}
-            <i class="{{.}}" aria-hidden="true"></i>
-          {{/columniclassbefore}}
-          </span>
-          {{#columnkeyclass}}<span class="key {{.}}">{{/columnkeyclass}}
-            {{^keystring}}
-            {{{key}}}
-          {{/keystring}}
-          {{#keystring}}
-            {{.}}
-          {{/keystring}}:
-          {{#columnkeyclass}}</span>{{/columnkeyclass}}
-          <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}} ">
-            {{{value}}}
-          {{#columnvalueclass}}</span>{{/columnvalueclass}}
-          <span {{^value}} style="display:none" {{/value}}>
-          {{#columniclassafter}}
-            <i class="value {{.}}" aria-hidden="true"></i>
-          {{/columniclassafter}}
-          </span>
-        {{#columnclass}}</div>{{/columnclass}}
-      {{/cardbody}}
+<div class="grid-entry">
+  {{#entrybody}}
+    {{#columnclass}}<div class="{{.}} {{key}}">{{/columnclass}}
+      <span {{^value}} style="display:none" {{/value}}>
+      {{#columniclassbefore}}<i class="{{.}}" aria-hidden="true"></i>{{/columniclassbefore}}
+      </span>
+      {{#columnkeyclass}}
+      <span class="key {{.}}">
+      {{/columnkeyclass}}
+      {{^keystring}}
+      {{{key}}}
+      {{/keystring}}
+      {{#keystring}}
+      {{.}}
+      {{/keystring}}:
+      {{#columnkeyclass}}</span>{{/columnkeyclass}}
+      <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}} ">
+      {{{value}}}
+      {{#columnvalueclass}}</span>{{/columnvalueclass}}
+      <span {{^value}} style="display:none" {{/value}}>
+      {{#columniclassafter}}
+      <i class="value {{.}}" aria-hidden="true"></i>
+      {{/columniclassafter}}
+      </span>
+    {{#columnclass}}</div>{{/columnclass}}
+  {{/entrybody}}
 </div>

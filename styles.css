@@ -87,3 +87,16 @@
         border-bottom: 0;
     }
 }
+
+/* Tablegrid. */
+.wunderbyte-table-grid .grid-entry {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+
