@@ -239,19 +239,6 @@ class musi_table extends wunderbyte_table {
         return $title;
     }
 
-    /**
-     * This function is called for each data row to allow processing of the
-     * divider value.
-     *
-     * @param object $values Contains object with all the values of record.
-     * @return string $string Return name of the booking option.
-     * @throws dml_exception
-     */
-    public function col_divider($values) {
-
-        return "<hr>";
-    }
-
 
     /**
      * This function is called for each data row to allow processing of the

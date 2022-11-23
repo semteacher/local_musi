@@ -122,7 +122,7 @@ class shortcodes {
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
         $table->add_subcolumns('cardbody', ['sport', 'text', 'action', 'botags', 'dayofweektime', 'teacher', 'location',
-            'bookings', 'price', 'divider']);
+            'bookings', 'price']);
 
         // This avoids showing all keys in list view.
         $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-md-none']);
@@ -145,8 +145,6 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-left'], ['bookings']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-map-ticket'], ['bookings']);
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-right'], ['price']);
-
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-md-12 col-sm-12'], ['divider']);
 
         // Override naming for columns. one could use getstring for localisation here.
         $table->add_classes_to_subcolumns(
