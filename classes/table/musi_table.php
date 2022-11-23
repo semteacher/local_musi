@@ -98,7 +98,7 @@ class musi_table extends wunderbyte_table {
      */
     public function col_invisibleoption($values) {
 
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
         if (!empty($settings->invisible)) {
             return get_string('invisibleoption', 'mod_booking');
@@ -109,7 +109,7 @@ class musi_table extends wunderbyte_table {
 
     public function col_image($values) {
 
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
         if (empty($settings->imageurl)) {
             return null;
@@ -129,7 +129,7 @@ class musi_table extends wunderbyte_table {
     public function col_teacher($values) {
 
         // Render col_teacher using a template.
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
         $data = new col_teacher($values->id, $settings);
         return $this->outputmusi->render_col_teacher($data);
     }
@@ -145,7 +145,7 @@ class musi_table extends wunderbyte_table {
     public function col_price($values) {
 
         // Render col_price using a template.
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
         // Get the availability information for this booking option.
         // boinfo contains availability information, description, visibility information etc.
@@ -250,7 +250,7 @@ class musi_table extends wunderbyte_table {
      */
     public function col_bookings($values) {
 
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
         // Render col_bookings using a template.
         $data = new col_availableplaces($values, $settings, $this->buyforuser);
         return $this->outputbooking->render_col_availableplaces($data);
@@ -266,7 +266,7 @@ class musi_table extends wunderbyte_table {
      */
     public function col_location($values) {
 
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
         if (isset($settings->entity) && (count($settings->entity) > 0)) {
 
@@ -293,7 +293,7 @@ class musi_table extends wunderbyte_table {
      */
     public function col_sport($values) {
 
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
         if (isset($settings->customfields) && isset($settings->customfields['sport'])) {
             if (is_array($settings->customfields['sport'])) {
@@ -332,7 +332,7 @@ class musi_table extends wunderbyte_table {
      */
     public function col_botags($values) {
 
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
         $botagsstring = '';
 
@@ -370,7 +370,7 @@ class musi_table extends wunderbyte_table {
     public function col_dayofweektime($values) {
 
         $ret = '';
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
         $units = null;
         if (!empty($settings->dayofweektime)) {
@@ -425,7 +425,7 @@ class musi_table extends wunderbyte_table {
         // Link is empty on default.
         $link = '';
 
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->optionid);
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->optionid, $values);
         $bookinganswers = singleton_service::get_instance_of_booking_answers($settings, 0);
 
         if (count($bookinganswers->usersonlist) > 0) {
@@ -461,7 +461,7 @@ class musi_table extends wunderbyte_table {
     public function col_action($values) {
 
         if (!$this->booking) {
-            $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id);
+            $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id, $values);
         }
 
         $data = new stdClass();
@@ -481,7 +481,7 @@ class musi_table extends wunderbyte_table {
 
         // Get the URL to edit the option.
         if (!empty($values->id)) {
-            $bookingsoptionsettings = singleton_service::get_instance_of_booking_option_settings($values->id);
+            $bookingsoptionsettings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
             if (!empty($bookingsoptionsettings)) {
 
                 if (!$this->context) {
