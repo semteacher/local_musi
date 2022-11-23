@@ -315,6 +315,23 @@ class musi_table extends wunderbyte_table {
                 return $settings->customfields['sport'];
             }
         }
+
+        // Normally we won't arrive here, but if so, we want to show a meaningful error message.
+        if (!$this->context) {
+            $this->context = context_module::instance($settings->cmid);
+        }
+
+        // The error message should only be shown to admins.
+        if (has_capability('moodle/site:config', $this->context)) {
+
+            $message = get_string('youneedcustomfieldsport', 'local_musi');
+
+            $message = "<div class='alert alert-danger'>$message</div>";
+
+            return $message;
+        }
+
+        // Normal users won't notice the problem.
         return '';
     }
 

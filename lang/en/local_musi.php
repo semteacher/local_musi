@@ -97,6 +97,7 @@ $string['createbotag:helptext'] = '<p>
 
 // Edit sports.
 $string['editsports'] = 'Edit sports';
+$string['youneedcustomfieldsport'] = 'The booking customfield with the shortname "sport" needs to be created';
 
 // Teachers.
 $string['teacher'] = 'Teacher';

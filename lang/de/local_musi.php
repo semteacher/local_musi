@@ -97,6 +97,7 @@ $string['createbotag:helptext'] = '<p>
 
 // Edit sports.
 $string['editsports'] = 'Sportarten bearbeiten';
+$string['youneedcustomfieldsport'] = 'Das booking customfield mit dem Shortname "sport" ist nicht vorhanden.';
 
 // Teachers.
 $string['teacher'] = 'Trainer:in';
