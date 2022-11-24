@@ -138,3 +138,12 @@ $string['entities'] = 'Sportstätten';
 $string['dayofweek'] = "Wochentag";
 $string['sport'] = "Sportart";
 $string['coursename'] = "Kursname";
+
+// Contract management.
+$string['contractmanagementsettings'] = 'Vertragsmanagement-Einstellungen';
+$string['contractmanagementsettings_desc'] = 'Konfigurieren Sie hier, wie sich Verträge auf Abrechnungen
+ auswirken und welche Sonderfälle es gibt.';
+$string['contractformula'] = 'Vertragsformel';
+$string['contractformula_desc'] = 'Hier können Sie eine JSON-Formel angeben, die festlegt, wie sich Verträge auf Abrechnungen
+ auswirken und welche Sonderfälle es gibt.';
+$string['contractformulatest'] = 'Vertragsformel testen';

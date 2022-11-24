@@ -14,51 +14,41 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Add dates to option.
+ * Test the contract formula.
  *
  * @package local_musi
  * @copyright 2022 Georg Maißer <info@wunderbyte.at>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__ . '/../../config.php');
+use local_musi\contractmanager;
+
+require_once(__DIR__ . '/../../../config.php');
 
 // No guest autologin.
 require_login(0, false);
 
 global $DB, $PAGE, $OUTPUT, $USER;
 
+$userid = required_param('userid', PARAM_INT);
+
 if (!$context = context_system::instance()) {
     throw new moodle_exception('badcontext');
 }
-
-$type = optional_param('type', 'liste', PARAM_TEXT);
-
-// Check if optionid is valid.
 $PAGE->set_context($context);
 
-$title = get_string('allcourses', 'local_musi');
+$title = get_string('contractformulatest', 'local_musi');
 
-$PAGE->set_url('/local/musi/allekurse.php');
+$PAGE->set_url('/local/musi/test/contractformula_test.php');
 $PAGE->navbar->add($title);
 $PAGE->set_title(format_string($title));
 $PAGE->set_heading($title);
 $PAGE->set_pagelayout('standard');
-$PAGE->add_body_class('local_musi-allcourses');
+$PAGE->add_body_class('local_musi-contractformula-test');
 
 echo $OUTPUT->header();
 
-switch ($type) {
-    case 'karten':
-        echo format_text("[allekursekarten filter=1 search=1]", FORMAT_HTML);
-        break;
-    case 'grid':
-        echo format_text("[allekursegrid filter=1 search=1]", FORMAT_HTML);
-        break;
-    case 'liste':
-    default:
-        echo format_text("[allekurseliste filter=1 search=1]", FORMAT_HTML);
-        break;
-}
+echo "<p>Gesetzte userid: $userid</p>";
+echo "Stundensatz: " . contractmanager::get_hourrate($userid);
 
 echo $OUTPUT->footer();

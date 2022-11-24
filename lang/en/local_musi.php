@@ -138,3 +138,10 @@ $string['musi'] = 'MUSI';
 $string['cachier'] = 'Cashiers desk';
 $string['entities'] = 'Sport locations';
 $string['coursename'] = "Coursename";
+
+// Contract management.
+$string['contractmanagementsettings'] = 'Contract management settings';
+$string['contractmanagementsettings_desc'] = 'Configure how contracts affect staff invoices and define special cases.';
+$string['contractformula'] = 'Contract formula';
+$string['contractformula_desc'] = 'Configure how contracts affect staff invoices and define special cases using a JSON formula.';
+$string['contractformulatest'] = 'Test the contract formula';

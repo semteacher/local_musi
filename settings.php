@@ -77,4 +77,15 @@ if ($hassiteconfig) {
                     $defaultcmid, $allowedinstances));
         }
     }
+
+    // CONTRACT MANAGEMENT.
+    $settings->add(
+        new admin_setting_heading('contractmanagement_heading',
+            get_string('contractmanagementsettings', 'local_musi'),
+            get_string('contractmanagementsettings_desc', 'local_musi')));
+
+    $settings->add(
+        new admin_setting_configtextarea('local_musi/contractformula',
+            get_string('contractformula', 'local_musi'),
+            get_string('contractformula_desc', 'local_musi'), '', PARAM_TEXT, 60, 10));
 }
