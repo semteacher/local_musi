@@ -59,20 +59,32 @@
        ]
     }
 }}
-<div class="wunderbyte_table_container_{{idstring}} wunderbyte_table_container">
-     <aside class="wunderbyte_table_components">
-          <div>
+<div class="wunderbyte_table_container_{{idstring}} mt-2">
+     <div class="container-fluid">
+          <div class="row mb-2">
+               <div class="">
+                    <div>
+                         {{> local_wunderbyte_table/component_toggle }}
+                         {{> local_wunderbyte_table/component_reload }}
+                         {{> local_wunderbyte_table/component_print }}
+                    </div>
+               </div>
+               <div class="ml-auto">
+                    {{> local_wunderbyte_table/component_search }}
+               </div>
+          </div>
+     </div>
+
+
+     <div class="wunderbyte_table_container">
+          <aside class="wunderbyte_table_components {{^showcomponentstoggle}} inactive {{/showcomponentstoggle}}">
                {{> local_wunderbyte_table/component_sort }}
-          </div>
-          <div>
-               {{> local_wunderbyte_table/component_search }}
-          </div>
-          <div>
                {{> local_wunderbyte_table/component_filter }}
-          </div>
-     </aside>
-     <div class= "wunderbyteTableClass" id='a{{idstring}}'>
+               {{> local_wunderbyte_table/component_infinitescroll }}
+          </aside>
+          <div class= "wunderbyteTableClass" id='a{{idstring}}'>
           {{> local_musi/table_card }}
+          </div>
      </div>
 </div>
 
