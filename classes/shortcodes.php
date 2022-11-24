@@ -125,7 +125,7 @@ class shortcodes {
             'bookings', 'price']);
 
         // This avoids showing all keys in list view.
-        $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-md-none']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
 
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-12 text-left'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'sport-badge rounded-sm bg-light text-dark
