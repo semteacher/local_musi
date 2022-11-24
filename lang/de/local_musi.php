@@ -147,3 +147,4 @@ $string['contractformula'] = 'Vertragsformel';
 $string['contractformula_desc'] = 'Hier können Sie eine JSON-Formel angeben, die festlegt, wie sich Verträge auf Abrechnungen
  auswirken und welche Sonderfälle es gibt.';
 $string['contractformulatest'] = 'Vertragsformel testen';
+$string['editcontractformula'] = 'Vertragsformel bearbeiten';

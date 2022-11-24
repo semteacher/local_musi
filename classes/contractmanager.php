@@ -68,7 +68,9 @@ class contractmanager {
 
             if ($key === 'customfield') {
                 foreach ($value as $cfval) {
-                    if (empty($user->{'profile_field_' . $cfval->name})) {
+                    if (empty($cfval->hourrate)
+                        || empty($cfval->value)
+                        || empty($user->{'profile_field_' . $cfval->name})) {
                         continue;
                     }
                     if ($user->{'profile_field_' . $cfval->name} === $cfval->value) {

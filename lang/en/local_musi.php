@@ -145,3 +145,4 @@ $string['contractmanagementsettings_desc'] = 'Configure how contracts affect sta
 $string['contractformula'] = 'Contract formula';
 $string['contractformula_desc'] = 'Configure how contracts affect staff invoices and define special cases using a JSON formula.';
 $string['contractformulatest'] = 'Test the contract formula';
+$string['editcontractformula'] = 'Edit contract formula';
