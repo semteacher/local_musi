@@ -155,49 +155,38 @@ class musi_table extends wunderbyte_table {
         // ... even if availability for the user is not given.
         if (list($conditionid, $isavailable, $description) = $boinfo->get_description(true, $settings, $this->buyforuser->id)) {
 
-            // In some cases, we stick to the original.
-            $originaldescription = $description;
-            if (!$this->context) {
-                $this->context = context_module::instance($settings->cmid);
-            }
-            if (has_capability('mod/booking:bookforothers', $this->context)) {
-                $data = new col_price($values, $settings, $this->buyforuser, $this->context);
-                $description = html_writer::div($description, 'alert alert-danger text-center');
-                $description .= $this->outputbooking->render_col_price($data);
-            } else {
-                $description = html_writer::div($description, 'alert alert-warning text-center');
-            }
-
             // Price blocks normal availability, if it's the only one, we show the cart.
             if (!$isavailable) {
+
+                // If user has capability to book for others (e.g. cashier), we allow overbooking.
+                $showprice = false;
+                if (has_capability('mod/booking:bookforothers', $this->context)) {
+                    // Allow overbooking.
+                    $showprice = true;
+                }
+
+                // We only show notify me button if it's turned on in settings.
+                $shownotificationlist = false;
+                if (get_config('booking', 'usenotificationlist')) {
+                    $shownotificationlist = true;
+                }
+
                 switch ($conditionid) {
                     case BO_COND_ISLOGGEDIN:
-                        // We pass on the id of the booking option.
-                        $data = new col_price($values, $settings, $this->buyforuser, $this->context);
-                        return $this->outputbooking->render_col_price($data);
                     case BO_COND_PRICEISSET:
-                        // We pass on the id of the booking option.
-                        $data = new col_price($values, $settings, $this->buyforuser, $this->context);
-                        return $this->outputbooking->render_col_price($data);
+                        return bo_info::render_conditionmessage('', '', $values->id, true, $values,
+                            false, $this->buyforuser);
                     case BO_COND_ALREADYBOOKED:
-                        return html_writer::div($originaldescription, 'alert alert-success text-center');
-                    case BO_COND_ISCANCELLED:
-                        return $description;
+                        return bo_info::render_conditionmessage($description, 'success');
+                    case BO_COND_ONWAITINGLIST:
+                        return bo_info::render_conditionmessage($description, 'warning');
                     case BO_COND_FULLYBOOKED:
-                        $usenotificationlist = get_config('booking', 'usenotificationlist');
-                        $bookinganswer = singleton_service::get_instance_of_booking_answers($settings);
-                        $bookinginformation = $bookinganswer->return_all_booking_information($this->buyforuser->id);
-
-                        if ($usenotificationlist) {
-                            $data = new button_notifyme($this->buyforuser->id, $values->id,
-                                $bookinginformation['notbooked']['onnotifylist']);
-                            return $this->outputbooking->render_notifyme_button($data);
-                        } else {
-                            return $description;
-                        }
-                        break;
+                        return bo_info::render_conditionmessage($description, 'warning', $values->id,
+                            $showprice, $values, $shownotificationlist, $this->buyforuser);
+                    case BO_COND_ISCANCELLED:
                     default:
-                        return $description;
+                        return bo_info::render_conditionmessage($description, 'danger', $values->id,
+                            $showprice, $values, false, $this->buyforuser);
                 }
             }
             // TODO: If no price is set at all, we need to add possibility to book right away without shopping cart!
