@@ -147,6 +147,11 @@ class musi_table extends wunderbyte_table {
         // Render col_price using a template.
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
+        // Normally we won't arrive here, but if so, we want to show a meaningful error message.
+        if (!$this->context) {
+            $this->context = context_module::instance($settings->cmid);
+        }
+
         // Get the availability information for this booking option.
         // boinfo contains availability information, description, visibility information etc.
         $boinfo = new bo_info($settings);
