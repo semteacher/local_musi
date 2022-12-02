@@ -29,7 +29,7 @@ use html_writer;
 use local_wunderbyte_table\wunderbyte_table;
 use mod_booking\bo_availability\bo_info;
 use mod_booking\booking;
-use mod_booking\optiondates_handler;
+use mod_booking\dates_handler;
 use mod_booking\output\button_notifyme;
 use mod_booking\output\col_availableplaces;
 use mod_booking\output\col_price;
@@ -368,7 +368,7 @@ class musi_table extends wunderbyte_table {
 
         $units = null;
         if (!empty($settings->dayofweektime)) {
-            $units = optiondates_handler::calculate_and_render_educational_units($settings->dayofweektime);
+            $units = dates_handler::calculate_and_render_educational_units($settings->dayofweektime);
         }
 
         if (!empty($settings->dayofweektime)) {
