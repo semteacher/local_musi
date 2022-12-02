@@ -185,6 +185,26 @@ class musi_table extends wunderbyte_table {
                     case BO_COND_FULLYBOOKED:
                         return bo_info::render_conditionmessage($description, 'warning', $values->id,
                             $showprice, $values, $shownotificationlist, $this->buyforuser);
+                    case BO_COND_SUBBOOKINGBLOCKS:
+                        return bo_info::render_conditionmessage(
+                            $description,
+                            '',
+                            $values->id,
+                            false,
+                            $values,
+                            false,
+                            null,
+                            true);
+                    case BO_COND_SUBBOOKING:
+                        return bo_info::render_conditionmessage(
+                            $description,
+                            '',
+                            $values->id,
+                            false,
+                            $values,
+                            false,
+                            null,
+                            true);
                     case BO_COND_ISCANCELLED:
                     default:
                         return bo_info::render_conditionmessage($description, 'danger', $values->id,
