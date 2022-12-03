@@ -25,7 +25,7 @@ use context;
 use context_module;
 use core_form\dynamic_form;
 use moodle_url;
-use mod_booking\optiondates_handler;
+use mod_booking\dates_handler;
 use mod_booking\semester;
 use stdClass;
 
@@ -64,7 +64,7 @@ class sports_form extends dynamic_form {
             $loadexistingdates = true;
         }
 
-        $optiondateshandler = new optiondates_handler($optionid, $bookingid);
+        $optiondateshandler = new dates_handler($optionid, $bookingid);
         $optiondateshandler->add_optiondates_for_semesters_to_mform($mform, $loadexistingdates);
 
         $this->add_action_buttons(false, get_string('add_optiondate_series', 'mod_booking'));
