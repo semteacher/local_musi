@@ -72,7 +72,6 @@ class musi_table extends wunderbyte_table {
         parent::__construct($uniqueid);
 
         global $PAGE;
-        $this->baseurl = $PAGE->url;
 
         if ($booking) {
             $this->booking = $booking;
