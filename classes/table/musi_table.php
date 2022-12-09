@@ -29,6 +29,7 @@ use html_writer;
 use local_wunderbyte_table\wunderbyte_table;
 use mod_booking\bo_availability\bo_info;
 use mod_booking\booking;
+use mod_booking\booking_bookit;
 use mod_booking\dates_handler;
 use mod_booking\output\col_availableplaces;
 use mod_booking\output\col_teacher;
@@ -156,6 +157,8 @@ class musi_table extends wunderbyte_table {
         // Render col_price using a template.
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
+        return booking_bookit::render_bookit_button(0, $settings);
+
         // Normally we won't arrive here, but if so, we want to show a meaningful error message.
         if (!$this->context) {
             $this->context = context_module::instance($settings->cmid);
@@ -217,6 +220,8 @@ class musi_table extends wunderbyte_table {
                             false,
                             null,
                             true);
+                    case BO_COND_BOOKITBUTTON:
+                        return bo_info::render_conditionmessage($description, '');
                     case BO_COND_ISCANCELLED:
                     default:
                         return bo_info::render_conditionmessage($description, 'danger', $values->id,
