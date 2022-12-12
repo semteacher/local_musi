@@ -86,6 +86,10 @@ class card_content_sports implements renderable, templatable {
      */
     public function export_for_template(renderer_base $output) {
 
+        // Initialize.
+        $returnarray = [];
+        $returnarray['item'] = [];
+
         // We transform the data object to an array where we can read key & value.
         foreach ($this->data as $key => $value) {
 
