@@ -142,9 +142,9 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-left'], ['teacher']);
         $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-left'], ['location']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-left'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-left'], ['bookings']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-map-ticket'], ['bookings']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-right'], ['price']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-right'], ['price']);
 
         // Override naming for columns. one could use getstring for localisation here.
         $table->add_classes_to_subcolumns(
