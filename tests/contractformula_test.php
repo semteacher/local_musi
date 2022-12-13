@@ -39,7 +39,7 @@ $PAGE->set_context($context);
 
 $title = get_string('contractformulatest', 'local_musi');
 
-$PAGE->set_url('/local/musi/test/contractformula_test.php');
+$PAGE->set_url('/local/musi/tests/contractformula_test.php');
 $PAGE->navbar->add($title);
 $PAGE->set_title(format_string($title));
 $PAGE->set_heading($title);
