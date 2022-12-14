@@ -115,7 +115,7 @@ class shortcodes {
                 booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray);
         }
 
-        $table->set_filter_sql($fields, $from, $where, $params, $filter);
+        $table->set_filter_sql($fields, $from, $where, $filter, $params);
 
         $table->use_pages = false;
 
@@ -322,7 +322,7 @@ class shortcodes {
                 booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray);
         }
 
-        $table->set_filter_sql($fields, $from, $where, $params, $filter);
+        $table->set_filter_sql($fields, $from, $where, $filter, $params);
 
         $table->use_pages = false;
 
@@ -532,7 +532,7 @@ class shortcodes {
                 booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray);
         }
 
-        $table->set_filter_sql($fields, $from, $where, $params, $filter);
+        $table->set_filter_sql($fields, $from, $where, $filter, $params);
 
         $table->use_pages = false;
 
@@ -710,7 +710,7 @@ class shortcodes {
                 booking::get_options_filter_sql(0, 0, '', null, $booking->context, [], $wherearray, $userid);
         }
 
-        $table->set_filter_sql($fields, $from, $where, $params, $filter);
+        $table->set_filter_sql($fields, $from, $where, $filter, $params);
 
         $table->use_pages = false;
 
