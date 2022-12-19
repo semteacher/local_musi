@@ -520,6 +520,20 @@ class musi_table extends wunderbyte_table {
                             init.init('" . $values->id . "', '" . $values->status . "');
                         });"
                 ]);
+        } else {
+            $data->undocancel = false;
+            $data->cancellink = html_writer::link('#',
+            '<i class="fa fa-undo" aria-hidden="true"></i> ' .
+                get_string('cancelallusers', 'mod_booking'),
+                [
+                    'class' => 'dropdown-item cancelallusers',
+                    'data-id' => $values->id,
+                    'data-componentname' => 'mod_booking',
+                    'onclick' =>
+                        "require(['mod_booking/confirm_cancel'], function(init) {
+                            init.init('" . $values->id . "', '" . $values->status . "');
+                        });"
+                ]);
         }
 
         return $this->outputbooking->render_col_text_link($data);
