@@ -505,9 +505,9 @@ class musi_table extends wunderbyte_table {
             }
         }
 
-        // If booking option is cancelled, we want to show the "undo cancel" button instead.
+        // If booking option is already cancelled, we want to show the "undo cancel" button instead.
         if ($values->status == 1) {
-            $data->undocancel = true;
+            $data->showundocancel = true;
             $data->undocancellink = html_writer::link('#',
             '<i class="fa fa-undo" aria-hidden="true"></i> ' .
                 get_string('undocancelthisbookingoption', 'mod_booking'),
@@ -515,23 +515,27 @@ class musi_table extends wunderbyte_table {
                     'class' => 'dropdown-item undocancelallusers',
                     'data-id' => $values->id,
                     'data-componentname' => 'mod_booking',
+                    'data-area' => 'option',
                     'onclick' =>
                         "require(['mod_booking/confirm_cancel'], function(init) {
                             init.init('" . $values->id . "', '" . $values->status . "');
                         });"
                 ]);
         } else {
-            $data->undocancel = false;
+            // Else we show the default cancel button.
+            // We do NOT set $data->undocancel here.
+            $data->showcancel = true;
             $data->cancellink = html_writer::link('#',
-            '<i class="fa fa-undo" aria-hidden="true"></i> ' .
+            '<i class="fa fa-ban" aria-hidden="true"></i> ' .
                 get_string('cancelallusers', 'mod_booking'),
                 [
                     'class' => 'dropdown-item cancelallusers',
                     'data-id' => $values->id,
                     'data-componentname' => 'mod_booking',
+                    'data-area' => 'option',
                     'onclick' =>
-                        "require(['mod_booking/confirm_cancel'], function(init) {
-                            init.init('" . $values->id . "', '" . $values->status . "');
+                        "require(['local_shopping_cart/menu'], function(menu) {
+                            menu.confirmCancelAllUsersAndSetCreditModal('" . $values->id . "', 'mod_booking', 'option');
                         });"
                 ]);
         }
