@@ -124,6 +124,8 @@ $string['shortcodessetinstancedesc'] = 'If you use this setting, you can use the
 So no need to specify the ID';
 $string['shortcodesnobookinginstance'] = '<div class="text-danger font-weight-bold">No booking instance created yet!</div>';
 $string['shortcodesnobookinginstancedesc'] = 'You need to create at least one booking instance within a moodle course before you can choose one.';
+$string['shortcodesuserinformation'] = 'Display user information';
+
 $string['courses'] = 'Courses';
 
 // Access.php.

@@ -124,6 +124,8 @@ $string['shortcodessetinstancedesc'] = 'Wenn Du hier einen Wert setzt, kann der 
 Es ist also nicht mehr nötig, eine ID zu übergeben.';
 $string['shortcodesnobookinginstance'] = '<div class="text-danger font-weight-bold">Noch keine Buchungsinstanz erstellt!</div>';
 $string['shortcodesnobookinginstancedesc'] = 'Sie müssen mindestens eine Buchungsinstanz in einem Moodle-Kurs erstellen, bevor Sie hier eine auswählen können.';
+$string['shortcodesuserinformation'] = 'Zeige Informationen von NutzerInnen';
+
 $string['courses'] = 'Kurse';
 
 // Access.php.

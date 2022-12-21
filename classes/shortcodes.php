@@ -28,6 +28,7 @@ namespace local_musi;
 
 use context_module;
 use local_musi\output\page_allteachers;
+use local_musi\output\userinformation;
 use local_musi\table\musi_table;
 use mod_booking\booking;
 use mod_booking\singleton_service;
@@ -37,6 +38,36 @@ use moodle_url;
  * Deals with local_shortcodes regarding booking.
  */
 class shortcodes {
+
+    /**
+     * Prints out list of bookingoptions.
+     * Argumtents can be 'category' or 'perpage'.
+     *
+     * @param string $shortcode
+     * @param array $args
+     * @param string|null $content
+     * @param object $env
+     * @param Closure $next
+     * @return void
+     */
+    public static function userinformation($shortcode, $args, $content, $env, $next) {
+
+        global $USER, $PAGE;
+        // If the id argument was not passed on, we have a fallback in the connfig.
+        if (!isset($args['userid'])) {
+
+            $args['userid'] = $USER->id;
+        }
+
+        if (!isset($args['fields'])) {
+
+            $args['fields'] = '';
+        }
+
+        $data = new userinformation($args['userid'], $args['fields']);
+        $output = $PAGE->get_renderer('local_musi');
+        return $output->render_userinformation($data);
+    }
 
     /**
      * Prints out list of bookingoptions.
