@@ -102,7 +102,7 @@
         {{#columnclass}}</div>{{/columnclass}}
       {{/cardbody}}
     </div>
-    <div class="course-card-footer">
+    <div class="mt-2">
       <div class="{{cardlistclass}}">
         <ul class="infolist">
         {{#cardlist}}
@@ -134,7 +134,8 @@
         {{/cardlist}}
         </ul>
       </div>
-      <div>
+    </div>
+      <div class="mt-2 text-center">
         {{#cardfooter}}
           {{#columnclass}}<div class="{{.}}{{#key}} {{key}}{{/key}}">{{/columnclass}}
                 <span {{^value}} style="display:none" {{/value}}>
@@ -150,9 +151,9 @@
                   {{.}}:
                 {{/keystring}}
                 {{#columnkeyclass}}</span>{{/columnkeyclass}}
-                <span {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}{{#key}} {{key}}{{/key}}">
+                <div {{^value}} style="display:none" {{/value}} class="{{columnvalueclass}}{{#key}} {{key}}{{/key}}">
                   {{{value}}}
-                </span>
+                </div>
                 <span {{^value}} style="display:none" {{/value}}>
                 {{#columniclassafter}}
                   <i class="value {{.}}" aria-hidden="true"></i>
@@ -162,4 +163,3 @@
         {{/cardfooter}}
       </div>
     </div>
-</div>

@@ -158,59 +158,63 @@ class shortcodes {
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('cardbody', ['sport', 'text', 'action', 'botags', 'dayofweektime', 'teacher', 'location',
-            'bookings', 'price']);
+        $table->add_subcolumns('leftside', ['sport', 'text', 'action', 'teacher']);
+        $table->add_subcolumns('footer', ['botags', 'dayofweektime', 'location']);
+        $table->add_subcolumns('rightside', ['price']);
 
-        // This avoids showing all keys in list view.
-        $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none']);
 
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-12 text-left'], ['sport']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'sport-badge rounded-sm bg-light text-dark
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left'], ['sport']);
+        $table->add_classes_to_subcolumns('leftside', ['columnvalueclass' => 'sport-badge rounded-sm text-gray
             pl-1 pr-1 pb-0 pt-0 mr-1'], ['sport']);
 
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-md-9 col-sm-9 text-left'], ['text']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-right'], ['action']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left'], ['text']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-right'], ['action']);
 
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-12 col-md-12 text-left'], ['botags']);
-        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tags'], ['botags']);
+        $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none'], ['botags']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left'], ['botags']);
+        $table->add_classes_to_subcolumns('leftside', ['columniclassbefore' => 'fa fa-tags'], ['botags']);
+        $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-inline text-gray'], ['teacher']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left'], ['teacher']);
+        $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']);
 
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-left'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-left'], ['teacher']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-left'], ['location']);
-        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-2 col-md-2 text-left'], ['bookings']);
-        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-map-ticket'], ['bookings']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnclass' => 'col-sm-3 col-md-3 text-right'], ['price']);
+        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray pr-2 font-size-sm'], ['dayofweektime']);
+        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-clock-o text-gray font-size-sm'], ['dayofweektime']);
+
+        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray  pr-2 font-size-sm'], ['location']);
+        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-marker text-gray font-size-sm'], ['location']);
+        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray font-size-sm'], ['bookings']);
+        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-ticket text-gray font-size-sm'], ['bookings']);
+        $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right'], ['price']);
 
         // Override naming for columns. one could use getstring for localisation here.
         $table->add_classes_to_subcolumns(
-            'cardbody',
+            'leftside',
             ['keystring' => get_string('tableheader_text', 'booking')],
             ['text']
         );
         $table->add_classes_to_subcolumns(
-            'cardbody',
+            'leftside',
             ['keystring' => get_string('tableheader_teacher', 'booking')],
             ['teacher']
         );
         $table->add_classes_to_subcolumns(
-            'cardbody',
+            'footer',
             ['keystring' => get_string('tableheader_maxanswers', 'booking')],
             ['maxanswers']
         );
         $table->add_classes_to_subcolumns(
-            'cardbody',
+            'footer',
             ['keystring' => get_string('tableheader_maxoverbooking', 'booking')],
             ['maxoverbooking']
         );
         $table->add_classes_to_subcolumns(
-            'cardbody',
+            'footer',
             ['keystring' => get_string('tableheader_coursestarttime', 'booking')],
             ['coursestarttime']
         );
         $table->add_classes_to_subcolumns(
-            'cardbody',
+            'footer',
             ['keystring' => get_string('tableheader_courseendtime', 'booking')],
             ['courseendtime']
         );
@@ -588,7 +592,7 @@ class shortcodes {
             ['columnvalueclass' => 'shortcodes_option_info_invisible'],
             ['invisibleoption']
         );
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6 sport-badge rounded-sm bg-light text-dark
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6 sport-badge rounded-sm text-dark
         pl-1 pr-1 pb-0 pt-0 mr-1'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);

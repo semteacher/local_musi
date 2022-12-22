@@ -95,9 +95,7 @@
 }
 
 .wunderbyte-table-list .rows-container .row{
-    border: 1px solid #c3c3c3;
     border-radius: 5px;
-    margin-bottom: 20px;
 }
 /* Tablegrid. */
 .wunderbyte-table-grid .grid-entry {
@@ -110,4 +108,20 @@
     margin: 20px;
 }
 
+.inactivefilter .wunderbyte_table_container {
+    grid-template-columns: 0fr 2fr;
+    gap: 0;
+}
+
+
+.wunderbyte-table-grid .list-group-item+.list-group-item {
+    border-top: 1px solid rgba(0,0,0,.125);
+    border-top-width: 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.text-gray {
+    color: #77838f;
+}
 
