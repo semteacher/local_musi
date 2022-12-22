@@ -24,6 +24,8 @@
 
 namespace local_musi\output;
 
+use context_system;
+use local_shopping_cart\shopping_cart;
 use mod_booking\singleton_service;
 use renderer_base;
 use renderable;
@@ -49,17 +51,13 @@ class userinformation implements renderable, templatable {
      */
     public function __construct(int $userid = 0, string $fields) {
 
-        global $CFG;
+        global $CFG, $DB;
 
         if (empty($fields)) {
             return 'You can add fields like this in the shortcode \'fields="firstname,lastname"\'';
         }
 
         require_once("$CFG->dirroot/user/profile/lib.php");
-
-        if (empty($userid)) {
-            $userid = $USER->id;
-        }
 
         $user = singleton_service::get_instance_of_user($userid);
 
@@ -71,7 +69,7 @@ class userinformation implements renderable, templatable {
                 continue;
             }
             $this->data[] = [
-                'key' => $key,
+                'key' => get_string($key, 'core'),
                 'value' => $value,
             ];
         }
@@ -83,9 +81,9 @@ class userinformation implements renderable, templatable {
             if (!in_array($key, $fields)) {
                 continue;
             }
-
+            $localized = $DB->get_field('user_info_field', 'name', ['shortname' => $key]);
             $this->data[] = [
-                'key' => $key,
+                'key' => $localized,
                 'value' => $value,
             ];
         }

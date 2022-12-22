@@ -27,9 +27,11 @@
 namespace local_musi;
 
 use context_module;
+use context_system;
 use local_musi\output\page_allteachers;
 use local_musi\output\userinformation;
 use local_musi\table\musi_table;
+use local_shopping_cart\shopping_cart;
 use mod_booking\booking;
 use mod_booking\singleton_service;
 use moodle_url;
@@ -53,10 +55,14 @@ class shortcodes {
     public static function userinformation($shortcode, $args, $content, $env, $next) {
 
         global $USER, $PAGE;
-        // If the id argument was not passed on, we have a fallback in the connfig.
-        if (!isset($args['userid'])) {
 
-            $args['userid'] = $USER->id;
+        $userid = $args['userid'] ?? 0;
+        // If the id argument was not passed on, we have a fallback in the connfig.
+        $context = context_system::instance();
+        if (empty($userid) && has_capability('local/shopping_cart:cashier', $context)) {
+            $userid = shopping_cart::return_buy_for_userid();
+        } else if (!has_capability('local/shopping_cart:cashier', $context)) {
+            $userid = $USER->id;
         }
 
         if (!isset($args['fields'])) {
@@ -64,7 +70,7 @@ class shortcodes {
             $args['fields'] = '';
         }
 
-        $data = new userinformation($args['userid'], $args['fields']);
+        $data = new userinformation($userid, $args['fields']);
         $output = $PAGE->get_renderer('local_musi');
         return $output->render_userinformation($data);
     }

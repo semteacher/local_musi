@@ -24,10 +24,12 @@
     * data-region
 }}
 
-{{#user}}
-    <div>
-        <p>
-            {{key}}: {{value}}
-        </p>
-    </div>
-{{/user}}
+<div class='userinformation'>
+    <p>
+        {{#user}}
+            <div class="{{key}}-field">
+                    {{key}}: {{value}}
+            </div>
+        {{/user}}
+    </p>
+</div>
