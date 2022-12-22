@@ -24,12 +24,15 @@
     * data-region
 }}
 
-<div class='userinformation'>
-    <p>
-        {{#user}}
+<div class="userinformation card">
+    <div class="card-header">{{#str}}userinformation, local_musi{{/str}}</div>
+    <div class="card-body">
+        <div class="card-text">
+            {{#user}}
             <div class="{{key}}-field">
-                    {{key}}: {{value}}
+                    <b>{{key}}:</b> {{value}}
             </div>
-        {{/user}}
-    </p>
+            {{/user}}
+        </div>
+    </div>
 </div>

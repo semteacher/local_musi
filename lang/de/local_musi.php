@@ -150,3 +150,6 @@ $string['contractformula_desc'] = 'Hier können Sie eine JSON-Formel angeben, di
  auswirken und welche Sonderfälle es gibt.';
 $string['contractformulatest'] = 'Vertragsformel testen';
 $string['editcontractformula'] = 'Vertragsformel bearbeiten';
+
+// Userinformation.mustache.
+$string['userinformation'] = 'Benutzer-Information';
