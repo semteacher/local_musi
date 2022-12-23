@@ -487,10 +487,6 @@ class musi_table extends wunderbyte_table {
 
                         $data->editoptionurl = $this->add_return_url($bookingsoptionsettings->editoptionurl);
                     }
-                    if (isset($bookingsoptionsettings->editteachersurl)) {
-                        // Get the URL to edit the teachers for the option.
-                        $data->editteachersurl = $bookingsoptionsettings->editteachersurl;
-                    }
                     if (isset($bookingsoptionsettings->manageresponsesurl)) {
                         // Get the URL to manage responses (answers) for the option.
                         $data->manageresponsesurl = $bookingsoptionsettings->manageresponsesurl;
