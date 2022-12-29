@@ -155,7 +155,7 @@ class musi_table extends wunderbyte_table {
 
         // TODO: bo_info needs to support cashier mode, where booking for another user is possible...
         // ... even if availability for the user is not given.
-        if (list($conditionid, $isavailable, $description) = $boinfo->get_description(true, $settings, $this->buyforuser->id)) {
+        if (list($conditionid, $isavailable, $description) = $boinfo->get_description($settings, $this->buyforuser->id, true)) {
 
             // Price blocks normal availability, if it's the only one, we show the cart.
             if (!$isavailable) {
