@@ -49,7 +49,7 @@ class userinformation implements renderable, templatable {
      *
      * @param integer $userid
      */
-    public function __construct(int $userid = 0, string $fields) {
+    public function __construct(int $userid, string $fields) {
 
         global $CFG, $DB;
 
