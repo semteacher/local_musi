@@ -145,7 +145,7 @@ class musi_table extends wunderbyte_table {
         // Render col_price using a template.
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
-        return booking_bookit::render_bookit_button(0, $settings);
+        return booking_bookit::render_bookit_button($settings, 0);
 
         // Normally we won't arrive here, but if so, we want to show a meaningful error message.
         if (!$this->context) {
@@ -188,28 +188,6 @@ class musi_table extends wunderbyte_table {
                     case BO_COND_FULLYBOOKED:
                         return bo_info::render_conditionmessage($description, 'warning', $values->id,
                             $showprice, $values, $shownotificationlist, $this->buyforuser);
-                    case BO_COND_SUBBOOKINGBLOCKS:
-                        return bo_info::render_conditionmessage(
-                            $description,
-                            '',
-                            $values->id,
-                            false,
-                            $values,
-                            false,
-                            null,
-                            true);
-                    case BO_COND_SUBBOOKING:
-                        return bo_info::render_conditionmessage(
-                            $description,
-                            '',
-                            $values->id,
-                            false,
-                            $values,
-                            false,
-                            null,
-                            true);
-                    case BO_COND_BOOKITBUTTON:
-                        return bo_info::render_conditionmessage($description, '');
                     case BO_COND_ISCANCELLED:
                     default:
                         return bo_info::render_conditionmessage($description, 'danger', $values->id,
