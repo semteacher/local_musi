@@ -867,7 +867,7 @@ class shortcodes {
 
         // Now get all teachers that we're interested in.
         $sqlteachers =
-            "SELECT DISTINCT bt.userid, u.lastname
+            "SELECT DISTINCT bt.userid, u.firstname, u.lastname, u.email
             FROM {booking_teachers} bt
             LEFT JOIN {user} u
             ON u.id = bt.userid
@@ -878,6 +878,8 @@ class shortcodes {
                 $teacherids[] = $teacherrecord->userid;
             }
         }
+
+        // TODO: For admins, we want to show a collapsible list of teachers with their E-Mail addresses.
 
         // Now prepare the data for all teachers.
         $data = new page_allteachers($teacherids);
