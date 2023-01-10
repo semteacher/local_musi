@@ -179,12 +179,15 @@ class shortcodes {
         $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']);
 
         $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray pr-2 font-size-sm'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-clock-o text-gray font-size-sm'], ['dayofweektime']);
+        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-clock-o text-gray font-size-sm'],
+            ['dayofweektime']);
 
         $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray  pr-2 font-size-sm'], ['location']);
-        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-marker text-gray font-size-sm'], ['location']);
+        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-marker text-gray font-size-sm'],
+            ['location']);
         $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray font-size-sm'], ['bookings']);
-        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-ticket text-gray font-size-sm'], ['bookings']);
+        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-ticket text-gray font-size-sm'],
+            ['bookings']);
         $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right'], ['price']);
 
         // Override naming for columns. one could use getstring for localisation here.
@@ -773,7 +776,7 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
         $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
 
-        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings']);
+        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings', 'course']);
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
@@ -846,7 +849,170 @@ class shortcodes {
         }
 
         $out = $table->outhtml($perpage, true);
+        return $out;
+    }
 
+    /**
+     * Prints out list of bookingoptions where the current user is a trainer.
+     * Arguments can be 'id', 'category' or 'perpage'.
+     *
+     * @param string $shortcode
+     * @param array $args
+     * @param string|null $content
+     * @param object $env
+     * @param Closure $next
+     * @return void
+     */
+    public static function myteachedcoursescards($shortcode, $args, $content, $env, $next) {
+
+        global $USER;
+
+        // If the id argument was not passed on, we have a fallback in the connfig.
+        if (!isset($args['id'])) {
+            $args['id'] = get_config('local_musi', 'shortcodessetinstance');
+        }
+
+        // To prevent misconfiguration, id has to be there and int.
+        if (!(isset($args['id']) && $args['id'] && is_int((int)$args['id']))) {
+            return 'Set id of booking instance';
+        }
+
+        if (!$booking = singleton_service::get_instance_of_booking_by_cmid($args['id'])) {
+            return 'Couldn\'t find right booking instance ' . $args['id'];
+        }
+
+        if (!isset($args['category']) || !$category = ($args['category'])) {
+            $category = '';
+        }
+
+        if (!isset($args['filter']) || !$showfilter = ($args['filter'])) {
+            $showfilter = false;
+        }
+
+        if (!isset($args['search']) || !$showsearch = ($args['search'])) {
+            $showsearch = false;
+        }
+
+        if (!isset($args['sort']) || !$showsort = ($args['sort'])) {
+            $showsort = false;
+        }
+
+        if (
+            !isset($args['perpage'])
+            || !is_int((int)$args['perpage'])
+            || !$perpage = ($args['perpage'])
+        ) {
+            $perpage = 1000;
+        }
+
+        $tablename = bin2hex(random_bytes(12));
+
+        $table = new musi_table($tablename, $booking);
+
+        // We want to check for the currently logged in user...
+        // ... if (s)he is teaching courses.
+        $teacherid = $USER->id;
+
+        // This is the important part: We only filter for booking options where the current user is a teacher!
+        // Also we only want to show courses for the currently set booking instance (semester instance).
+        list($fields, $from, $where, $params, $filter) =
+            booking::get_all_options_of_teacher_sql($teacherid, (int)$booking->id);
+
+        $table->set_filter_sql($fields, $from, $where, $filter, $params);
+
+        $table->use_pages = false;
+
+        $table->define_cache('mod_booking', 'bookingoptionstable');
+
+        $table->add_subcolumns('itemcategory', ['sport']);
+        $table->add_subcolumns('itemday', ['dayofweektime']);
+        $table->add_subcolumns('cardimage', ['image']);
+        $table->add_subcolumns('optioninvisible', ['invisibleoption']);
+
+        $table->add_subcolumns('cardbody', ['invisibleoption', 'sport', 'text', 'teacher', 'botags']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
+            ['invisibleoption']
+        );
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h5'], ['text']);
+        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
+
+        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings', 'course']);
+        $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
+
+        $table->add_subcolumns('cardfooter', ['price']);
+        $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
+
+        $table->set_tableclass('cardimageclass', 'w-100');
+
+        $table->is_downloading('', 'List of booking options');
+
+        // Id is not really something one wants to filter, but we need the dataset on the html element.
+        // The key "id" won't be rendered in filter json, though.
+        if ($showfilter !== false) {
+            $table->define_filtercolumns([
+                'id', 'sport' => [
+                    'localizedname' => get_string('sport', 'local_musi')
+                ], 'dayofweek' => [
+                    'localizedname' => get_string('dayofweek', 'local_musi'),
+                    'monday' => get_string('monday', 'mod_booking'),
+                    'tuesday' => get_string('tuesday', 'mod_booking'),
+                    'wednesday' => get_string('wednesday', 'mod_booking'),
+                    'thursday' => get_string('thursday', 'mod_booking'),
+                    'friday' => get_string('friday', 'mod_booking'),
+                    'saturday' => get_string('saturday', 'mod_booking'),
+                    'sunday' => get_string('sunday', 'mod_booking')
+                ],  'location' => [
+                    'localizedname' => get_string('location', 'mod_booking')
+                ],  'botags' => [
+                    'localizedname' => get_string('tags', 'core')
+                ]
+            ]);
+        }
+
+        if ($showsearch !== false) {
+            $table->define_fulltextsearchcolumns(['titleprefix', 'text', 'sport', 'description', 'location', 'teacherobjects']);
+        }
+
+        if ($showsort !== false) {
+            $table->define_sortablecolumns([
+                'text' => get_string('coursename', 'local_musi'),
+                'sport' => get_string('sport', 'local_musi'),
+                'location',
+                'dayofweek'
+            ]);
+        } else {
+            $table->sortable(true, 'text');
+        }
+
+        // It's important to have the baseurl defined, we use it as a return url at one point.
+        $baseurl = new moodle_url(
+            $_SERVER['REQUEST_URI'],
+            $_GET
+        );
+
+        $table->define_baseurl($baseurl->out());
+
+        // This allows us to use infinite scrolling, No pages will be used.
+        $table->infinitescroll = 30;
+
+        $table->tabletemplate = 'local_musi/table_card';
+
+        // If we find "nolazy='1'", we return the table directly, without lazy loading.
+        if (isset($args['lazy']) && ($args['lazy'] == 1)) {
+
+            list($idstring, $encodedtable, $out) = $table->lazyouthtml($perpage, true);
+
+            return $out;
+        }
+
+        $out = $table->outhtml($perpage, true);
         return $out;
     }
 

@@ -128,6 +128,10 @@ $string['shortcodesnobookinginstancedesc'] = 'You need to create at least one bo
 $string['shortcodesuserinformation'] = 'Display user information';
 
 $string['courses'] = 'Courses';
+$string['mycourses'] = 'My courses';
+$string['gotocoursematerial'] = 'Go to course material';
+$string['coursesibooked'] = 'Courses I have booked in the current semester';
+$string['coursesiteach'] = 'Courses I teach in the current semester';
 
 // Access.php.
 $string['musi:canedit'] = 'User can edit';

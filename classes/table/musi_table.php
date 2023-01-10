@@ -352,6 +352,32 @@ class musi_table extends wunderbyte_table {
 
     /**
      * This function is called for each data row to allow processing of the
+     * associated Moodle course.
+     *
+     * @param object $values Contains object with all the values of record.
+     * @return string a link to the Moodle course - if there is one
+     * @throws coding_exception
+     */
+    public function col_course($values) {
+
+        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
+
+        if (empty($settings->courseid)) {
+            $ret = '';
+        } else {
+            $moodleurl = new moodle_url('/course/view.php', ['id' => $settings->courseid]);
+            $courseurl = $moodleurl->out(false);
+            $gotocoursematerial = get_string('gotocoursematerial', 'local_musi');
+            $ret = "<a href='$courseurl' target='_self' class='btn btn-light mt-2 mb-2'>
+                <i class='fa fa-graduation-cap' aria-hidden='true'></i>&nbsp;&nbsp;$gotocoursematerial
+            </a>";
+        }
+
+        return $ret;
+    }
+
+    /**
+     * This function is called for each data row to allow processing of the
      * dayofweektime value.
      *
      * @param object $values Contains object with all the values of record.
@@ -472,28 +498,28 @@ class musi_table extends wunderbyte_table {
 
         // Get the URL to edit the option.
         if (!empty($values->id)) {
-            $bookingsoptionsettings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
-            if (!empty($bookingsoptionsettings)) {
+            $bosettings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
+            if (!empty($bosettings)) {
 
                 if (!$this->context) {
-                    $this->context = context_module::instance($bookingsoptionsettings->cmid);
+                    $this->context = context_module::instance($bosettings->cmid);
                 }
 
                 // If the user has no capability to editoptions, the URLs will not be added.
                 if ((has_capability('mod/booking:updatebooking', $this->context) ||
                         has_capability('mod/booking:addeditownoption', $this->context))) {
-                    if (isset($bookingsoptionsettings->editoptionurl)) {
+                    if (isset($bosettings->editoptionurl)) {
                         // Get the URL to edit the option.
 
-                        $data->editoptionurl = $this->add_return_url($bookingsoptionsettings->editoptionurl);
+                        $data->editoptionurl = $this->add_return_url($bosettings->editoptionurl);
                     }
-                    if (isset($bookingsoptionsettings->manageresponsesurl)) {
+                    if (isset($bosettings->manageresponsesurl)) {
                         // Get the URL to manage responses (answers) for the option.
-                        $data->manageresponsesurl = $bookingsoptionsettings->manageresponsesurl;
+                        $data->manageresponsesurl = $bosettings->manageresponsesurl;
                     }
-                    if (isset($bookingsoptionsettings->optiondatesteachersurl)) {
+                    if (isset($bosettings->optiondatesteachersurl)) {
                         // Get the URL for the optiondates-teachers-report.
-                        $data->optiondatesteachersurl = $bookingsoptionsettings->optiondatesteachersurl;
+                        $data->optiondatesteachersurl = $bosettings->optiondatesteachersurl;
                     }
                 }
             }
