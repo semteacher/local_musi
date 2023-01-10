@@ -110,6 +110,7 @@ $string['messagingteacherimpossible'] = 'Sie können dieser Trainerin / diesem T
 $string['sendmail'] = 'Mail';
 $string['teachernotfound'] = 'Trainer:in konnte nicht gefunden werden oder existiert nicht.';
 $string['notateacher'] = 'Die ausgewählte Person unterrichtet keine buchbaren Kurse und kann daher nicht angezeigt werden.';
+$string['showteachersmailinglist'] = 'E-Mail-Liste für alle Trainer:innen anzeigen...';
 
 // Shortcodes.
 $string['shortcodeslistofbookingoptions'] = 'Liste der buchbaren Kurse';

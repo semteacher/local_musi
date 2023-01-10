@@ -879,8 +879,6 @@ class shortcodes {
             }
         }
 
-        // TODO: For admins, we want to show a collapsible list of teachers with their E-Mail addresses.
-
         // Now prepare the data for all teachers.
         $data = new page_allteachers($teacherids);
         $output = $PAGE->get_renderer('local_musi');

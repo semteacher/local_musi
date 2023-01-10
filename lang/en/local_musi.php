@@ -110,6 +110,7 @@ $string['messagingteacherimpossible'] = 'You cannot send messages to this teache
 $string['sendmail'] = 'Mail';
 $string['teachernotfound'] = 'Teacher could not be found or does not exist.';
 $string['notateacher'] = 'The user selected is not teaching any courses and is probably not a teacher.';
+$string['showteachersmailinglist'] = 'Show a list of e-mails for all teachers...';
 
 // Shortcodes.
 $string['shortcodeslistofbookingoptions'] = 'List of booking options';

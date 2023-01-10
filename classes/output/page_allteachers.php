@@ -67,11 +67,18 @@ class page_allteachers implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         global $PAGE;
 
-        if (!isset($PAGE->context)) {
-            $PAGE->set_context(context_system::instance());
+        $returnarray = [];
+
+        $context = context_system::instance();
+
+        if (has_capability('local/musi:canedit', $context)) {
+            // Only add, if true - false won't work in template.
+            $returnarray['canedit'] = true;
         }
 
-        $returnarray = [];
+        if (!isset($PAGE->context)) {
+            $PAGE->set_context($context);
+        }
 
         // We transform the data object to an array where we can read key & value.
         foreach ($this->listofteachers as $teacher) {
@@ -101,7 +108,10 @@ class page_allteachers implements renderable, templatable {
                 $teacherarr['linktoperformedunitsreport'] = $url->out();
             }
 
-            if (!empty($teacher->email) && $teacher->maildisplay == 1) {
+            // If the user has set to hide e-mails, we won't show them.
+            // However, a site admin will always see e-mail addresses.
+            if (!empty($teacher->email) &&
+                ($teacher->maildisplay == 1 || has_capability('local/musi:canedit', $context))) {
                 $teacherarr['email'] = $teacher->email;
             }
 
