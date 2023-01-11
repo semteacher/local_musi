@@ -34,6 +34,7 @@ $string['shortcodeslistofbookingoptions'] = 'Alle Kurse als Liste';
 $string['shortcodeslistofbookingoptionsascards'] = 'Alle Kurse als Karten';
 $string['shortcodeslistofmybookingoptionsascards'] = 'Meine Kurse als Karten';
 $string['shortcodeslistofteachersascards'] = 'Liste aller Trainer als Karten';
+$string['shortcodeslistofmyteachedbookingoptionsascards'] = 'Kurse, die ich unterrichte, als Karten';
 
 // List of all courses.
 $string['allcourses'] = 'Alle Kurse';
@@ -72,7 +73,7 @@ $string['sapdailysums'] = 'SAP-Buchungsdateien';
 $string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">Keine Semester-Instanz! Hier klicken, um eine einzustellen.</span>';
 $string['editpricecategories'] = 'Preiskategorien bearbeiten';
 $string['editsemesters'] = 'Semester bearbeiten';
-$string['changebookinginstance'] = 'Semester-Instanz ändern';
+$string['changebookinginstance'] = 'Standard-Semester-Instanz setzen';
 $string['editbotags'] = 'Tags verwalten';
 $string['createbotag'] = 'Neuen Tag anlegen...';
 $string['createbotag:helptext'] = '<p>

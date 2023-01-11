@@ -34,6 +34,8 @@ $string['shortcodeslistofbookingoptions'] = 'All courses as list';
 $string['shortcodeslistofbookingoptionsascards'] = 'All courses as cards';
 $string['shortcodeslistofmybookingoptionsascards'] = 'My courses as cards';
 $string['shortcodeslistofteachersascards'] = 'List of teachers as cards';
+$string['shortcodeslistofmyteachedbookingoptionsascards'] = 'Courses I teach as cards';
+
 
 // List of all courses.
 $string['allcourses'] = 'All courses';
@@ -72,7 +74,7 @@ $string['sapdailysums'] = 'SAP booking files';
 $string['addbookinginstance'] = '<span class="bg-danger font-weight-bold">No semester instance! Click here to choose one.</span>';
 $string['editpricecategories'] = 'Edit price categories';
 $string['editsemesters'] = 'Edit semesters';
-$string['changebookinginstance'] = 'Change semester instance';
+$string['changebookinginstance'] = 'Set default semester instance';
 $string['editbotags'] = 'Edit tags';
 $string['createbotag'] = 'Create new tag...';
 $string['createbotag:helptext'] = '<p>
