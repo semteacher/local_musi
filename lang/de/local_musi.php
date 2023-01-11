@@ -131,8 +131,8 @@ $string['shortcodesuserinformation'] = 'Zeige Informationen von NutzerInnen';
 $string['courses'] = 'Kurse';
 $string['mycourses'] = 'Meine Kurse';
 $string['gotocoursematerial'] = 'Zu den Kursmaterialien';
-$string['coursesibooked'] = 'Kurse, die ich im aktuellen Semester gebucht habe';
-$string['coursesiteach'] = 'Kurse, die ich im aktuellen Semester unterrichte';
+$string['coursesibooked'] = '<i class="fa fa-ticket" aria-hidden="true"></i> Kurse, die ich im aktuellen Semester gebucht habe:';
+$string['coursesiteach'] = '<i class="fa fa-graduation-cap" aria-hidden="true"></i> Kurse, die ich im aktuellen Semester unterrichte:';
 
 // Access.php.
 $string['musi:canedit'] = 'Nutzer:in darf verwalten';

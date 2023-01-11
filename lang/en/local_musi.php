@@ -132,8 +132,8 @@ $string['shortcodesuserinformation'] = 'Display user information';
 $string['courses'] = 'Courses';
 $string['mycourses'] = 'My courses';
 $string['gotocoursematerial'] = 'Go to course material';
-$string['coursesibooked'] = 'Courses I have booked in the current semester';
-$string['coursesiteach'] = 'Courses I teach in the current semester';
+$string['coursesibooked'] = '<i class="fa fa-ticket" aria-hidden="true"></i> Courses I have booked in the current semester:';
+$string['coursesiteach'] = '<i class="fa fa-graduation-cap" aria-hidden="true"></i> Courses I teach in the current semester:';
 
 // Access.php.
 $string['musi:canedit'] = 'User can edit';

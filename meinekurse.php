@@ -43,17 +43,21 @@ $title = get_string('mycourses', 'local_musi');
 $PAGE->set_url('/local/musi/meinekurse.php');
 $PAGE->navbar->add($title);
 $PAGE->set_title(format_string($title));
-$PAGE->set_heading($title);
 $PAGE->set_pagelayout('base');
 $PAGE->add_body_class('local_musi-meinekurse');
 
 echo $OUTPUT->header();
-echo html_writer::div(get_string('coursesibooked', 'local_musi'), 'h3 mt-2 mb-2');
-echo format_text("[meinekursekarten]", FORMAT_HTML);
+
+echo "<div class='text-center h1'>$title</div>";
+echo "<hr class='w-100 border border-light'/>";
 
 if ($DB->get_records('booking_teachers', ['userid' => $USER->id])) {
-    echo html_writer::div(get_string('coursesiteach', 'local_musi'), 'h3 mt-2 mb-2');
-    echo format_text("[trainerkursekarten]", FORMAT_HTML);
+    echo html_writer::div(get_string('coursesiteach', 'local_musi'), 'h2 mt-2 mb-2 text-center');
+    echo format_text("[trainerkursekarten filter=1 search=1]", FORMAT_HTML);
+    echo "<hr class='w-100 border border-light'/>";
 }
+
+echo html_writer::div(get_string('coursesibooked', 'local_musi'), 'h2 mt-2 mb-2 text-center');
+echo format_text("[meinekursekarten filter=1 search=1]", FORMAT_HTML);
 
 echo $OUTPUT->footer();
