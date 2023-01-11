@@ -158,8 +158,8 @@ class shortcodes {
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('leftside', ['sport', 'text', 'action', 'teacher']);
-        $table->add_subcolumns('footer', ['botags', 'dayofweektime', 'location']);
+        $table->add_subcolumns('leftside', ['sport', 'text', 'action', 'teacher', 'botags']);
+        $table->add_subcolumns('footer', ['dayofweektime', 'location']);
         $table->add_subcolumns('rightside', ['price']);
 
         $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none']);
