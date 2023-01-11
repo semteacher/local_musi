@@ -224,7 +224,7 @@ class musi_table extends wunderbyte_table {
         }
 
         if (!$this->is_downloading()) {
-            $title = "<a href='$url' target='_blank'><h3>$title</h3></a>";
+            $title = "<a href='$url' target='_blank'><h6 class='m-0 mb-1'>$title</h6></a>";
         }
 
         return $title;
