@@ -83,14 +83,17 @@ function local_musi_render_navbar_output(\renderer_base $renderer) {
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="'
+            . $CFG->wwwroot . '/local/musi/dashboard.php">'
+            . get_string('dashboard', 'local_musi') . '</a>
+            <a class="dropdown-item" href="'
                 . $CFG->wwwroot . '/local/shopping_cart/cashier.php"">'
                 . get_string('cachier', 'local_musi') . '</a>
             <a class="dropdown-item" href="'
-                . $CFG->wwwroot . '/local/musi/dashboard.php">'
-                . get_string('dashboard', 'local_musi') . '</a>
-            <a class="dropdown-item" href="'
                 . $CFG->wwwroot . '/local/entities/entities.php">'
                 . get_string('entities', 'local_musi') . '</a>
+            <a class="dropdown-item" href="'
+                . $CFG->wwwroot . '/local/musi/meinekurse.php">'
+                . get_string('mycourses', 'local_musi') . '</a>
         </div>
     </div>';
 
