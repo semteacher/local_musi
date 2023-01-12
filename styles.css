@@ -125,3 +125,11 @@
     color: #77838f;
 }
 
+.font-size-sm {
+    font-size: 0.8rem;
+}
+.wunderbyte-table-list .action {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
