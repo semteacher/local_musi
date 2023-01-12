@@ -127,12 +127,18 @@ Es ist also nicht mehr nötig, eine ID zu übergeben.';
 $string['shortcodesnobookinginstance'] = '<div class="text-danger font-weight-bold">Noch keine Buchungsinstanz erstellt!</div>';
 $string['shortcodesnobookinginstancedesc'] = 'Sie müssen mindestens eine Buchungsinstanz in einem Moodle-Kurs erstellen, bevor Sie hier eine auswählen können.';
 $string['shortcodesuserinformation'] = 'Zeige Informationen von NutzerInnen';
+$string['shortcodesarchivecmids'] = 'Liste von IDs für das "Meine Kurse"-Archiv';
+$string['shortcodesarchivecmids_desc'] = 'Geben Sie eine Komma-getrennte Liste von Kursmodul-IDs (cmids) der Semester-Instanzen (Buchungsinstanzen) an,
+die im "Meine Kurse"-Archiv aufscheinen sollen.';
 
 $string['courses'] = 'Kurse';
+$string['archive'] = '<i class="fa fa-archive" aria-hidden="true"></i> Archiv';
 $string['mycourses'] = 'Meine Kurse';
 $string['gotocoursematerial'] = 'Zu den Kursmaterialien';
 $string['coursesibooked'] = '<i class="fa fa-ticket" aria-hidden="true"></i> Kurse, die ich im aktuellen Semester gebucht habe:';
+$string['coursesibookedarchive'] = 'Kurse, die ich in vergangenen Semestern gebucht habe:';
 $string['coursesiteach'] = '<i class="fa fa-graduation-cap" aria-hidden="true"></i> Kurse, die ich im aktuellen Semester unterrichte:';
+$string['coursesiteacharchive'] = 'Kurse, die ich in vergangenen Semestern unterrichtet habe:';
 
 // Access.php.
 $string['musi:canedit'] = 'Nutzer:in darf verwalten';

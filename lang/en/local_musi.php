@@ -128,12 +128,17 @@ So no need to specify the ID';
 $string['shortcodesnobookinginstance'] = '<div class="text-danger font-weight-bold">No booking instance created yet!</div>';
 $string['shortcodesnobookinginstancedesc'] = 'You need to create at least one booking instance within a moodle course before you can choose one.';
 $string['shortcodesuserinformation'] = 'Display user information';
+$string['shortcodesarchivecmids'] = 'List of IDs for "My courses"-archive';
+$string['shortcodesarchivecmids_desc'] = 'Enter a comma-separated list of course module ids (cmids) of booking instances you want to show in the "My courses"-archive.';
 
 $string['courses'] = 'Courses';
+$string['archive'] = '<i class="fa fa-archive" aria-hidden="true"></i> Archive';
 $string['mycourses'] = 'My courses';
 $string['gotocoursematerial'] = 'Go to course material';
-$string['coursesibooked'] = '<i class="fa fa-ticket" aria-hidden="true"></i> Courses I have booked in the current semester:';
+$string['coursesibooked'] = '<i class="fa fa-ticket" aria-hidden="true"></i> Courses I booked in the current semester:';
+$string['coursesibookedarchive'] = 'Courses I booked in previous semesters:';
 $string['coursesiteach'] = '<i class="fa fa-graduation-cap" aria-hidden="true"></i> Courses I teach in the current semester:';
+$string['coursesiteacharchive'] = 'Courses I teached in previous semesters:';
 
 // Access.php.
 $string['musi:canedit'] = 'User can edit';

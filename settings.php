@@ -56,7 +56,7 @@ if ($hassiteconfig) {
             )"
         )) {
             foreach ($records as $record) {
-                $allowedinstances[$record->cmid] = $record->bookingname;
+                $allowedinstances[$record->cmid] = "$record->bookingname (ID: $record->cmid)";
                 $defaultcmid = $record->cmid; // Last cmid will be the default one.
             }
         }
@@ -76,16 +76,21 @@ if ($hassiteconfig) {
                     get_string('shortcodessetinstancedesc', 'local_musi'),
                     $defaultcmid, $allowedinstances));
         }
+
+        $settings->add(
+            new admin_setting_configtext('local_musi/shortcodesarchivecmids',
+                get_string('shortcodesarchivecmids', 'local_musi'),
+                get_string('shortcodesarchivecmids_desc', 'local_musi'), ''));
+
+        // CONTRACT MANAGEMENT.
+        $settings->add(
+            new admin_setting_heading('contractmanagement_heading',
+                get_string('contractmanagementsettings', 'local_musi'),
+                get_string('contractmanagementsettings_desc', 'local_musi')));
+
+        $settings->add(
+            new admin_setting_configtextarea('local_musi/contractformula',
+                get_string('contractformula', 'local_musi'),
+                get_string('contractformula_desc', 'local_musi'), '', PARAM_TEXT, 60, 10));
     }
-
-    // CONTRACT MANAGEMENT.
-    $settings->add(
-        new admin_setting_heading('contractmanagement_heading',
-            get_string('contractmanagementsettings', 'local_musi'),
-            get_string('contractmanagementsettings_desc', 'local_musi')));
-
-    $settings->add(
-        new admin_setting_configtextarea('local_musi/contractformula',
-            get_string('contractformula', 'local_musi'),
-            get_string('contractformula_desc', 'local_musi'), '', PARAM_TEXT, 60, 10));
 }
