@@ -159,25 +159,22 @@ class shortcodes {
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
         $table->add_subcolumns('leftside', ['sport', 'text', 'action', 'teacher', 'botags']);
-        $table->add_subcolumns('footer', ['dayofweektime', 'location']);
+        $table->add_subcolumns('footer', ['dayofweektime', 'location', 'bookings']);
         $table->add_subcolumns('rightside', ['price']);
 
         $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none']);
 
         $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left'], ['sport']);
         $table->add_classes_to_subcolumns('leftside', ['columnvalueclass' => 'sport-badge rounded-sm text-gray
-            pl-1 pr-1 pb-0 pt-0 mr-1'], ['sport']);
+            pb-0 pt-0'], ['sport']);
 
-        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left m-0 mb-1 h6'], ['text']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left m-0 mb-1 h5'], ['text']);
         $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-right'], ['action']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left font-size-sm'], ['botags']);
+        $table->add_classes_to_subcolumns('leftside', ['columniclassbefore' => 'fa fa-tags text-gray font-size-sm'], ['botags']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left font-size-sm'], ['teacher']);
 
-        $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none'], ['botags']);
-        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left'], ['botags']);
-        $table->add_classes_to_subcolumns('leftside', ['columniclassbefore' => 'fa fa-tags'], ['botags']);
-        $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-inline text-gray'], ['teacher']);
-        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left'], ['teacher']);
         $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']);
-
         $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray pr-2 font-size-sm'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-clock-o text-gray font-size-sm'],
             ['dayofweektime']);
@@ -185,9 +182,10 @@ class shortcodes {
         $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray  pr-2 font-size-sm'], ['location']);
         $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-marker text-gray font-size-sm'],
             ['location']);
-        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray font-size-sm'], ['bookings']);
-        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-ticket text-gray font-size-sm'],
+        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray pr-2 font-size-sm'], ['bookings']);
+        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-ticket text-gray font-size-sm'],
             ['bookings']);
+
         $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right'], ['price']);
 
         // Override naming for columns. one could use getstring for localisation here.
