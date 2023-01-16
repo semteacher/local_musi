@@ -602,7 +602,7 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users pr-3'], ['bookings']);
 
         $table->add_subcolumns('cardfooter', ['price']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
@@ -779,7 +779,7 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users pr-3'], ['bookings']);
 
         $table->add_subcolumns('cardfooter', ['price']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
@@ -944,7 +944,7 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users pr-3'], ['bookings']);
 
         $table->add_subcolumns('cardfooter', ['conditionmessage']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
@@ -1146,7 +1146,7 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users pr-3'], ['bookings']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
 
         $table->add_subcolumns('cardfooter', ['price']);
