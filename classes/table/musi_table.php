@@ -661,7 +661,7 @@ class musi_table extends wunderbyte_table {
      */
     public function finish_html() {
         $table = new \local_wunderbyte_table\output\table($this);
-        echo $this->outputbooking->render_bookingoptions_table($table);
+        echo $this->outputbooking->render_bookingoptions_wbtable($table);
     }
 
     private function add_return_url(string $urlstring):string {
