@@ -153,7 +153,6 @@ class musi_table extends wunderbyte_table {
      * @throws dml_exception
      */
     public function col_price($values) {
-
         // Render col_price using a template.
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
 
