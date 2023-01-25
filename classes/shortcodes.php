@@ -158,22 +158,23 @@ class shortcodes {
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('leftside', ['sport', 'text', 'action', 'teacher', 'botags']);
-        $table->add_subcolumns('footer', ['dayofweektime', 'location', 'bookings']);
+        $table->add_subcolumns('leftside', ['sport', 'text', 'action', 'botags']);
+        $table->add_subcolumns('footer', ['teacher', 'dayofweektime', 'location', 'bookings']);
         $table->add_subcolumns('rightside', ['price']);
 
         $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none']);
 
         $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left'], ['sport']);
-        $table->add_classes_to_subcolumns('leftside', ['columnvalueclass' => 'sport-badge rounded-sm text-gray
-            pb-0 pt-0'], ['sport']);
+        $table->add_classes_to_subcolumns('leftside', ['columnvalueclass' => 'sport-badge rounded-sm text-gray-800
+            pb-0 pt-0 mb-1'], ['sport']);
 
-        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left m-0 mb-1 h5'], ['text']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left mt-3 mb-3 h3'], ['text']);
         $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-right'], ['action']);
         $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left font-size-sm'], ['botags']);
         $table->add_classes_to_subcolumns('leftside', ['columniclassbefore' => 'fa fa-tags text-gray font-size-sm'], ['botags']);
-        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left font-size-sm'], ['teacher']);
 
+        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left font-size-m'], ['teacher']);
+        $table->add_classes_to_subcolumns('footer', ['columnvalueclass' => 'd-flex'], ['teacher']);
         $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray pr-2 font-size-sm'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-clock-o text-gray font-size-sm'],
@@ -194,11 +195,11 @@ class shortcodes {
             ['keystring' => get_string('tableheader_text', 'booking')],
             ['text']
         );
-        $table->add_classes_to_subcolumns(
-            'leftside',
-            ['keystring' => get_string('tableheader_teacher', 'booking')],
-            ['teacher']
-        );
+//        $table->add_classes_to_subcolumns(
+//            'leftside',
+//            ['keystring' => get_string('tableheader_teacher', 'booking')],
+//            ['teacher']
+//        );
         $table->add_classes_to_subcolumns(
             'footer',
             ['keystring' => get_string('tableheader_maxanswers', 'booking')],
