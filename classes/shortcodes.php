@@ -122,6 +122,10 @@ class shortcodes {
             $showimage = false;
         }
 
+        if (!isset($args['countlabel']) || !$countlabel = ($args['countlabel'])) {
+            $countlabel = false;
+        }
+
         // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
         /* if (!isset($args['infinitescrollpage']) || !$infinitescrollpage = ($args['infinitescrollpage'])) {
             $infinitescrollpage = 20;
@@ -138,7 +142,7 @@ class shortcodes {
         $tablename = bin2hex(random_bytes(12));
 
         $table = new musi_table($tablename, $booking);
-
+        $table->showcountlabel = $countlabel;
         $wherearray = ['bookingid' => (int)$booking->id];
 
         if (!empty($category)) {
