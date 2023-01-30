@@ -144,15 +144,14 @@ $string['coursesiteacharchive'] = 'Kurse, die ich in vergangenen Semestern unter
 // Access.php.
 $string['musi:canedit'] = 'Nutzer:in darf verwalten';
 
+// Filter.
+$string['sport'] = 'Sportart';
+
 // Nav.
 $string['musi'] = 'MUSI';
 $string['cachier'] = 'Kassa';
 $string['entities'] = 'Sportstätten';
-
-// Filter.
-$string['dayofweek'] = "Wochentag";
-$string['sport'] = "Sportart";
-$string['coursename'] = "Kursname";
+$string['coursename'] = 'Kursname';
 
 // Contract management.
 $string['contractmanagementsettings'] = 'Vertragsmanagement-Einstellungen';

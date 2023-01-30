@@ -145,8 +145,7 @@ $string['coursesiteacharchive'] = 'Courses I teached in previous semesters:';
 $string['musi:canedit'] = 'User can edit';
 
 // Filter.
-$string['dayofweek'] = "Weekday";
-$string['sport'] = "Sport";
+$string['sport'] = 'Sport';
 
 // Nav.
 $string['musi'] = 'MUSI';
