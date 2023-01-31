@@ -102,19 +102,6 @@ $string['createbotag:helptext'] = '<p>
 $string['editsports'] = 'Edit sports';
 $string['youneedcustomfieldsport'] = 'The booking customfield with the shortname "sport" needs to be created';
 
-// Teachers.
-$string['teacher'] = 'Teacher';
-$string['allteachers'] = 'All teachers';
-$string['showallteachers'] = '&gt;&gt; Show all teachers';
-$string['showcoursesofteacher'] = 'Courses';
-$string['messagebutton'] = 'Message';
-$string['messagingteacherimpossible'] = 'You cannot send messages to this teacher
- because you are not enrolled in any courses of her/him.';
-$string['sendmail'] = 'Mail';
-$string['teachernotfound'] = 'Teacher could not be found or does not exist.';
-$string['notateacher'] = 'The user selected is not teaching any courses and is probably not a teacher.';
-$string['showteachersmailinglist'] = 'Show a list of e-mails for all teachers...';
-
 // Shortcodes.
 $string['shortcodeslistofbookingoptions'] = 'List of booking options';
 $string['shortcodeslistofbookingoptionsascards'] = 'List of booking options as cards';
@@ -132,7 +119,6 @@ $string['shortcodesuserinformation'] = 'Display user information';
 $string['shortcodesarchivecmids'] = 'List of IDs for "My courses"-archive';
 $string['shortcodesarchivecmids_desc'] = 'Enter a comma-separated list of course module ids (cmids) of booking instances you want to show in the "My courses"-archive.';
 
-$string['courses'] = 'Courses';
 $string['archive'] = '<i class="fa fa-archive" aria-hidden="true"></i> Archive';
 $string['mycourses'] = 'My courses';
 $string['gotocoursematerial'] = 'Go to course material';

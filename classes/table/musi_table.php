@@ -128,6 +128,8 @@ class musi_table extends wunderbyte_table {
      * @throws dml_exception
      */
     public function col_teacher($values) {
+        global $PAGE;
+        $output = $PAGE->get_renderer('mod_booking');
 
         // Render col_teacher using a template.
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
@@ -142,7 +144,7 @@ class musi_table extends wunderbyte_table {
                 $value['last'] = false;
             }
         }
-        return $this->outputmusi->render_col_teacher($data);
+        return $output->render_col_teacher($data);
     }
 
     /**

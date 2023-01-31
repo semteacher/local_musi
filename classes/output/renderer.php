@@ -49,39 +49,6 @@ class renderer extends plugin_renderer_base {
         return $o;
     }
 
-    /** Function to render the page of a single teacher
-     * @param any $data
-     * @return string
-     */
-    public function render_teacherpage($data) {
-        $o = '';
-        $data = $data->export_for_template($this);
-        $o .= $this->render_from_template('local_musi/page_teacher', $data);
-        return $o;
-    }
-
-    /** Function to render the page showing all teachers
-     * @param any $data
-     * @return string
-     */
-    public function render_allteacherspage($data) {
-        $o = '';
-        $data = $data->export_for_template($this);
-        $o .= $this->render_from_template('local_musi/page_allteachers', $data);
-        return $o;
-    }
-
-    /** Function to render the teacher column.
-     * @param any $data
-     * @return string
-     */
-    public function render_col_teacher($data) {
-        $o = '';
-        $data = $data->export_for_template($this);
-        $o .= $this->render_from_template('local_musi/col_teacher', $data);
-        return $o;
-    }
-
     /** Function to render the cards table
      * @param any $data
      * @param string $data

@@ -28,7 +28,7 @@ namespace local_musi;
 
 use context_module;
 use context_system;
-use local_musi\output\page_allteachers;
+use mod_booking\output\page_allteachers;
 use local_musi\output\userinformation;
 use local_musi\table\musi_table;
 use local_shopping_cart\shopping_cart;

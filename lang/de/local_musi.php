@@ -101,19 +101,6 @@ $string['createbotag:helptext'] = '<p>
 $string['editsports'] = 'Sportarten bearbeiten';
 $string['youneedcustomfieldsport'] = 'Das booking customfield mit dem Shortname "sport" ist nicht vorhanden.';
 
-// Teachers.
-$string['teacher'] = 'Trainer:in';
-$string['allteachers'] = 'Alle Trainer:innen';
-$string['showallteachers'] = '&gt;&gt; Alle Trainer:innen anzeigen';
-$string['showcoursesofteacher'] = 'Kurse';
-$string['messagebutton'] = 'Nachricht';
-$string['messagingteacherimpossible'] = 'Sie können dieser Trainerin / diesem Trainer keine Nachrichten senden,
- weil Sie in keinen Kurs von ihr/ihm eingeschrieben sind.';
-$string['sendmail'] = 'Mail';
-$string['teachernotfound'] = 'Trainer:in konnte nicht gefunden werden oder existiert nicht.';
-$string['notateacher'] = 'Die ausgewählte Person unterrichtet keine buchbaren Kurse und kann daher nicht angezeigt werden.';
-$string['showteachersmailinglist'] = 'E-Mail-Liste für alle Trainer:innen anzeigen...';
-
 // Shortcodes.
 $string['shortcodeslistofbookingoptions'] = 'Liste der buchbaren Kurse';
 $string['shortcodeslistofbookingoptionsascards'] = 'Liste der buchbaren Kurse als Karten';
@@ -132,7 +119,6 @@ $string['shortcodesarchivecmids'] = 'Liste von IDs für das "Meine Kurse"-Archiv
 $string['shortcodesarchivecmids_desc'] = 'Geben Sie eine Komma-getrennte Liste von Kursmodul-IDs (cmids) der Semester-Instanzen (Buchungsinstanzen) an,
 die im "Meine Kurse"-Archiv aufscheinen sollen.';
 
-$string['courses'] = 'Kurse';
 $string['archive'] = '<i class="fa fa-archive" aria-hidden="true"></i> Archiv';
 $string['mycourses'] = 'Meine Kurse';
 $string['gotocoursematerial'] = 'Zu den Kursmaterialien';
