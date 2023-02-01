@@ -164,105 +164,19 @@ class shortcodes {
 
         $table->use_pages = false;
 
-        $table->define_cache('mod_booking', 'bookingoptionstable');
+
         if ($showimage !== false) {
             $table->set_tableclass('cardimageclass', 'pr-0 pl-1');
 
             $table->add_subcolumns('cardimage', ['image']);
         }
-        $table->add_subcolumns('top', ['sport', 'action']);
-        $table->add_subcolumns('leftside', ['text', 'botags']);
-        $table->add_subcolumns('footer', ['teacher', 'dayofweektime', 'location', 'bookings']);
-        $table->add_subcolumns('rightside', ['price']);
 
-        $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-left col-md-10'], ['sport']);
-        $table->add_classes_to_subcolumns('top', ['columnvalueclass' => 'sport-badge rounded-sm text-gray-800 pb-0 pt-0 mb-1'], ['sport']);
-        $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-right col-md-2 position-relative pr-0'], ['action']);
-        $table->add_classes_to_subcolumns('top', ['columnkeyclass' => 'd-none']);
-
-        $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none']);
-
-        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left mt-3 mb-3 h3'], ['text']);
-
-        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left font-size-sm'], ['botags']);
-        $table->add_classes_to_subcolumns('leftside', ['columniclassbefore' => 'fa fa-tags text-gray font-size-sm'], ['botags']);
-
-        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left font-size-m'], ['teacher']);
-        $table->add_classes_to_subcolumns('footer', ['columnvalueclass' => 'd-flex'], ['teacher']);
-        $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray pr-2 font-size-sm'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-clock-o text-gray font-size-sm'],
-            ['dayofweektime']);
-
-        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray  pr-2 font-size-sm'], ['location']);
-        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-map-marker text-gray font-size-sm'],
-            ['location']);
-        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'text-left text-gray pr-2 font-size-sm'], ['bookings']);
-        $table->add_classes_to_subcolumns('footer', ['columniclassbefore' => 'fa fa-ticket text-gray font-size-sm'],
-            ['bookings']);
-
-        $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right'], ['price']);
-
-        // Override naming for columns. one could use getstring for localisation here.
-        $table->add_classes_to_subcolumns(
-            'top',
-            ['keystring' => get_string('tableheader_text', 'booking')],
-            ['sport']
-        );
-        $table->add_classes_to_subcolumns(
-            'leftside',
-            ['keystring' => get_string('tableheader_text', 'booking')],
-            ['text']
-        );
-//        $table->add_classes_to_subcolumns(
-//            'leftside',
-//            ['keystring' => get_string('tableheader_teacher', 'booking')],
-//            ['teacher']
-//        );
-        $table->add_classes_to_subcolumns(
-            'footer',
-            ['keystring' => get_string('tableheader_maxanswers', 'booking')],
-            ['maxanswers']
-        );
-        $table->add_classes_to_subcolumns(
-            'footer',
-            ['keystring' => get_string('tableheader_maxoverbooking', 'booking')],
-            ['maxoverbooking']
-        );
-        $table->add_classes_to_subcolumns(
-            'footer',
-            ['keystring' => get_string('tableheader_coursestarttime', 'booking')],
-            ['coursestarttime']
-        );
-        $table->add_classes_to_subcolumns(
-            'footer',
-            ['keystring' => get_string('tableheader_courseendtime', 'booking')],
-            ['courseendtime']
-        );
-
-        $table->is_downloading('', 'List of booking options');
+        self::generate_table_for_list($table);
 
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
         if ($showfilter !== false) {
-            $table->define_filtercolumns([
-                'id', 'sport' => [
-                    'localizedname' => get_string('sport', 'local_musi')
-                ], 'dayofweek' => [
-                    'localizedname' => get_string('dayofweek', 'local_musi'),
-                    'monday' => get_string('monday', 'mod_booking'),
-                    'tuesday' => get_string('tuesday', 'mod_booking'),
-                    'wednesday' => get_string('wednesday', 'mod_booking'),
-                    'thursday' => get_string('thursday', 'mod_booking'),
-                    'friday' => get_string('friday', 'mod_booking'),
-                    'saturday' => get_string('saturday', 'mod_booking'),
-                    'sunday' => get_string('sunday', 'mod_booking')
-                ],  'location' => [
-                    'localizedname' => get_string('location', 'mod_booking')
-                ],  'botags' => [
-                    'localizedname' => get_string('tags', 'core')
-                ]
-            ]);
+            self::define_filtercolumns($table);
         }
 
         if ($showsearch !== false) {
@@ -450,24 +364,7 @@ class shortcodes {
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
         if ($showfilter !== false) {
-            $table->define_filtercolumns([
-                'id', 'sport' => [
-                    'localizedname' => get_string('sport', 'local_musi')
-                ], 'dayofweek' => [
-                    'localizedname' => get_string('dayofweek', 'local_musi'),
-                    'monday' => get_string('monday', 'mod_booking'),
-                    'tuesday' => get_string('tuesday', 'mod_booking'),
-                    'wednesday' => get_string('wednesday', 'mod_booking'),
-                    'thursday' => get_string('thursday', 'mod_booking'),
-                    'friday' => get_string('friday', 'mod_booking'),
-                    'saturday' => get_string('saturday', 'mod_booking'),
-                    'sunday' => get_string('sunday', 'mod_booking')
-                ],  'location' => [
-                    'localizedname' => get_string('location', 'mod_booking')
-                ],  'botags' => [
-                    'localizedname' => get_string('tags', 'core')
-                ]
-            ]);
+            self::define_filtercolumns($table);
         }
 
         if ($showsearch !== false) {
@@ -598,60 +495,12 @@ class shortcodes {
 
         $table->use_pages = false;
 
-        $table->define_cache('mod_booking', 'bookingoptionstable');
-
-        $table->add_subcolumns('itemcategory', ['sport']);
-        $table->add_subcolumns('itemday', ['dayofweektime']);
-        $table->add_subcolumns('cardimage', ['image']);
-        $table->add_subcolumns('optioninvisible', ['invisibleoption']);
-
-        $table->add_subcolumns('cardbody', ['action', 'invisibleoption', 'sport', 'text', 'botags', 'teacher']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'float-right m-1'], ['action']);
-        $table->add_classes_to_subcolumns(
-            'cardbody',
-            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
-            ['invisibleoption']
-        );
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6 sport-badge rounded-sm text-dark
-        pl-1 pr-1 pb-0 pt-0 mr-1'], ['sport']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'm-0 mb-1 h5'], ['text']);
-        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
-
-        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings']);
-        $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users pr-3'], ['bookings']);
-
-        $table->add_subcolumns('cardfooter', ['price']);
-        $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
-
-        $table->set_tableclass('cardimageclass', 'w-100');
-
-        $table->is_downloading('', 'List of booking options');
+        self::generate_table_for_cards($table);
 
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
         if ($showfilter !== false) {
-            $table->define_filtercolumns([
-                'id', 'sport' => [
-                    'localizedname' => get_string('sport', 'local_musi')
-                ], 'dayofweek' => [
-                    'localizedname' => get_string('dayofweek', 'local_musi'),
-                    'monday' => get_string('monday', 'mod_booking'),
-                    'tuesday' => get_string('tuesday', 'mod_booking'),
-                    'wednesday' => get_string('wednesday', 'mod_booking'),
-                    'thursday' => get_string('thursday', 'mod_booking'),
-                    'friday' => get_string('friday', 'mod_booking'),
-                    'saturday' => get_string('saturday', 'mod_booking'),
-                    'sunday' => get_string('sunday', 'mod_booking')
-                ],  'location' => [
-                    'localizedname' => get_string('location', 'mod_booking')
-                ],  'botags' => [
-                    'localizedname' => get_string('tags', 'core')
-                ]
-            ]);
+            self::define_filtercolumns($table);
         }
 
         if ($showsearch !== false) {
@@ -776,59 +625,12 @@ class shortcodes {
 
         $table->use_pages = false;
 
-        $table->define_cache('mod_booking', 'bookingoptionstable');
-
-        $table->add_subcolumns('itemcategory', ['sport']);
-        $table->add_subcolumns('itemday', ['dayofweektime']);
-        $table->add_subcolumns('cardimage', ['image']);
-        $table->add_subcolumns('optioninvisible', ['invisibleoption']);
-
-        $table->add_subcolumns('cardbody', ['action', 'invisibleoption', 'sport', 'text', 'teacher', 'botags']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'float-right m-1'], ['action']);
-        $table->add_classes_to_subcolumns(
-            'cardbody',
-            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
-            ['invisibleoption']
-        );
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'm-0 mb-1 h5'], ['text']);
-        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
-
-        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings', 'course']);
-        $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users pr-3'], ['bookings']);
-
-        $table->add_subcolumns('cardfooter', ['price']);
-        $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
-
-        $table->set_tableclass('cardimageclass', 'w-100');
-
-        $table->is_downloading('', 'List of booking options');
+        self::generate_table_for_cards($table);
 
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
         if ($showfilter !== false) {
-            $table->define_filtercolumns([
-                'id', 'sport' => [
-                    'localizedname' => get_string('sport', 'local_musi')
-                ], 'dayofweek' => [
-                    'localizedname' => get_string('dayofweek', 'local_musi'),
-                    'monday' => get_string('monday', 'mod_booking'),
-                    'tuesday' => get_string('tuesday', 'mod_booking'),
-                    'wednesday' => get_string('wednesday', 'mod_booking'),
-                    'thursday' => get_string('thursday', 'mod_booking'),
-                    'friday' => get_string('friday', 'mod_booking'),
-                    'saturday' => get_string('saturday', 'mod_booking'),
-                    'sunday' => get_string('sunday', 'mod_booking')
-                ],  'location' => [
-                    'localizedname' => get_string('location', 'mod_booking')
-                ],  'botags' => [
-                    'localizedname' => get_string('tags', 'core')
-                ]
-            ]);
+            self::define_filtercolumns($table);
         }
 
         if ($showsearch !== false) {
@@ -941,59 +743,12 @@ class shortcodes {
 
         $table->use_pages = false;
 
-        $table->define_cache('mod_booking', 'bookingoptionstable');
-
-        $table->add_subcolumns('itemcategory', ['sport']);
-        $table->add_subcolumns('itemday', ['dayofweektime']);
-        $table->add_subcolumns('cardimage', ['image']);
-        $table->add_subcolumns('optioninvisible', ['invisibleoption']);
-
-        $table->add_subcolumns('cardbody', ['action', 'invisibleoption', 'sport', 'text', 'teacher', 'botags']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'float-right m-1'], ['action']);
-        $table->add_classes_to_subcolumns(
-            'cardbody',
-            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
-            ['invisibleoption']
-        );
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
-        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'm-0 mb-1 h5'], ['text']);
-        $table->add_classes_to_subcolumns('cardbody', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
-
-        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings', 'course']);
-        $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users pr-3'], ['bookings']);
-
-        $table->add_subcolumns('cardfooter', ['conditionmessage']);
-        $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
-
-        $table->set_tableclass('cardimageclass', 'w-100');
-
-        $table->is_downloading('', 'List of booking options');
+        self::generate_table_for_cards($table);
 
         // Id is not really something one wants to filter, but we need the dataset on the html element.
         // The key "id" won't be rendered in filter json, though.
         if ($showfilter !== false) {
-            $table->define_filtercolumns([
-                'id', 'sport' => [
-                    'localizedname' => get_string('sport', 'local_musi')
-                ], 'dayofweek' => [
-                    'localizedname' => get_string('dayofweek', 'local_musi'),
-                    'monday' => get_string('monday', 'mod_booking'),
-                    'tuesday' => get_string('tuesday', 'mod_booking'),
-                    'wednesday' => get_string('wednesday', 'mod_booking'),
-                    'thursday' => get_string('thursday', 'mod_booking'),
-                    'friday' => get_string('friday', 'mod_booking'),
-                    'saturday' => get_string('saturday', 'mod_booking'),
-                    'sunday' => get_string('sunday', 'mod_booking')
-                ],  'location' => [
-                    'localizedname' => get_string('location', 'mod_booking')
-                ],  'botags' => [
-                    'localizedname' => get_string('tags', 'core')
-                ]
-            ]);
+            self::define_filtercolumns($table);
         }
 
         if ($showsearch !== false) {
@@ -1438,5 +1193,129 @@ class shortcodes {
         $table->tabletemplate = 'local_musi/nolazytable';
 
         return [$table, $booking, $category];
+    }
+
+    private static function define_filtercolumns(&$table){
+        $table->define_filtercolumns([
+            'id', 'sport' => [
+                'localizedname' => get_string('sport', 'local_musi')
+            ], 'dayofweek' => [
+                'localizedname' => get_string('dayofweek', 'local_musi'),
+                'monday' => get_string('monday', 'mod_booking'),
+                'tuesday' => get_string('tuesday', 'mod_booking'),
+                'wednesday' => get_string('wednesday', 'mod_booking'),
+                'thursday' => get_string('thursday', 'mod_booking'),
+                'friday' => get_string('friday', 'mod_booking'),
+                'saturday' => get_string('saturday', 'mod_booking'),
+                'sunday' => get_string('sunday', 'mod_booking')
+            ],  'location' => [
+                'localizedname' => get_string('location', 'mod_booking')
+            ],  'botags' => [
+                'localizedname' => get_string('tags', 'core')
+            ]
+        ]);
+    }
+
+    private static function generate_table_for_cards(&$table){
+        $table->define_cache('mod_booking', 'bookingoptionstable');
+
+        $table->add_subcolumns('itemcategory', ['sport']);
+        $table->add_subcolumns('cardimage', ['image']);
+        $table->add_subcolumns('optioninvisible', ['invisibleoption']);
+
+        $table->add_subcolumns('cardbody', ['action', 'invisibleoption', 'sport', 'text', 'botags']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'float-right m-1'], ['action']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'font-size-sm'], ['botags']);
+        $table->add_classes_to_subcolumns(
+            'cardbody',
+            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
+            ['invisibleoption']
+        );
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'text-secondary'], ['sport']);
+        $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'm-0 mt-1 mb-1 h5'], ['text']);
+
+        $table->add_subcolumns('cardlist', ['teacher', 'dayofweektime', 'location', 'bookings']);
+        $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('cardlist', ['columnvalueclass' => 'text-secondary']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'text-secondary fa-fw']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
+
+        $table->add_subcolumns('cardfooter', ['price']);
+        $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('cardfooter', ['columnclass' => 'theme-text-color bold '], ['price']);
+        $table->set_tableclass('cardimageclass', 'w-100');
+
+        $table->is_downloading('', 'List of booking options');
+    }
+
+    private static function generate_table_for_list(&$table){
+        $table->define_cache('mod_booking', 'bookingoptionstable');
+        $table->add_subcolumns('top', ['sport', 'action']);
+        $table->add_subcolumns('leftside', ['text']);
+        $table->add_subcolumns('info', ['teacher', 'dayofweektime', 'location', 'bookings']);
+        //$table->add_subcolumns('footer', ['botags']);
+        $table->add_subcolumns('rightside', ['botags','price']);
+
+        $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-left col-md-8'], ['sport']);
+        $table->add_classes_to_subcolumns('top', ['columnvalueclass' => 'sport-badge rounded-sm text-gray-800 pb-0 pt-0 mb-1'], ['sport']);
+        $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-right col-md-2 position-relative pr-0'], ['action']);
+        $table->add_classes_to_subcolumns('top', ['columnkeyclass' => 'd-none']);
+
+        $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left mt-3 mb-3 h3'], ['text']);
+
+        $table->add_classes_to_subcolumns('info', ['columnclass' => 'text-left text-secondary font-size-sm pr-2']);
+        $table->add_classes_to_subcolumns('info', ['columnvalueclass' => 'd-flex'], ['teacher']);
+        $table->add_classes_to_subcolumns('info', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
+        $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
+        $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-ticket'], ['bookings']);
+
+//        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'font-size-sm']);
+//        $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right mb-auto align-self-end '], ['botags']);
+        $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right mt-auto align-self-end theme-text-color bold '], ['price']);
+
+        // Override naming for columns. one could use getstring for localisation here.
+        $table->add_classes_to_subcolumns(
+            'top',
+            ['keystring' => get_string('tableheader_text', 'booking')],
+            ['sport']
+        );
+        $table->add_classes_to_subcolumns(
+            'leftside',
+            ['keystring' => get_string('tableheader_text', 'booking')],
+            ['text']
+        );
+//        $table->add_classes_to_subcolumns(
+//            'leftside',
+//            ['keystring' => get_string('tableheader_teacher', 'booking')],
+//            ['teacher']
+//        );
+        $table->add_classes_to_subcolumns(
+            'info',
+            ['keystring' => get_string('tableheader_maxanswers', 'booking')],
+            ['maxanswers']
+        );
+        $table->add_classes_to_subcolumns(
+            'info',
+            ['keystring' => get_string('tableheader_maxoverbooking', 'booking')],
+            ['maxoverbooking']
+        );
+        $table->add_classes_to_subcolumns(
+            'info',
+            ['keystring' => get_string('tableheader_coursestarttime', 'booking')],
+            ['coursestarttime']
+        );
+        $table->add_classes_to_subcolumns(
+            'info',
+            ['keystring' => get_string('tableheader_courseendtime', 'booking')],
+            ['courseendtime']
+        );
+
+        $table->is_downloading('', 'List of booking options');
     }
 }
