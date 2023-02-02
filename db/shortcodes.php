@@ -55,7 +55,7 @@ $shortcodes = [
     'meinekurseliste' => [
         'callback' => 'local_musi\shortcodes::mycourseslist',
         'wraps' => false,
-        'description' => 'shortcodeslistofmybookingoptionsalist'
+        'description' => 'shortcodeslistofmybookingoptionsaslist'
     ],
     'alletrainerkarten' => [
         'callback' => 'local_musi\shortcodes::allteacherscards',

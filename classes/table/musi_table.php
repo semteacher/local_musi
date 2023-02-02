@@ -60,8 +60,8 @@ class musi_table extends wunderbyte_table {
     /** @var context_module $buyforuser */
     private $context = null;
 
-    /** @var boolean $show_units */
-    private $show_units = false;
+    /** @var bool $showunits */
+    private $showunits = false;
 
     /**
      * Constructor
@@ -132,12 +132,12 @@ class musi_table extends wunderbyte_table {
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
         $data = new col_teacher($values->id, $settings);
 
-        $num_items = count($data->teachers);
+        $numitems = count($data->teachers);
         $i = 0;
-        foreach ($data->teachers as $key=>&$value){
-            if(++$i === $num_items) {
+        foreach ($data->teachers as $key => &$value) {
+            if (++$i === $numitems) {
                 $value['last'] = true;
-            }else{
+            } else {
                 $value['last'] = false;
             }
         }
@@ -461,11 +461,17 @@ class musi_table extends wunderbyte_table {
         $units = null;
 
         if (!empty($settings->dayofweektime)) {
-            $local_weekdays = dates_handler::get_localized_weekdays(current_language());
+            $localweekdays = dates_handler::get_localized_weekdays(current_language());
             $dayinfo = dates_handler::prepare_day_info($settings->dayofweektime);
-            $ret = $local_weekdays[$dayinfo['day']].', '.$dayinfo['starttime'].' -- '.$dayinfo['endtime'];
+            if (isset($dayinfo['day']) && $dayinfo['starttime'] && $dayinfo['endtime']) {
+                $ret = $localweekdays[$dayinfo['day']] . ', '.$dayinfo['starttime'] . ' -- ' . $dayinfo['endtime'];
+            } else if (!empty($settings->dayofweektime)) {
+                $ret = $settings->dayofweektime;
+            } else {
+                $ret = get_string('datenotset', 'mod_booking');
+            }
 
-            if (!$this->is_downloading() && !empty($units) && $this->show_units) {
+            if (!$this->is_downloading() && !empty($units) && $this->showunits) {
                 $units = dates_handler::calculate_and_render_educational_units($settings->dayofweektime);
                 $ret .= " ($units)";
             }
@@ -637,8 +643,9 @@ class musi_table extends wunderbyte_table {
 
         if ($values->courseid != null && $values->courseid != 0) {
             $url = new moodle_url('/course/view.php', ['id' => $values->courseid]);
-            $ret_html = html_writer::tag('i','',['class' => 'fa fa-graduation-cap']).' '.get_string('tocoursecontent','local_musi');
-            return html_writer::tag('a', $ret_html, ['href' => $url->out(false), 'class' => 'btn btn-info']);
+            $rethtml = html_writer::tag('i', '', ['class' => 'fa fa-graduation-cap']) . ' ' .
+                get_string('tocoursecontent', 'local_musi');
+            return html_writer::tag('a', $rethtml, ['href' => $url->out(false), 'class' => 'btn btn-info']);
         }
 
         return "";

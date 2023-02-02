@@ -1200,7 +1200,7 @@ class shortcodes {
             'id', 'sport' => [
                 'localizedname' => get_string('sport', 'local_musi')
             ], 'dayofweek' => [
-                'localizedname' => get_string('dayofweek', 'local_musi'),
+                'localizedname' => get_string('dayofweek', 'mod_booking'),
                 'monday' => get_string('monday', 'mod_booking'),
                 'tuesday' => get_string('tuesday', 'mod_booking'),
                 'wednesday' => get_string('wednesday', 'mod_booking'),
