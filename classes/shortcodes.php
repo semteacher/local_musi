@@ -164,7 +164,6 @@ class shortcodes {
 
         $table->use_pages = false;
 
-
         if ($showimage !== false) {
             $table->set_tableclass('cardimageclass', 'pr-0 pl-1');
 
@@ -1195,7 +1194,7 @@ class shortcodes {
         return [$table, $booking, $category];
     }
 
-    private static function define_filtercolumns(&$table){
+    private static function define_filtercolumns(&$table) {
         $table->define_filtercolumns([
             'id', 'sport' => [
                 'localizedname' => get_string('sport', 'local_musi')
@@ -1216,7 +1215,7 @@ class shortcodes {
         ]);
     }
 
-    private static function generate_table_for_cards(&$table){
+    private static function generate_table_for_cards(&$table) {
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
         $table->add_subcolumns('itemcategory', ['sport']);
@@ -1251,20 +1250,27 @@ class shortcodes {
         $table->is_downloading('', 'List of booking options');
     }
 
-    private static function generate_table_for_list(&$table){
+    private static function generate_table_for_list(&$table) {
         $table->define_cache('mod_booking', 'bookingoptionstable');
         $table->add_subcolumns('top', ['sport', 'action']);
-        $table->add_subcolumns('leftside', ['text']);
+        $table->add_subcolumns('leftside', ['invisibleoption', 'text']);
         $table->add_subcolumns('info', ['teacher', 'dayofweektime', 'location', 'bookings']);
-        //$table->add_subcolumns('footer', ['botags']);
-        $table->add_subcolumns('rightside', ['botags','price']);
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        /* $table->add_subcolumns('footer', ['botags']); */
+        $table->add_subcolumns('rightside', ['botags', 'price']);
 
         $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-left col-md-8'], ['sport']);
-        $table->add_classes_to_subcolumns('top', ['columnvalueclass' => 'sport-badge rounded-sm text-gray-800 pb-0 pt-0 mb-1'], ['sport']);
+        $table->add_classes_to_subcolumns('top', ['columnvalueclass' =>
+            'sport-badge rounded-sm text-gray-800 pb-0 pt-0 mb-1'], ['sport']);
         $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-right col-md-2 position-relative pr-0'], ['action']);
         $table->add_classes_to_subcolumns('top', ['columnkeyclass' => 'd-none']);
 
         $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none']);
+        $table->add_classes_to_subcolumns(
+            'leftside',
+            ['columnvalueclass' => 'shortcodes_option_info_invisible'],
+            ['invisibleoption']
+        );
         $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left mt-3 mb-3 h3'], ['text']);
 
         $table->add_classes_to_subcolumns('info', ['columnclass' => 'text-left text-secondary font-size-sm pr-2']);
@@ -1273,11 +1279,12 @@ class shortcodes {
         $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-ticket'], ['bookings']);
-
-//        $table->add_classes_to_subcolumns('footer', ['columnclass' => 'font-size-sm']);
-//        $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']);
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        /* $table->add_classes_to_subcolumns('footer', ['columnclass' => 'font-size-sm']);
+        $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']); */
         $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right mb-auto align-self-end '], ['botags']);
-        $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right mt-auto align-self-end theme-text-color bold '], ['price']);
+        $table->add_classes_to_subcolumns('rightside', ['columnclass' =>
+            'text-right mt-auto align-self-end theme-text-color bold '], ['price']);
 
         // Override naming for columns. one could use getstring for localisation here.
         $table->add_classes_to_subcolumns(
@@ -1290,11 +1297,14 @@ class shortcodes {
             ['keystring' => get_string('tableheader_text', 'booking')],
             ['text']
         );
-//        $table->add_classes_to_subcolumns(
-//            'leftside',
-//            ['keystring' => get_string('tableheader_teacher', 'booking')],
-//            ['teacher']
-//        );
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        /*
+        $table->add_classes_to_subcolumns(
+            'leftside',
+            ['keystring' => get_string('tableheader_teacher', 'booking')],
+            ['teacher']
+        );
+        */
         $table->add_classes_to_subcolumns(
             'info',
             ['keystring' => get_string('tableheader_maxanswers', 'booking')],
