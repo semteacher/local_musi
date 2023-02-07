@@ -1253,7 +1253,7 @@ class shortcodes {
     private static function generate_table_for_list(&$table) {
         $table->define_cache('mod_booking', 'bookingoptionstable');
         $table->add_subcolumns('top', ['sport', 'action']);
-        $table->add_subcolumns('leftside', ['invisibleoption', 'text']);
+        $table->add_subcolumns('leftside', ['text', 'invisibleoption']);
         $table->add_subcolumns('info', ['teacher', 'dayofweektime', 'location', 'bookings']);
         // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
         /* $table->add_subcolumns('footer', ['botags']); */
