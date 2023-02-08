@@ -559,7 +559,7 @@ class musi_table extends wunderbyte_table {
         if ($values->status == 1) {
             $data->showundocancel = true;
             $data->undocancellink = html_writer::link('#',
-            '<i class="fa fa-undo" aria-hidden="true"></i> ' .
+            '<i class="fa fa-undo fa-fw" aria-hidden="true"></i> ' .
                 get_string('undocancelthisbookingoption', 'mod_booking'),
                 [
                     'class' => 'dropdown-item undocancelallusers',
@@ -576,7 +576,7 @@ class musi_table extends wunderbyte_table {
             // We do NOT set $data->undocancel here.
             $data->showcancel = true;
             $data->cancellink = html_writer::link('#',
-            '<i class="fa fa-ban" aria-hidden="true"></i> ' .
+            '<i class="fa fa-ban fa-fw" aria-hidden="true"></i> ' .
                 get_string('cancelallusers', 'mod_booking'),
                 [
                     'class' => 'dropdown-item cancelallusers',
