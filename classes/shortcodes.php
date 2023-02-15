@@ -142,6 +142,10 @@ class shortcodes {
         $tablename = bin2hex(random_bytes(12));
 
         $table = new musi_table($tablename, $booking);
+
+        // Without defining sorting won't work!
+        $table->define_columns(['titleprefix']);
+
         $table->showcountlabel = $countlabel;
         $wherearray = ['bookingid' => (int)$booking->id];
 
@@ -281,6 +285,9 @@ class shortcodes {
         $tablename = bin2hex(random_bytes(12));
 
         $table = new musi_table($tablename, $booking);
+
+        // Without defining sorting won't work!
+        $table->define_columns(['titleprefix']);
 
         $wherearray = ['bookingid' => (int)$booking->id];
 
@@ -469,6 +476,9 @@ class shortcodes {
 
         $table = new musi_table($tablename, $booking);
 
+        // Without defining sorting won't work!
+        $table->define_columns(['titleprefix']);
+
         $wherearray = ['bookingid' => (int)$booking->id];
 
         if (!empty($category)) {
@@ -590,6 +600,9 @@ class shortcodes {
         $tablename = bin2hex(random_bytes(12));
 
         $table = new musi_table($tablename, $booking);
+
+        // Without defining sorting won't work!
+        $table->define_columns(['titleprefix']);
 
         $wherearray = ['bookingid' => (int)$booking->id];
 
@@ -721,6 +734,9 @@ class shortcodes {
 
         $table = new musi_table($tablename, $booking);
 
+        // Without defining sorting won't work!
+        $table->define_columns(['titleprefix']);
+
         // We want to check for the currently logged in user...
         // ... if (s)he is teaching courses.
         $teacherid = $USER->id;
@@ -840,6 +856,9 @@ class shortcodes {
         $tablename = bin2hex(random_bytes(12));
 
         $table = new musi_table($tablename, $booking);
+
+        // Without defining sorting won't work!
+        $table->define_columns(['titleprefix']);
 
         $wherearray = ['bookingid' => (int)$booking->id];
 
@@ -1093,6 +1112,9 @@ class shortcodes {
         $tablename = bin2hex(random_bytes(12));
 
         $table = new musi_table($tablename, $booking);
+
+        // Without defining sorting won't work!
+        $table->define_columns(['titleprefix']);
 
         $wherearray = ['bookingid' => (int)$booking->id];
 
