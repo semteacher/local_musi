@@ -381,13 +381,7 @@ class shortcodes {
             $table->sortable(true, 'text');
         }
 
-        // It's important to have the baseurl defined, we use it as a return url at one point.
-        $baseurl = new moodle_url(
-            $_SERVER['REQUEST_URI'],
-            $_GET
-        );
-
-        $table->define_baseurl($baseurl->out());
+        $table->cardsort = true;
 
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 100;
@@ -517,13 +511,7 @@ class shortcodes {
             $table->sortable(true, 'text');
         }
 
-        // It's important to have the baseurl defined, we use it as a return url at one point.
-        $baseurl = new moodle_url(
-            $_SERVER['REQUEST_URI'],
-            $_GET
-        );
-
-        $table->define_baseurl($baseurl->out());
+        $table->cardsort = true;
 
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 30;
