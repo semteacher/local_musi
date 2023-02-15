@@ -132,6 +132,7 @@ $string['musi:canedit'] = 'User can edit';
 
 // Filter.
 $string['sport'] = 'Sport';
+$string['location'] = 'Location';
 
 // Nav.
 $string['musi'] = 'MUSI';

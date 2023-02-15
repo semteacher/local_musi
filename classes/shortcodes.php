@@ -186,8 +186,8 @@ class shortcodes {
             $table->define_sortablecolumns([
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
-                'location',
-                'dayofweek'
+                'location' => get_string('location', 'local_musi'),
+                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -374,7 +374,7 @@ class shortcodes {
             $table->define_sortablecolumns([
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
-                'location',
+                'location' => get_string('location', 'local_musi'),
                 'dayofweek'
             ]);
         } else {
@@ -504,8 +504,8 @@ class shortcodes {
             $table->define_sortablecolumns([
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
-                'location',
-                'dayofweek'
+                'location' => get_string('location', 'local_musi'),
+                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -628,8 +628,8 @@ class shortcodes {
             $table->define_sortablecolumns([
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
-                'location',
-                'dayofweek'
+                'location' => get_string('location', 'local_musi'),
+                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -746,8 +746,8 @@ class shortcodes {
             $table->define_sortablecolumns([
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
-                'location',
-                'dayofweek'
+                'location' => get_string('location', 'local_musi'),
+                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -952,8 +952,8 @@ class shortcodes {
             $table->define_sortablecolumns([
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
-                'location',
-                'dayofweek'
+                'location' => get_string('location', 'local_musi'),
+                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -1156,8 +1156,8 @@ class shortcodes {
             $table->define_sortablecolumns([
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
-                'location',
-                'dayofweek'
+                'location' => get_string('location', 'local_musi'),
+                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
