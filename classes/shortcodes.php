@@ -201,6 +201,8 @@ class shortcodes {
 
         $table->define_baseurl($baseurl->out());
 
+        $table->cardsort = true;
+
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 60;
 
@@ -643,6 +645,8 @@ class shortcodes {
 
         $table->define_baseurl($baseurl->out());
 
+        $table->cardsort = true;
+
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 30;
 
@@ -760,6 +764,8 @@ class shortcodes {
         );
 
         $table->define_baseurl($baseurl->out());
+
+        $table->cardsort = true;
 
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 30;
@@ -967,6 +973,8 @@ class shortcodes {
 
         $table->define_baseurl($baseurl->out());
 
+        $table->cardsort = true;
+
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 30;
 
@@ -1170,6 +1178,8 @@ class shortcodes {
         );
 
         $table->define_baseurl($baseurl->out());
+
+        $table->cardsort = true;
 
         // This allows us to use infinite scrolling, No pages will be used.
         $table->infinitescroll = 100;
