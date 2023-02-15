@@ -184,10 +184,10 @@ class shortcodes {
 
         if ($showsort !== false) {
             $table->define_sortablecolumns([
+                'titleprefix' => get_string('titleprefix', 'local_musi'),
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
                 'location' => get_string('location', 'local_musi'),
-                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -374,10 +374,10 @@ class shortcodes {
 
         if ($showsort !== false) {
             $table->define_sortablecolumns([
+                'titleprefix' => get_string('titleprefix', 'local_musi'),
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
                 'location' => get_string('location', 'local_musi'),
-                'dayofweek'
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -504,10 +504,10 @@ class shortcodes {
 
         if ($showsort !== false) {
             $table->define_sortablecolumns([
+                'titleprefix' => get_string('titleprefix', 'local_musi'),
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
                 'location' => get_string('location', 'local_musi'),
-                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -628,10 +628,10 @@ class shortcodes {
 
         if ($showsort !== false) {
             $table->define_sortablecolumns([
+                'titleprefix' => get_string('titleprefix', 'local_musi'),
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
                 'location' => get_string('location', 'local_musi'),
-                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -748,10 +748,10 @@ class shortcodes {
 
         if ($showsort !== false) {
             $table->define_sortablecolumns([
+                'titleprefix' => get_string('titleprefix', 'local_musi'),
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
                 'location' => get_string('location', 'local_musi'),
-                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -956,10 +956,10 @@ class shortcodes {
 
         if ($showsort !== false) {
             $table->define_sortablecolumns([
+                'titleprefix' => get_string('titleprefix', 'local_musi'),
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
                 'location' => get_string('location', 'local_musi'),
-                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');
@@ -1162,10 +1162,10 @@ class shortcodes {
 
         if ($showsort !== false) {
             $table->define_sortablecolumns([
+                'titleprefix' => get_string('titleprefix', 'local_musi'),
                 'text' => get_string('coursename', 'local_musi'),
                 'sport' => get_string('sport', 'local_musi'),
                 'location' => get_string('location', 'local_musi'),
-                'dayofweek' => get_string('dayofweek', 'mod_booking'),
             ]);
         } else {
             $table->sortable(true, 'text');

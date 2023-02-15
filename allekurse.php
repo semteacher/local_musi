@@ -53,7 +53,7 @@ switch ($type) {
         echo format_text("[allekursekarten filter=1 search=1 sort=1]", FORMAT_HTML);
         break;
     case 'grid':
-        echo format_text("[allekursegrid filter=0 search=1 sort=1]", FORMAT_HTML);
+        echo format_text("[allekursegrid filter=1 search=1 sort=1]", FORMAT_HTML);
         break;
     case 'liste':
     default:

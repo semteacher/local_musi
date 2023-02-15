@@ -37,6 +37,8 @@ $string['shortcodeslistofmybookingoptionsaslist'] = 'My courses as list';
 $string['shortcodeslistofteachersascards'] = 'List of teachers as cards';
 $string['shortcodeslistofmyteachedbookingoptionsascards'] = 'Courses I teach as cards';
 
+// General strings.
+$string['titleprefix'] = 'Course number';
 
 // List of all courses.
 $string['allcourses'] = 'All courses';
@@ -151,5 +153,5 @@ $string['editcontractformula'] = 'Edit contract formula';
 // Userinformation.mustache.
 $string['userinformation'] = 'Benutzer-Information';
 
-// My Courses List
+// My Courses List.
 $string['tocoursecontent'] = 'Course content';
