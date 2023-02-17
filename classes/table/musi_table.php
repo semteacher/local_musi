@@ -272,6 +272,22 @@ class musi_table extends wunderbyte_table {
 
     /**
      * This function is called for each data row to allow processing of the
+     * minanswers value.
+     *
+     * @param object $values Contains object with all the values of record.
+     * @return string a string containing the minanswers description and value
+     * @throws coding_exception
+     */
+    public function col_minanswers($values) {
+        $ret = null;
+        if (!empty($values->minanswers)) {
+            $ret = get_string('minanswers', 'mod_booking') . ": $values->minanswers";
+        }
+        return $ret;
+    }
+
+    /**
+     * This function is called for each data row to allow processing of the
      * location value.
      *
      * @param object $values Contains object with all the values of record.
@@ -593,6 +609,15 @@ class musi_table extends wunderbyte_table {
         return $this->outputbooking->render_col_text_link($data);
     }
 
+    /**
+     * This function is called for each data row to allow processing of the
+     * courseid value.
+     *
+     * @param object $values Contains object with all the values of record.
+     * @return string Link to connected Moodle course styled as button.
+     * @throws moodle_exception
+     * @throws coding_exception
+     */
     public function col_courseid($values) {
 
         if ($values->courseid != null && $values->courseid != 0) {

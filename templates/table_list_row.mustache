@@ -133,29 +133,28 @@
           <div class="d-block">
               <ul class="nav mb-2">
               {{#info}}
-                 {{!^value}}
+                <span {{^value}} style="display:none" {{/value}}>
                   <li class="nav-item pr-3">
-                      <div class="d-flex align-items-center">
-                          <div class="mr-2 d-flex text-secondary font-size-m icon-uxs align-middle">
-                              {{#columniclassbefore}}
-                                  <i class="{{.}}  mt-auto mb-auto mr-1 fa-fw" aria-hidden="true" aria-label="
-                                    {{^keystring}}
-                                      {{{key}}}
-                                  {{/keystring}}
-                                      {{#keystring}}
-                                          {{.}}
-                                      {{/keystring}}"></i>
-                              {{/columniclassbefore}}
-                              {{{value}}}
-
-                                  {{#columniclassafter}}
-                                      <i class="value {{.}}" aria-hidden="true"></i>
-                                  {{/columniclassafter}}
-                          </div>
+                    <div class="d-flex align-items-center">
+                      <div class="mr-2 d-flex text-secondary font-size-m icon-uxs align-middle">
+                        {{#columniclassbefore}}
+                            <i class="{{.}}  mt-auto mb-auto mr-1 fa-fw" aria-hidden="true" aria-label="
+                              {{^keystring}}
+                                {{{key}}}
+                            {{/keystring}}
+                                {{#keystring}}
+                                    {{.}}
+                                {{/keystring}}"></i>
+                        {{/columniclassbefore}}
+                        {{{value}}}
+                        {{#columniclassafter}}
+                            <i class="value {{.}}" aria-hidden="true"></i>
+                        {{/columniclassafter}}
                       </div>
+                    </div>
                   </li>
-                  {{!/value}}
-          {{/info}}
+                </span>
+              {{/info}}
               </ul>
         </div>
       </div>

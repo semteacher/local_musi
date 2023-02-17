@@ -312,7 +312,7 @@ class shortcodes {
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
-        $table->add_subcolumns('entrybody', ['text', 'dayofweektime', 'sport', 'teacher', 'location', 'bookings',
+        $table->add_subcolumns('entrybody', ['text', 'dayofweektime', 'sport', 'teacher', 'location', 'bookings', 'minanswers',
             'price', 'action']);
 
         // This avoids showing all keys in list view.
@@ -332,6 +332,8 @@ class shortcodes {
         $table->add_classes_to_subcolumns('entrybody', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
 
         $table->add_classes_to_subcolumns('entrybody', ['columnclass' => 'grid-area-booking'], ['bookings']);
+
+        $table->add_classes_to_subcolumns('entrybody', ['columnclass' => 'grid-area-minanswers'], ['minanswers']);
 
         $table->add_classes_to_subcolumns('entrybody', ['columnclass' => 'grid-area-price'], ['price']);
 
@@ -1079,12 +1081,13 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'h6'], ['sports']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'm-0 mb-1 h5'], ['text']);
 
-        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings', 'botags']);
+        $table->add_subcolumns('cardlist', ['dayofweektime', 'location', 'bookings', 'minanswers', 'botags']);
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users pr-3'], ['bookings']);
-        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-tag'], ['botags']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-fw fa-clock-o mr-1'], ['dayofweektime']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-fw fa-map-marker mr-1'], ['location']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-fw fa-users mr-1'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-fw fa-arrow-up mr-1'], ['minanswers']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-fw fa-tag mr-1'], ['botags']);
 
         $table->add_subcolumns('cardfooter', ['price']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
@@ -1192,13 +1195,14 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'text-secondary'], ['sport']);
         $table->add_classes_to_subcolumns('cardbody', ['columnvalueclass' => 'm-0 mt-1 mb-1 h5'], ['text']);
 
-        $table->add_subcolumns('cardlist', ['teacher', 'dayofweektime', 'location', 'bookings']);
+        $table->add_subcolumns('cardlist', ['teacher', 'dayofweektime', 'location', 'bookings', 'minanswers']);
         $table->add_classes_to_subcolumns('cardlist', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardlist', ['columnvalueclass' => 'text-secondary']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'text-secondary fa-fw']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-users'], ['bookings']);
+        $table->add_classes_to_subcolumns('cardlist', ['columniclassbefore' => 'fa fa-arrow-up'], ['minanswers']);
 
         $table->add_subcolumns('cardfooter', ['price']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
@@ -1210,18 +1214,19 @@ class shortcodes {
 
     private static function generate_table_for_list(&$table) {
         $table->define_cache('mod_booking', 'bookingoptionstable');
+
         $table->add_subcolumns('top', ['sport', 'action']);
         $table->add_subcolumns('leftside', ['text', 'invisibleoption']);
-        $table->add_subcolumns('info', ['teacher', 'dayofweektime', 'location', 'bookings']);
+        $table->add_subcolumns('info', ['teacher', 'dayofweektime', 'location', 'bookings', 'minanswers']);
         // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
         /* $table->add_subcolumns('footer', ['botags']); */
         $table->add_subcolumns('rightside', ['botags', 'price']);
 
+        $table->add_classes_to_subcolumns('top', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-left col-md-8'], ['sport']);
         $table->add_classes_to_subcolumns('top', ['columnvalueclass' =>
             'sport-badge rounded-sm text-gray-800 pb-0 pt-0 mb-1'], ['sport']);
         $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-right col-md-2 position-relative pr-0'], ['action']);
-        $table->add_classes_to_subcolumns('top', ['columnkeyclass' => 'd-none']);
 
         $table->add_classes_to_subcolumns('leftside', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns(
@@ -1231,15 +1236,14 @@ class shortcodes {
         );
         $table->add_classes_to_subcolumns('leftside', ['columnclass' => 'text-left mt-3 mb-3 h3'], ['text']);
 
+        $table->add_classes_to_subcolumns('info', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('info', ['columnclass' => 'text-left text-secondary font-size-sm pr-2']);
         $table->add_classes_to_subcolumns('info', ['columnvalueclass' => 'd-flex'], ['teacher']);
-        $table->add_classes_to_subcolumns('info', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-clock-o'], ['dayofweektime']);
         $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-map-marker'], ['location']);
         $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-ticket'], ['bookings']);
-        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-        /* $table->add_classes_to_subcolumns('footer', ['columnclass' => 'font-size-sm']);
-        $table->add_classes_to_subcolumns('footer', ['columnkeyclass' => 'd-none']); */
+        $table->add_classes_to_subcolumns('info', ['columniclassbefore' => 'fa fa-arrow-up'], ['minanswers']);
+
         $table->add_classes_to_subcolumns('rightside', ['columnclass' => 'text-right mb-auto align-self-end '], ['botags']);
         $table->add_classes_to_subcolumns('rightside', ['columnclass' =>
             'text-right mt-auto align-self-end theme-text-color bold '], ['price']);
