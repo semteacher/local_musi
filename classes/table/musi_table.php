@@ -164,63 +164,6 @@ class musi_table extends wunderbyte_table {
 
     /**
      * This function is called for each data row to allow processing of the
-     * condition message.
-     *
-     * @param object $values Contains object with all the values of record.
-     * @return string $string condition message.
-     * @throws dml_exception
-     */
-    public function col_conditionmessage($values) {
-
-        $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
-
-        // Normally we won't arrive here, but if so, we want to show a meaningful error message.
-        if (!$this->context) {
-            $this->context = context_module::instance($settings->cmid);
-        }
-
-        // Get the availability information for this booking option.
-        // boinfo contains availability information, description, visibility information etc.
-        $boinfo = new bo_info($settings);
-
-        if (list($conditionid, $isavailable, $description) = $boinfo->get_description($settings, $this->buyforuser->id, true)) {
-
-            // Price blocks normal availability, if it's the only one, we show the cart.
-            if (!$isavailable) {
-
-                // If user has capability to book for others (e.g. cashier), we allow overbooking.
-                $showprice = false;
-                if (has_capability('mod/booking:bookforothers', $this->context)) {
-                    // Allow overbooking.
-                    $showprice = true;
-                }
-
-                // We only show notify me button if it's turned on in settings.
-                $shownotificationlist = false;
-                if (get_config('booking', 'usenotificationlist')) {
-                    $shownotificationlist = true;
-                }
-
-                switch ($conditionid) {
-                    case BO_COND_ISLOGGEDIN:
-                    case BO_COND_PRICEISSET:
-                        return '';
-                    case BO_COND_ALREADYBOOKED:
-                        return bo_info::render_conditionmessage($description, 'success');
-                    case BO_COND_ONWAITINGLIST:
-                    case BO_COND_FULLYBOOKED:
-                        return bo_info::render_conditionmessage($description, 'warning');
-                    case BO_COND_ISCANCELLED:
-                        return bo_info::render_conditionmessage($description, 'danger');
-                    default:
-                        return '';
-                }
-            }
-        }
-    }
-
-    /**
-     * This function is called for each data row to allow processing of the
      * text value.
      *
      * @param object $values Contains object with all the values of record.
