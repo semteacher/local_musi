@@ -47,10 +47,10 @@ defined('MOODLE_INTERNAL') || die();
 class musi_table extends wunderbyte_table {
 
     /** @var renderer_base $outputbooking */
-    private $outputbooking = null;
+    // private $outputbooking = null;
 
     /** @var renderer_base $outputmusi */
-    private $outputmusi = null;
+    // private $outputmusi = null;
 
     /** @var booking $booking */
     private $booking = null;
@@ -83,8 +83,8 @@ class musi_table extends wunderbyte_table {
             $this->booking = $booking;
         }
 
-        $this->outputbooking = $PAGE->get_renderer('mod_booking');
-        $this->outputmusi = $PAGE->get_renderer('local_musi');
+        // $this->outputbooking = $PAGE->get_renderer('mod_booking');
+        // $this->outputmusi = $PAGE->get_renderer('local_musi');
 
         // We set buyforuser here for better performance.
         $this->buyforuser = price::return_user_to_buy_for();
@@ -139,8 +139,6 @@ class musi_table extends wunderbyte_table {
      * @throws dml_exception
      */
     public function col_teacher($values) {
-        global $PAGE;
-        $output = $PAGE->get_renderer('mod_booking');
 
         // Render col_teacher using a template.
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
@@ -155,7 +153,8 @@ class musi_table extends wunderbyte_table {
                 $value['last'] = false;
             }
         }
-        return $this->outputmusi->render_col_teacher($data);;
+        $output = singleton_service::get_renderer('local_musi');
+        return $output->render_col_teacher($data);;
     }
 
     /**
@@ -217,11 +216,15 @@ class musi_table extends wunderbyte_table {
      * @throws coding_exception
      */
     public function col_bookings($values) {
+
+        global $PAGE;
+
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
         // Render col_bookings using a template.
         $data = new col_availableplaces($values, $settings, $this->buyforuser);
         $data->showmaxanswers = $this->displayoptions['showmaxanwers'];
-        return $this->outputmusi->render_col_availableplaces($data);
+        $output = singleton_service::get_renderer('local_musi');
+        return $output->render_col_availableplaces($data);
     }
 
     /**
@@ -476,6 +479,8 @@ class musi_table extends wunderbyte_table {
      */
     public function col_action($values) {
 
+        global $PAGE;
+
         if (!$this->booking) {
             $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id, $values);
         }
@@ -558,8 +563,8 @@ class musi_table extends wunderbyte_table {
                         });"
                 ]);
         }
-
-        return $this->outputbooking->render_col_text_link($data);
+        $output = singleton_service::get_renderer('mod_booking');
+        return $output->render_col_text_link($data);
     }
 
     /**
@@ -589,8 +594,12 @@ class musi_table extends wunderbyte_table {
      * @return void
      */
     public function finish_html() {
+
+        global $PAGE;
+
         $table = new \local_wunderbyte_table\output\table($this);
-        echo $this->outputbooking->render_bookingoptions_wbtable($table);
+        $output = singleton_service::get_renderer('mod_booking');
+        echo $output->render_bookingoptions_wbtable($table);
     }
 
     private function add_return_url(string $urlstring):string {
