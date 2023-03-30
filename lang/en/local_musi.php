@@ -164,3 +164,20 @@ $string['locationalt'] = 'Location of the course';
 $string['bookingsalt'] = 'Available course slots and maximum capacity';
 $string['teacheralt'] = 'Course instructor';
 $string['imagealt'] = 'Course cover image';
+
+// Transactions List.
+$string['status'] = 'Status';
+$string['openorder'] = 'Open';
+$string['bookedorder'] = 'Complete';
+$string['transactionslist'] = 'Overview transactions';
+$string['checkstatus'] = 'Check status';
+$string['statuschanged'] = 'Status changed';
+$string['statusnotchanged'] = 'Status not changed';
+
+
+$string['id'] = 'Entry';
+$string['transactionid'] = 'Internal ID';
+$string['itemid'] = 'Item ID';
+$string['userid'] = 'User';
+$string['price'] = 'Amount';
+$string['names'] = 'Purchases';

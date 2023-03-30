@@ -15,22 +15,22 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Mobile cache definitions.
  *
- * @package     local_musi
- * @copyright   2022 Wunderbyte Gmbh <info@wunderbyte.at>
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    local_musi
+ * @copyright  2022 Georg Maißer <info@wudnerbyte.at>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$plugin->component = 'local_musi';
-$plugin->release = '0.4.6';
-$plugin->version = 2023032001;
-$plugin->requires = 2021051700;
-$plugin->maturity = MATURITY_ALPHA;
-$plugin->dependencies = [
-    'mod_booking' => 2023032000,
-    'local_wunderbyte_table' => 2023031300,
-    'local_shopping_cart' => 2023032000,
-];
+$definitions = array(
+    'cachedpaymenttable' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'staticacceleration' => true,
+        'staticaccelerationsize' => 1,
+        'invalidationevents' => ['setbackcachedpaymenttable']
+    ),
+);
+

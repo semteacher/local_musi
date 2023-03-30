@@ -167,3 +167,21 @@ $string['locationalt'] = 'Abhaltungsort des Kurses';
 $string['bookingsalt'] = 'Anzahl der freien und maximal verfügbaren Kursplätze';
 $string['teacheralt'] = 'Leiter des Kurses';
 $string['imagealt'] = 'Titelbild des Kurses';
+
+
+// Transactions List.
+$string['status'] = 'Status';
+$string['openorder'] = 'Offen';
+$string['bookedorder'] = 'Bezahlt';
+$string['transactionslist'] = 'Übersicht Transaktionen';
+$string['checkstatus'] = 'Überprüfe Status';
+$string['statuschanged'] = 'Status geändert';
+$string['statusnotchanged'] = 'Status nicht geändert';
+
+$string['id'] = 'Eintrag';
+$string['transactionid'] = 'Interne ID';
+$string['itemid'] = 'Item ID';
+$string['userid'] = 'Nutzer';
+$string['price'] = 'Betrag';
+$string['names'] = 'Buchungen';
+
