@@ -46,11 +46,13 @@ defined('MOODLE_INTERNAL') || die();
  */
 class musi_table extends wunderbyte_table {
 
-    /** @var renderer_base $outputbooking */
-    // private $outputbooking = null;
+    // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+    /* @var renderer_base $outputbooking
+    private $outputbooking = null; */
 
-    /** @var renderer_base $outputmusi */
-    // private $outputmusi = null;
+    // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+    /* @var renderer_base $outputmusi
+    private $outputmusi = null; */
 
     /** @var booking $booking */
     private $booking = null;
@@ -83,8 +85,9 @@ class musi_table extends wunderbyte_table {
             $this->booking = $booking;
         }
 
-        // $this->outputbooking = $PAGE->get_renderer('mod_booking');
-        // $this->outputmusi = $PAGE->get_renderer('local_musi');
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        /* $this->outputbooking = $PAGE->get_renderer('mod_booking');
+        $this->outputmusi = $PAGE->get_renderer('local_musi'); */
 
         // We set buyforuser here for better performance.
         $this->buyforuser = price::return_user_to_buy_for();
@@ -478,8 +481,6 @@ class musi_table extends wunderbyte_table {
      * @throws coding_exception
      */
     public function col_action($values) {
-
-        global $PAGE;
 
         if (!$this->booking) {
             $this->booking = singleton_service::get_instance_of_booking_by_optionid($values->id, $values);
