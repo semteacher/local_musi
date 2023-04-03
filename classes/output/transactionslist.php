@@ -48,7 +48,8 @@ class transactionslist implements renderable, templatable {
         $table->define_columns(['id', 'tid', 'itemid', 'userid', 'price', 'status', 'names', 'action']);
 
         // Pass SQL to table.
-        list($fields, $from, $where) = self::return_sql_transaction();
+        // TODO: Add functionality for other providers.
+        list($fields, $from, $where) = self::return_payunity_sql_transaction();
         $table->set_filter_sql($fields, $from, $where, '');
 
         $table->sortable(true, 'id', SORT_ASC);
@@ -86,12 +87,14 @@ class transactionslist implements renderable, templatable {
      *
      * @return array
      */
-    private static function return_sql_transaction():array {
+    private static function return_payunity_sql_transaction():array {
         global $DB;
 
         // TODO: Check database exists and / or loop over payment providers!
         // DB table_exists.
-
+        $gatewaynames = ['payunity'];
+        // TODO: check for open orders tables in all gateways.
+        // TODO: use all gateway tables.
         $concatsql = $DB->sql_group_concat("so.itemname", "<br>", "so.itemname");
         $fields = '*';
         $from = "(SELECT oo.*, " . $concatsql . " AS names FROM

@@ -56,6 +56,7 @@ class musi_transactions_table extends wunderbyte_table {
      * @return string
      */
     public function col_status($values) {
+        // TODO: Comment cases.
         switch($values->status) {
             case 0:
                 return get_string('openorder', 'local_musi');
