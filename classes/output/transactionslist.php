@@ -66,7 +66,8 @@ class transactionslist implements renderable, templatable {
         // Pass html to render.
         list($idstring, $encodedtable, $html) = $table->lazyouthtml(20, true);
         $this->tabledata = $html;
-        // Not lazy laod : $this->tabledata = $table->outhtml(20, true);
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        // Not lazy laod : $this->tabledata = $table->outhtml(20, true).
 
     }
 
