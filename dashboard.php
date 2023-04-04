@@ -50,7 +50,8 @@ $title = get_string('pluginname', 'local_musi');
 $PAGE->navbar->add($title);
 $PAGE->set_title(format_string($title));
 $PAGE->set_heading($title);
-$PAGE->set_pagelayout('standard');
+
+$PAGE->set_pagelayout('mydashboard');
 $PAGE->add_body_class('local_musi-dashboard');
 
 echo $OUTPUT->header();
