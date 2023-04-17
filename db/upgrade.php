@@ -23,8 +23,6 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Execute local_musi upgrade from the given old version.
  *
@@ -105,6 +103,30 @@ function xmldb_local_musi_upgrade($oldversion) {
 
         // Musi savepoint reached.
         upgrade_plugin_savepoint(true, 2022080400, 'local', 'musi');
+    }
+
+    if ($oldversion < 2023041700) {
+
+        // Define table local_musi_globals to be created.
+        $table = new xmldb_table('local_musi_globals');
+
+        // Adding fields to table local_musi_globals.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('type', XMLDB_TYPE_CHAR, '50', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('fieldname', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('fieldvalue_num', XMLDB_TYPE_NUMBER, '10, 2', null, null, null, '0');
+        $table->add_field('fieldvalue_char', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+
+        // Adding keys to table local_musi_globals.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for local_musi_globals.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Musi savepoint reached.
+        upgrade_plugin_savepoint(true, 2023041700, 'local', 'musi');
     }
 
     return true;

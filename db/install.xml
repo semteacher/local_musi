@@ -40,5 +40,17 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
+    <TABLE NAME="local_musi_globals" COMMENT="A flexible table to store different kinds of global values.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="type" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" COMMENT="Global value type"/>
+        <FIELD NAME="fieldname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Field name has to be unique within value type scope."/>
+        <FIELD NAME="fieldvalue_num" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" DECIMALS="2" COMMENT="Value field to store numeric values."/>
+        <FIELD NAME="fieldvalue_char" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Value field for short strings."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
   </TABLES>
 </XMLDB>
