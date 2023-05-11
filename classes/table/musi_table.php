@@ -510,18 +510,27 @@ class musi_table extends wunderbyte_table {
                     $this->context = context_module::instance($bosettings->cmid);
                 }
 
-                // If the user has no capability to editoptions, the URLs will not be added.
-                if (has_capability('mod/booking:updatebooking', $this->context) || (has_capability(
-                    'mod/booking:addeditownoption', $this->context) && booking_check_if_teacher($values))) {
-                    if (isset($bosettings->editoptionurl)) {
-                        // Get the URL to edit the option.
+                $allowedit = has_capability('mod/booking:updatebooking', $this->context)
+                || (has_capability('mod/booking:addeditownoption', $this->context) && booking_check_if_teacher($values));
 
-                        $data->editoptionurl = $this->add_return_url($bosettings->editoptionurl);
+                $onlyview = has_capability('mod/booking:viewreports', $this->context);
+
+                // If the user has no capability to editoptions, the URLs will not be added.
+                if ($allowedit || $onlyview) {
+
+                    if ($allowedit) {
+                        if (isset($bosettings->editoptionurl)) {
+                            // Get the URL to edit the option.
+
+                            $data->editoptionurl = $this->add_return_url($bosettings->editoptionurl);
+                        }
                     }
+
                     if (isset($bosettings->manageresponsesurl)) {
                         // Get the URL to manage responses (answers) for the option.
                         $data->manageresponsesurl = $bosettings->manageresponsesurl;
                     }
+
                     if (isset($bosettings->optiondatesteachersurl)) {
                         // Get the URL for the optiondates-teachers-report.
                         $data->optiondatesteachersurl = $bosettings->optiondatesteachersurl;
