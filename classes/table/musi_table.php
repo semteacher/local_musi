@@ -513,7 +513,8 @@ class musi_table extends wunderbyte_table {
                 $allowedit = has_capability('mod/booking:updatebooking', $this->context)
                 || (has_capability('mod/booking:addeditownoption', $this->context) && booking_check_if_teacher($values));
 
-                $onlyview = has_capability('mod/booking:viewreports', $this->context);
+                $onlyview = (has_capability('mod/booking:viewreports', $this->context)
+                    || has_capability('mod/booking:limitededitownoption', $this->context) && booking_check_if_teacher($values));
 
                 // If the user has no capability to editoptions, the URLs will not be added.
                 if ($allowedit || $onlyview) {
