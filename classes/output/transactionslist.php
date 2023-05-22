@@ -101,7 +101,7 @@ class transactionslist implements renderable, templatable {
         $from = "(SELECT oo.*, " . $concatsql . " AS names FROM
             {paygw_payunity_openorders} oo
             LEFT JOIN {local_shopping_cart_history} so
-            ON oo.itemid = so.identifier GROUP BY oo.id
+            ON oo.itemid = so.identifier AND oo.userid=so.userid GROUP BY oo.id
             ) as s1 ";
 
         $where = "1 = 1";
