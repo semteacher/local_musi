@@ -778,15 +778,14 @@ class shortcodes {
 
     private static function inittableforcourses($booking) {
 
+        global $PAGE;
+
         $tablename = bin2hex(random_bytes(12));
 
         $table = new musi_table($tablename, $booking);
 
         // It's important to have the baseurl defined, we use it as a return url at one point.
-        $baseurl = new moodle_url(
-            $_SERVER['REQUEST_URI'],
-            $_GET
-        );
+        $baseurl = $PAGE->url ?? new moodle_url('');
 
         $table->define_baseurl($baseurl->out());
         $table->cardsort = true;
