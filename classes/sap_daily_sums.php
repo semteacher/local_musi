@@ -69,7 +69,10 @@ class sap_daily_sums {
                     foreach ($cols as $key => $value) {
                         if (strpos($key, 'orderid') !== false) {
                             $colselects[] =
-                                "SELECT $gwname.paymentid, $gwname.$key orderid, paymentbrand
+                                "SELECT
+                                    $gwname.paymentid,
+                                    $gwname.$key AS orderid,
+                                    $gwname.paymentbrand
                                 FROM {paygw_$gwname} $gwname";
                         }
                     }
@@ -81,41 +84,32 @@ class sap_daily_sums {
         if (!empty($colselects)) {
             $selectorderidpart = ", pgw.orderid, pgw.paymentbrand";
             $colselectsstring = implode(' UNION ', $colselects);
-            $gatewayspart = "LEFT JOIN ($colselectsstring) pgw ON p.id = pgw.paymentid";
+            $gatewayspart = "JOIN ($colselectsstring) pgw ON p.id = pgw.paymentid";
         }
 
         // SQL query. The subselect will fix the "Did you remember to make the first column something...
         // ...unique in your call to get_records?" bug.
-        $sql = "SELECT scl.id, scl.identifier, scl.price, scl.discount, scl.credits, scl.fee, scl.currency,
-                u.id userid, u.lastname, u.firstname, u.email, scl.itemid, scl.itemname, scl.payment, scl.paymentstatus, " .
-                $DB->sql_concat("um.firstname", "' '", "um.lastname") . " as usermodified, scl.timecreated, scl.timemodified,
-                p.gateway$selectorderidpart
-                FROM {local_shopping_cart_ledger} scl
+        $sql = "SELECT
+                    p.id, p.itemid AS identifier, p.amount AS price, p.currency,
+                    p.userid, u.lastname, u.firstname, u.email,
+                    p.timecreated, p.timemodified,
+                    p.gateway$selectorderidpart
+                FROM {payments} p
                 LEFT JOIN {user} u
-                ON u.id = scl.userid
-                LEFT JOIN {user} um
-                ON um.id = scl.usermodified
-                LEFT JOIN {payments} p
-                ON p.itemid = scl.identifier
+                ON u.id = p.userid
                 $gatewayspart
-                WHERE scl.timecreated BETWEEN :startofday AND :endofday
-                AND scl.paymentstatus = :paymentsuccess
-                AND scl.itemid <> 0";
+                WHERE p.timecreated BETWEEN :startofday AND :endofday
+                AND p.component = 'local_shopping_cart'
+                AND p.itemid <> 0";
 
         $params = [
             'startofday' => $startofday,
-            'endofday' => $endofday,
-            'paymentsuccess' => PAYMENT_SUCCESS
+            'endofday' => $endofday
         ];
 
         $content = '';
         if ($records = $DB->get_records_sql($sql, $params)) {
             foreach ($records as $record) {
-                // We only want to log online payments.
-                // We ignore payments at the cashier's desk.
-                if ($record->payment != PAYMENT_METHOD_ONLINE) {
-                    continue;
-                }
                 /*
                  * Mandant - 3 Stellen alphanumerisch - immer "101"
                  * Buchungskreis - 4 Stellen alphanumerisch - immer "VIE1"
