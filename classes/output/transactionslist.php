@@ -41,11 +41,15 @@ class transactionslist implements renderable, templatable {
 
         // Create instance of transactions wb_table and specify columns and headers.
         $table = new musi_transactions_table('musi_transactions_table');
+
+        // Headers.
         $table->define_headers([get_string('id', 'local_musi'), get_string('transactionid', 'local_musi'),
-        get_string('itemid', 'local_musi'), get_string('userid', 'local_musi'),
+        get_string('itemid', 'local_musi'), get_string('username', 'local_musi'),
         get_string('price', 'local_musi'), get_string('status', 'local_musi'), get_string('names', 'local_musi'),
-        'action']);
-        $table->define_columns(['id', 'tid', 'itemid', 'userid', 'price', 'status', 'names', 'action']);
+        get_string('action', 'local_musi')]);
+
+        // Columns.
+        $table->define_columns(['id', 'tid', 'itemid', 'username', 'price', 'status', 'names', 'action']);
 
         // Pass SQL to table.
         // TODO: Add functionality for other providers.
@@ -55,14 +59,22 @@ class transactionslist implements renderable, templatable {
         $table->sortable(true, 'id', SORT_ASC);
 
         // Define Filters.
-        $table->define_filtercolumns([ 'status' => [
-            'localizedname' => get_string('status', 'local_musi'),
-            '0' => get_string('openorder', 'local_musi'),
-            '3' => get_string('bookedorder', 'local_musi'),
-        ]
+        $table->define_filtercolumns([
+            'status' => [
+                'localizedname' => get_string('status', 'local_musi'),
+                '0' => get_string('openorder', 'local_musi'),
+                '3' => get_string('bookedorder', 'local_musi'),
+            ]
         ]);
 
+        // Full text search columns.
+        $table->define_fulltextsearchcolumns(['id', 'tid', 'itemid', 'username', 'price', 'status', 'names']);
+
+        // Sortable columns.
+        $table->define_sortablecolumns(['id', 'tid', 'itemid', 'username', 'price', 'status', 'names']);
+
         $table->define_cache('local_musi', 'cachedpaymenttable');
+
         // Pass html to render.
         list($idstring, $encodedtable, $html) = $table->lazyouthtml(20, true);
         $this->tabledata = $html;
@@ -97,11 +109,15 @@ class transactionslist implements renderable, templatable {
         // TODO: check for open orders tables in all gateways.
         // TODO: use all gateway tables.
         $concatsql = $DB->sql_group_concat("so.itemname", "<br>", "so.itemname");
+        $concatusername = $DB->sql_fullname("u.lastname", "u.firstname");
         $fields = '*';
-        $from = "(SELECT oo.*, " . $concatsql . " AS names FROM
+        $from = "(SELECT oo.*, $concatusername AS username, $concatsql AS names FROM
             {paygw_payunity_openorders} oo
             LEFT JOIN {local_shopping_cart_history} so
-            ON oo.itemid = so.identifier AND oo.userid=so.userid GROUP BY oo.id
+            ON oo.itemid = so.identifier AND oo.userid=so.userid
+            LEFT JOIN {user} u
+            ON u.id = oo.userid
+            GROUP BY oo.id, u.firstname, u.lastname
             ) as s1 ";
 
         $where = "1 = 1";

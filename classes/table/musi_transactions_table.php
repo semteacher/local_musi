@@ -88,10 +88,7 @@ class musi_transactions_table extends wunderbyte_table {
      */
     public function col_userid($values) {
 
-        // TODO: create link for user.
-        $user = singleton_service::get_instance_of_user($values->userid);
-
-        return fullname($user);
+        return "$values->firstname $values->lastname";
     }
 
     /**

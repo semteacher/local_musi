@@ -182,7 +182,7 @@ $string['statusnotchanged'] = 'Status nicht geändert';
 $string['id'] = 'Eintrag';
 $string['transactionid'] = 'Interne ID';
 $string['itemid'] = 'Item ID';
-$string['userid'] = 'Nutzer';
+$string['username'] = 'Nutzer';
 $string['price'] = 'Betrag';
 $string['names'] = 'Buchungen';
-
+$string['action'] = 'Aktion';
