@@ -87,7 +87,7 @@ function local_musi_render_navbar_output(\renderer_base $renderer) {
             . get_string('dashboard', 'local_musi') . '</a>
             <a class="dropdown-item" href="'
                 . $CFG->wwwroot . '/local/shopping_cart/cashier.php"">'
-                . get_string('cachier', 'local_musi') . '</a>
+                . get_string('cashier', 'local_musi') . '</a>
             <a class="dropdown-item" href="'
                 . $CFG->wwwroot . '/local/entities/entities.php">'
                 . get_string('entities', 'local_musi') . '</a>

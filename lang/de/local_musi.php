@@ -142,7 +142,7 @@ $string['location'] = 'Ort';
 
 // Nav.
 $string['musi'] = 'MUSI';
-$string['cachier'] = 'Kassa';
+$string['cashier'] = 'Kassa';
 $string['entities'] = 'Sportstätten';
 $string['coursename'] = 'Kursname';
 
