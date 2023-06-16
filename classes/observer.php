@@ -54,49 +54,166 @@ class observer {
     public static function payment_rebooked(payment_rebooked $event) {
         global $DB;
 
+        // Little hack to prevent posisble problems with the second observer function in shopping_cart.
+        sleep(2);
+
         $identifier = $event->other['identifier'];
         $userid = $event->other['userid'];
-        $usermodified = $event->other['usermodified'];
         $annotation = $event->other['annotation'];
-
-        // TODO let's continue here tomorrow...
-
-        /*$orderidelements = explode(' ', $annotation);
-
-        // Some security checks.
-        if (count($orderidelements) < 6) {
-            return;
-        } else if (substr($orderidelements[2], 0, 1) != "K") {
-            return;
-        }
-
-        $timecreated = (int) $orderidelements[count($orderidelements) - 1];
-        $amount = (float) $orderidelements[count($orderidelements) - 2];
         $accountid = $DB->get_field('payment_gateways', 'accountid', ['gateway' => 'payunity', 'enabled' => '1']);
 
-        // 1000105 16 K327 79.00 82.00 1686577767
+        // Let's use this flag to determine if it's a MUSI OrderID for which we might need special treatment.
+        $ismusiorderid = false;
+        $ispayunityorderid = false;
+        $useidentifierfrommusiorderid = false;
 
-        $paymentrecord = new stdClass;
-        $paymentrecord->component = 'local_shopping_cart';
-        $paymentrecord->paymentarea = null;
-        $paymentrecord->itemid = $identifier;
-        $paymentrecord->userid = $userid;
-        $paymentrecord->amount = $amount;
-        $paymentrecord->currency = 'EUR';
-        $paymentrecord->accountid = $accountid;
-        $paymentrecord->gateway = 'payunity';
-        $paymentrecord->timecreated = $timecreated;
-        $paymentrecord->timemodified = time();
+        $annotation = trim($annotation);
+        $orderidelements = explode(' ', $annotation);
 
-        $payunityrecord = new stdClass;
+        // The last word of the string might store the payment brand.
+        // If we do not find it, we use UNKNOWN as default.
+        $lastelement = end($orderidelements);
+        switch ($lastelement) {
+            case 'VC':
+            case 'VISA':
+                array_pop($orderidelements); // Remove the last element.
+                $paymentbrand = 'VC';
+                $pboriginal = 'VISA';
+                break;
+            case 'MC':
+            case 'MASTER':
+                array_pop($orderidelements); // Remove the last element.
+                $paymentbrand = 'MC';
+                $pboriginal = 'MASTER';
+                break;
+            case 'EP':
+            case 'EPS':
+                array_pop($orderidelements); // Remove the last element.
+                $paymentbrand = 'EP';
+                $pboriginal = 'EPS';
+                break;
+            case 'UK':
+            case 'UNKNOWN':
+                array_pop($orderidelements); // Remove the last element.
+                $paymentbrand = 'UK';
+                $pboriginal = 'UNKNOWN';
+                break;
+            default:
+                // In this case we keep the last element of the array!
+                $paymentbrand = 'UK';
+                $pboriginal = 'UNKNOWN';
+                break;
+        }
+        // Now we can restore the annotation string without the payment brand.
+        $annotation = implode(" ", $orderidelements);
 
-        $ordersrecord = new stdClass;*/
+        // Find out if it's a MUSI OrderID or just some annotation.
+        // Example MUSI OrderID: 1000105 16 K327 79.00 82.00 1686577767 VISA.
+        // Note: VISA, MASTER, UNKNOWN or EPS can be appended at the end - they are actually not part of the OrderID.
+        if (
+            count($orderidelements) > 5 &&
+            substr($orderidelements[2], 0, 1) == "K" &&
+            is_number(substr($orderidelements[2], 1, 1)) &&
+            is_number($orderidelements[0])
+        ) {
+            $ismusiorderid = true;
+        } else if (preg_match("/[A-Z0-9]+\.[a-z0-9\-]+/", $annotation)) {
+            $ispayunityorderid = true;
+        }
 
-        /* Important notice: We store the correct identifier in tables so we do not corrupt table consistency.
-        But the identifier which is part of the order id will be a different one! */
+        // Now we retrieve the amount from the MUSI order id.
+        if ($ismusiorderid) {
+            // Example order id: 1000105 16 K327 79.00 82.00 1686577767 - we already removed the payment brand with array_pop.
+            // So the amount is at the second last element.
+            $amount = (float) $orderidelements[count($orderidelements) - 2];
+            // It might be necessary to change the identifier, so it corresponds with the MUSI order id.
+            if (is_number($orderidelements[0])) {
+                $musiidentifier = $orderidelements[0];
+                // We have ot check if it already exists in ledger.
+                if (!$DB->get_records('local_shopping_cart_ledger', ['identifier' => $musiidentifier])) {
+                    /* If it does not exist in ledger, we can safely change the created identifier
+                    to the one from the MUSI order id. */
+                    if ($ledgerrecords = $DB->get_records('local_shopping_cart_ledger', [
+                        'payment' => PAYMENT_METHOD_CASHIER_MANUAL,
+                        'identifier' => $identifier,
+                        'userid' => $userid,
+                    ])) {
+                        foreach ($ledgerrecords as $ledgerrecord) {
+                            $ledgerrecord->identifier = $musiidentifier;
+                            // Usually, ledger should never be updated. But here we have to.
+                            $DB->update_record('local_shopping_cart_ledger', $ledgerrecord);
+                        }
+                        $useidentifierfrommusiorderid = true;
+                    }
 
-        // TODO: from here, we can start writing into the tables...
+                }
+            }
 
-        return;
+        } else if ($ispayunityorderid) {
+            // Initialize with 0.
+            $amount = 0.0;
+            // In this case, we have to calculate the amount from ledger.
+            // In any case, we store the annotation into the ledger table.
+            if ($ledgerrecords = $DB->get_records('local_shopping_cart_ledger', [
+                'payment' => PAYMENT_METHOD_CASHIER_MANUAL,
+                'identifier' => $identifier,
+                'userid' => $userid,
+            ])) {
+                foreach ($ledgerrecords as $ledgerrecord) {
+                    $amount += $ledgerrecord->price;
+                }
+            }
+        }
+        // Else it's just an annotation, so we do not write into payment tables at all!
+        if ($ismusiorderid || $ispayunityorderid) {
+
+            // Use the right identifier.
+            $identifier = $useidentifierfrommusiorderid ? $musiidentifier : $identifier;
+
+            if (!$DB->get_records('payments', [
+                'component' => 'local_shopping_cart',
+                'itemid' => $identifier,
+                'userid' => $userid
+            ])) {
+                $paymentrecord = new stdClass;
+                $paymentrecord->component = 'local_shopping_cart';
+                $paymentrecord->paymentarea = '';
+                $paymentrecord->itemid = $identifier;
+                $paymentrecord->userid = $userid;
+                $paymentrecord->amount = $amount;
+                $paymentrecord->currency = 'EUR';
+                $paymentrecord->accountid = $accountid;
+                $paymentrecord->gateway = 'payunity';
+                $paymentrecord->timecreated = time();
+                $paymentrecord->timemodified = time();
+                $paymentid = $DB->insert_record('payments', $paymentrecord);
+            }
+
+            if (!$DB->get_records('paygw_payunity', [
+                'paymentid' => $paymentid,
+                'pu_orderid' => $annotation
+            ])) {
+                $payunityrecord = new stdClass;
+                $payunityrecord->paymentid = $paymentid;
+                $payunityrecord->pu_orderid = $annotation;
+                $payunityrecord->paymentbrand = $paymentbrand;
+                $payunityrecord->pboriginal = $pboriginal;
+                $DB->insert_record('paygw_payunity', $payunityrecord);
+            }
+
+            if (!$DB->get_records('paygw_payunity_openorders', [
+                'tid' => $annotation,
+                'itemid' => $identifier,
+                'userid' => $userid,
+            ])) {
+                $ordersrecord = new stdClass;
+                $ordersrecord->tid = $annotation;
+                $ordersrecord->itemid = $identifier;
+                $ordersrecord->userid = $userid;
+                $ordersrecord->price = $amount;
+                $ordersrecord->status = 3; // Successful transaction.
+                $DB->insert_record('paygw_payunity_openorders', $ordersrecord);
+            }
+        }
     }
 }
