@@ -20,16 +20,16 @@
  * @author     Christian Badusch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+use local_musi\output\transactionslist;
 
+require_once('../../config.php');
+require_login();
 
- use local_musi\output\transactionslist;
-
- require_once('../../config.php');
- require_login();
 // Set up the page.
 if (!$context = context_system::instance()) {
     throw new moodle_exception('badcontext');
 }
+
 $PAGE->set_context($context);
 $title = get_string('pluginname', 'local_musi');
 $pagetitle = $title;
@@ -39,14 +39,11 @@ $PAGE->set_url($url);
 $PAGE->set_title($title);
 $PAGE->set_heading(get_string('transactionslist', 'local_musi'));
 
-
 $output = $PAGE->get_renderer('local_musi');
 
 echo $output->header();
 
 $data = new transactionslist();
 echo $output->render_transactions_list($data);
-
-
 
 echo $output->footer();
