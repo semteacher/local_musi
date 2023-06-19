@@ -126,11 +126,13 @@ class observer {
             // Example order id: 1000105 16 K327 79.00 82.00 1686577767 - we already removed the payment brand with array_pop.
             // So the amount is at the second last element.
             $amount = (float) $orderidelements[count($orderidelements) - 2];
+
             // It might be necessary to change the identifier, so it corresponds with the MUSI order id.
             if (is_number($orderidelements[0])) {
                 $musiidentifier = $orderidelements[0];
                 // We have ot check if it already exists in ledger.
                 if (!$DB->get_records('local_shopping_cart_ledger', ['identifier' => $musiidentifier])) {
+                    $useidentifierfrommusiorderid = true;
                     /* If it does not exist in ledger, we can safely change the created identifier
                     to the one from the MUSI order id. */
                     if ($ledgerrecords = $DB->get_records('local_shopping_cart_ledger', [
@@ -143,9 +145,7 @@ class observer {
                             // Usually, ledger should never be updated. But here we have to.
                             $DB->update_record('local_shopping_cart_ledger', $ledgerrecord);
                         }
-                        $useidentifierfrommusiorderid = true;
                     }
-
                 }
             }
 
@@ -170,7 +170,7 @@ class observer {
             // Use the right identifier.
             $identifier = $useidentifierfrommusiorderid ? $musiidentifier : $identifier;
 
-            if (!$DB->get_records('payments', [
+            if (!$existingpaymentrecord = $DB->get_records('payments', [
                 'component' => 'local_shopping_cart',
                 'itemid' => $identifier,
                 'userid' => $userid
@@ -187,11 +187,14 @@ class observer {
                 $paymentrecord->timecreated = time();
                 $paymentrecord->timemodified = time();
                 $paymentid = $DB->insert_record('payments', $paymentrecord);
+            } else {
+                // If a payment record for the identifier already exists...
+                // ... then we have to use the paymentid of this record!
+                $paymentid = $existingpaymentrecord->id;
             }
 
             if (!$DB->get_records('paygw_payunity', [
-                'paymentid' => $paymentid,
-                'pu_orderid' => $annotation
+                'paymentid' => $paymentid
             ])) {
                 $payunityrecord = new stdClass;
                 $payunityrecord->paymentid = $paymentid;
@@ -202,9 +205,7 @@ class observer {
             }
 
             if (!$DB->get_records('paygw_payunity_openorders', [
-                'tid' => $annotation,
-                'itemid' => $identifier,
-                'userid' => $userid,
+                'itemid' => $identifier
             ])) {
                 $ordersrecord = new stdClass;
                 $ordersrecord->tid = $annotation;
