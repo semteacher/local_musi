@@ -127,15 +127,17 @@ class observer {
             // So the amount is at the second last element.
             $amount = (float) $orderidelements[count($orderidelements) - 2];
 
+            // Do not do this! Let's work with the right identifier!
             // It might be necessary to change the identifier, so it corresponds with the MUSI order id.
-            if (is_number($orderidelements[0])) {
+            /* if (is_number($orderidelements[0])) {
                 $musiidentifier = $orderidelements[0];
                 // We have ot check if it already exists in ledger.
                 if (!$DB->get_records('local_shopping_cart_ledger', ['identifier' => $musiidentifier])) {
                     $useidentifierfrommusiorderid = true;
                     /* If it does not exist in ledger, we can safely change the created identifier
                     to the one from the MUSI order id. */
-                    if ($ledgerrecords = $DB->get_records('local_shopping_cart_ledger', [
+                    // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+                    /* if ($ledgerrecords = $DB->get_records('local_shopping_cart_ledger', [
                         'payment' => PAYMENT_METHOD_CASHIER_MANUAL,
                         'identifier' => $identifier,
                         'userid' => $userid,
@@ -147,7 +149,7 @@ class observer {
                         }
                     }
                 }
-            }
+            } */
 
         } else if ($ispayunityorderid) {
             // Initialize with 0.
@@ -167,8 +169,9 @@ class observer {
         // Else it's just an annotation, so we do not write into payment tables at all!
         if ($ismusiorderid || $ispayunityorderid) {
 
-            // Use the right identifier.
-            $identifier = $useidentifierfrommusiorderid ? $musiidentifier : $identifier;
+            // Let's work with the correct identifier for now!
+            // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+            /* $identifier = $useidentifierfrommusiorderid ? $musiidentifier : $identifier; */
 
             if (!$existingpaymentrecord = $DB->get_records('payments', [
                 'component' => 'local_shopping_cart',
