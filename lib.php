@@ -77,7 +77,7 @@ function local_musi_render_navbar_output(\renderer_base $renderer) {
     }
 
     $output = '<div class="popover-region nav-link icon-no-margin dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button"
+        <button class="btn btn-light dropdown-toggle" type="button"
         id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         '. get_string('musi', 'local_musi') .'
         </button>
