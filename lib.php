@@ -21,8 +21,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
-
 // Define booking status parameters.
 define('MUSI_STATUSPARAM_BOOKED', 0);
 define('MUSI_STATUSPARAM_WAITINGLIST', 1);
