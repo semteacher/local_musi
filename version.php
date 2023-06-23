@@ -25,13 +25,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_musi';
-$plugin->release = '0.5.4';
-$plugin->version = 2023061600;
+$plugin->release = '0.5.5';
+$plugin->version = 2023062300;
 $plugin->requires = 2021051700;
 $plugin->maturity = MATURITY_ALPHA;
 $plugin->dependencies = [
-    'mod_booking' => 2023061600,
+    'mod_booking' => 2023062200,
     'local_wunderbyte_table' => 2023061600,
-    'local_shopping_cart' => 2023061603,
-    'local_entities' => 2023060900,
+    'local_shopping_cart' => 2023062200,
+    'local_entities' => 2023062200,
 ];

@@ -1,3 +1,11 @@
+## Version 0.5.5 (2023062300)
+**Improvements:**
+* Improvement: Nicer MUSI button (light instead of secondary).
+* Improvement: Removed unnecessary moodle internal check.
+
+**Bugfixes:**
+* Bugfix: Some fixes for manual rebooking to keep table consistency.
+
 ## Version 0.5.4 (2023061600)
 **New features:**
 * New feature: New possibility for cachier to rebook users manually. In MUSI we can listen to the payment_rebooked event and write into the appropriate payment tables if necessary.
