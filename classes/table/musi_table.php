@@ -75,8 +75,9 @@ class musi_table extends wunderbyte_table {
      * @param string $uniqueid all tables have to have a unique id, this is used
      *      as a key when storing table properties like sort order in the session.
      * @param booking $booking the booking instance
+     * @param int $buyforuserid optional id of the user to buy for
      */
-    public function __construct(string $uniqueid, booking $booking = null) {
+    public function __construct(string $uniqueid, booking $booking = null, int $buyforuserid = null) {
         parent::__construct($uniqueid);
 
         global $PAGE;
@@ -90,7 +91,12 @@ class musi_table extends wunderbyte_table {
         $this->outputmusi = $PAGE->get_renderer('local_musi'); */
 
         // We set buyforuser here for better performance.
-        $this->buyforuser = price::return_user_to_buy_for();
+        if (empty($buyforuserid)) {
+            $this->buyforuser = price::return_user_to_buy_for();
+        } else {
+            $this->buyforuser = singleton_service::get_instance_of_user($buyforuserid);
+        }
+
         $this->set_display_options([]);
 
         // Columns and headers are not defined in constructor, in order to keep things as generic as possible.

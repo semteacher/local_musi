@@ -778,14 +778,22 @@ class shortcodes {
 
     private static function inittableforcourses($booking) {
 
-        global $PAGE;
+        global $PAGE, $USER;
 
         $tablename = bin2hex(random_bytes(12));
 
-        $table = new musi_table($tablename, $booking);
-
         // It's important to have the baseurl defined, we use it as a return url at one point.
         $baseurl = $PAGE->url ?? new moodle_url('');
+
+        // On the cashier page, we want to buy for different users...
+        // ...else we always want to buy for ourselves.
+        if (strpos($baseurl->out(), "cashier.php") !== false) {
+            $buyforuserid = null;
+        } else {
+            $buyforuserid = $USER->id;
+        }
+
+        $table = new musi_table($tablename, $booking, $buyforuserid);
 
         $table->define_baseurl($baseurl->out());
         $table->cardsort = true;
