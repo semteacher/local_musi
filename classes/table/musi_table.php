@@ -516,22 +516,23 @@ class musi_table extends wunderbyte_table {
                     $this->context = context_module::instance($bosettings->cmid);
                 }
 
-                $allowedit = has_capability('mod/booking:updatebooking', $this->context)
-                || (has_capability('mod/booking:addeditownoption', $this->context) && booking_check_if_teacher($values));
+                // ONLY users with the mod/booking:updatebooking capability can edit options.
+                $allowedit = has_capability('mod/booking:updatebooking', $this->context);
+                if ($allowedit) {
+                    if (isset($bosettings->editoptionurl)) {
+                        // Get the URL to edit the option.
+                        $data->editoptionurl = $this->add_return_url($bosettings->editoptionurl);
+                    }
+                }
 
-                $onlyview = (has_capability('mod/booking:viewreports', $this->context)
-                    || has_capability('mod/booking:limitededitownoption', $this->context) && booking_check_if_teacher($values));
+                $canviewreports = (
+                    has_capability('mod/booking:viewreports', $this->context)
+                    || (has_capability('mod/booking:limitededitownoption', $this->context) && booking_check_if_teacher($values))
+                    || has_capability('mod/booking:updatebooking', $this->context)
+                );
 
                 // If the user has no capability to editoptions, the URLs will not be added.
-                if ($allowedit || $onlyview) {
-
-                    if ($allowedit) {
-                        if (isset($bosettings->editoptionurl)) {
-                            // Get the URL to edit the option.
-
-                            $data->editoptionurl = $this->add_return_url($bosettings->editoptionurl);
-                        }
-                    }
+                if ($canviewreports) {
 
                     if (isset($bosettings->manageresponsesurl)) {
                         // Get the URL to manage responses (answers) for the option.
