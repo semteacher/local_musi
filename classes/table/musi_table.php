@@ -586,8 +586,8 @@ class musi_table extends wunderbyte_table {
             $data->showundocancel = null;
         }
 
-        $output = singleton_service::get_renderer('mod_booking');
-        return $output->render_col_text_link($data);
+        $output = singleton_service::get_renderer('local_musi');
+        return $output->render_musi_bookingoption_menu($data);
     }
 
     /**

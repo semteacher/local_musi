@@ -114,4 +114,16 @@ class renderer extends plugin_renderer_base {
         return $o;
     }
 
+    /**
+     * Function to render booking option menu for local_musi.
+     * @param any $data
+     * @return string
+     */
+    public function render_musi_bookingoption_menu($data): string {
+        $o = '';
+        $data = (array)$data;
+        $o .= $this->render_from_template('local_musi/musi_bookingoption_menu', $data);
+        return $o;
+    }
+
 }
