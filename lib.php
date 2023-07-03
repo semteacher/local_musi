@@ -21,6 +21,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use mod_booking\singleton_service;
+
 // Define booking status parameters.
 define('MUSI_STATUSPARAM_BOOKED', 0);
 define('MUSI_STATUSPARAM_WAITINGLIST', 1);

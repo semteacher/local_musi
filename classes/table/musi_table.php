@@ -494,7 +494,7 @@ class musi_table extends wunderbyte_table {
 
         $data = new stdClass();
 
-        $data->id = $values->id;
+        $data->optionid = $values->id;
         $data->componentname = 'mod_booking';
 
         if ($this->booking) {
@@ -523,6 +523,19 @@ class musi_table extends wunderbyte_table {
                         // Get the URL to edit the option.
                         $data->editoptionurl = $this->add_return_url($bosettings->editoptionurl);
                     }
+                }
+
+                // The simplified availability menu.
+                $alloweditavailability = (
+                    // Admin capability.
+                    has_capability('mod/booking:updatebooking', $this->context) ||
+                    // Or: Everyone with the M:USI editavailability capability.
+                    has_capability('local/musi:editavailability', $this->context) ||
+                    // Or: Teachers can edit the availability of their own option.
+                    (has_capability('mod/booking:limitededitownoption', $this->context) && booking_check_if_teacher($values))
+                );
+                if ($alloweditavailability) {
+                    $data->editavailability = true;
                 }
 
                 $canviewreports = (

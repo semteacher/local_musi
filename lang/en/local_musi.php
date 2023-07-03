@@ -25,10 +25,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['pluginname'] = 'M:USI Dashboard';
+
 $string['dashboard'] = 'Dashboard';
 $string['messageprovider:sendmessages'] = 'Send messages';
 $string['musi:cansendmessages'] = 'Can send messages';
-$string['pluginname'] = 'M:USI Dashboard';
+$string['musi:editavailability'] = 'Can change availability and reservations';
 
 $string['shortcodeslistofbookingoptions'] = 'All courses as list';
 $string['shortcodeslistofbookingoptionsascards'] = 'All courses as cards';
@@ -38,10 +40,11 @@ $string['shortcodeslistofteachersascards'] = 'List of teachers as cards';
 $string['shortcodeslistofmyteachedbookingoptionsascards'] = 'Courses I teach as cards';
 
 // General strings.
-$string['titleprefix'] = 'Course number';
 $string['campaigns'] = 'Campaigns';
 $string['dayofweek'] = 'Weekday';
+$string['editavailability'] = 'Edit availability...';
 $string['invisibleoption'] = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
+$string['titleprefix'] = 'Course number';
 
 // List of all courses.
 $string['allcourses'] = 'All courses';

@@ -52,6 +52,11 @@
         <i class="fa fa-edit fa-fw" aria-hidden="true"></i> {{#str}} editbookingoption, mod_booking {{/str}}
       </a>
       {{/editoptionurl}}
+      {{#editavailability}}
+      <a class="dropdown-item editavailability" href="#" target="_self" data-optionid="{{optionid}}">
+        <i class="fa fa-unlock-alt fa-fw" aria-hidden="true"></i> {{#str}} editavailability, local_musi {{/str}}
+      </a>
+      {{/editavailability}}
       {{#manageresponsesurl}}
       <a class="dropdown-item manageresponses" href="{{manageresponsesurl}}" target="_self">
         <i class="fa fa-ticket fa-fw" aria-hidden="true"></i> {{#str}} manageresponses, mod_booking {{/str}}
@@ -67,3 +72,13 @@
   </div>
 </div>
 {{/optiondatesteachersurl}}
+
+{{#js}}
+    require(['local_musi/easyavailabilitymodal'], function(fn) {
+        fn.init(
+          '{{optionid}}',
+          'a.editavailability[data-optionid="{{optionid}}"]',
+          '{{#str}} editavailability, local_musi {{/str}}'
+        );
+    });
+{{/js}}
