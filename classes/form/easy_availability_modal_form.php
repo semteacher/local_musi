@@ -16,6 +16,9 @@
 
 namespace local_musi\form;
 
+use context_module;
+use mod_booking\booking_option;
+use mod_booking\form\option_form;
 use mod_booking\singleton_service;
 use moodle_exception;
 use stdClass;
@@ -39,10 +42,34 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
      * @see moodleform::definition()
      */
     public function definition() {
+        global $DB;
 
         $mform = $this->_form;
-
         $optionid = $this->_ajaxformdata['optionid'];
+
+        $mform->addElement('hidden', 'optionid');
+        $mform->setType('optionid', PARAM_INT);
+
+        $mform->addElement('date_time_selector', 'bookingopeningtime', get_string('bookingopeningtime', 'mod_booking'));
+        $mform->setType('bookingopeningtime', PARAM_INT);
+
+        $mform->addElement('date_time_selector', 'bookingclosingtime', get_string('bookingclosingtime', 'mod_booking'));
+        $mform->setType('bookingclosingtime', PARAM_INT);
+
+        /* $settings = singleton_service::get_instance_of_booking_option_settings($optionid);
+        $bookingid = $settings->bookingid;
+        $cmid = $settings->cmid;
+        $context = context_module::instance($cmid);
+
+        $defaultvalues = $DB->get_record('booking_options', ['id' => $optionid]);
+
+        $optionformdummy = new option_form(null, [
+            'bookingid' => $bookingid,
+            'optionid' => $optionid,
+            'cmid' => $cmid,
+            'context' => $context
+        ]);
+        $optionformdummy->set_data($defaultvalues); */
 
         $mform->addElement('html', 'TODO: add form elements here! - optionid ' . $optionid);
     }
@@ -75,21 +102,38 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
     public function set_data_for_dynamic_submission(): void {
 
         $data = new stdClass();
-
-        // TODO: Set data.
-        // $data->botags = self::get_existing_botags_array();
-
+        $data->optionid = $this->_ajaxformdata['optionid'];
+        $data->bookingopeningtime = $this->_ajaxformdata['bookingopeningtime'];
+        $data->bookingclosingtime = $this->_ajaxformdata['bookingclosingtime'];
         $this->set_data($data);
     }
 
     public function process_dynamic_submission() {
-        global $DB;
 
+        // We get the data prepared by set_data_for_dynamic_submission().
         $data = $this->get_data();
+        $optionid = $data->optionid;
 
-        // TODO: ...
+        // Prepare option values.
+        booking_option::purge_cache_for_option($optionid);
+        $settings = singleton_service::get_instance_of_booking_option_settings($optionid);
+        $bookingid = $settings->bookingid;
+        $cmid = $settings->cmid;
+        $context = context_module::instance($cmid);
+        $optionvalues = $settings->return_settings_as_stdclass();
+        $optionvalues->optionid = $optionid;
 
-        return $data;
+        // Now we can modify with our data.
+        $optionvalues->restrictanswerperiodopening = true;
+        $optionvalues->restrictanswerperiodclosing = true;
+        $optionvalues->bookingopeningtime = $data->bookingopeningtime;
+        $optionvalues->bookingclosingtime = $data->bookingclosingtime;
+
+        if (booking_update_options($optionvalues, $context, UPDATE_OPTIONS_PARAM_REDUCED)) {
+            return true;
+        }
+
+        return false;
     }
 
     public function validation($data, $files) {

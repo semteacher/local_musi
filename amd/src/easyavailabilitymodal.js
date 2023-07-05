@@ -58,4 +58,3 @@ export const init = (optionid, linkSelector, modalTitle) => {
         });
     }
 };
-
