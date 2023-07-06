@@ -30,7 +30,7 @@
  */
 import ModalForm from 'core_form/modalform';
 
-export const init = (optionid, linkSelector, modalTitle) => {
+export const init = (optionid, linkSelector, modalTitle, formlocked) => {
 
     let element = document.querySelector(linkSelector);
 
@@ -42,8 +42,9 @@ export const init = (optionid, linkSelector, modalTitle) => {
                 // Add as many arguments as you need, they will be passed to the form:
                 args: {
                     'optionid': optionid,
+                    'formlocked': formlocked,
                 },
-                modalConfig: {title: modalTitle + ' optionid: ' + e.target.dataset.optionid},
+                modalConfig: {title: modalTitle},
                 returnFocus: e.currentTarget
             });
 

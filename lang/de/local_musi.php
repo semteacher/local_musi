@@ -42,7 +42,7 @@ $string['shortcodeslistofmyteachedbookingoptionsascards'] = 'Kurse, die ich unte
 // General strings.
 $string['campaigns'] = 'Kampagnen';
 $string['dayofweek'] = 'Wochentag';
-$string['editavailability'] = 'Verfügbarkeit bearbeiten...';
+$string['editavailability'] = 'Verfügbarkeit bearbeiten';
 $string['invisibleoption'] = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
 $string['titleprefix'] = 'Kursnummer';
 
@@ -189,3 +189,10 @@ $string['username'] = 'Nutzer';
 $string['price'] = 'Betrag';
 $string['names'] = 'Buchungen';
 $string['action'] = 'Aktion';
+
+// Easy availability feature.
+$string['easyavailability:overbook'] = 'Sogar dann, wenn der Kurs <b>ausgebucht</b> ist';
+$string['easyavailability:previouslybooked'] = 'Nutzer:innen, die bereits einen bestimmten USI-Kurs gebucht haben, dürfen immer buchen';
+$string['easyavailability:selectusers'] = 'Ausgewählte Nutzer:innen dürfen immer buchen';
+$string['easyavailability:formlocked'] = '<div class="alert alert-warning">Sie können dieses Formular nicht bearbeiten, da dieser Kurs Einschränkungen hat, die mit diesem
+ Formular nicht kompatibel sind. Wenn Sie dennoch Zugriff benötigen, wenden Sie sich an einen M:USI-Admin.</div>';

@@ -31,7 +31,7 @@ $plugin->requires = 2021051700;
 $plugin->maturity = MATURITY_ALPHA;
 $plugin->dependencies = [
     'mod_booking' => 2023062200,
-    'local_wunderbyte_table' => 2023061600,
+    'local_wunderbyte_table' => 2023070500,
     'local_shopping_cart' => 2023062200,
     'local_entities' => 2023062200,
 ];

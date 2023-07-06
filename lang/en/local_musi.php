@@ -42,7 +42,7 @@ $string['shortcodeslistofmyteachedbookingoptionsascards'] = 'Courses I teach as 
 // General strings.
 $string['campaigns'] = 'Campaigns';
 $string['dayofweek'] = 'Weekday';
-$string['editavailability'] = 'Edit availability...';
+$string['editavailability'] = 'Edit availability';
 $string['invisibleoption'] = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
 $string['titleprefix'] = 'Course number';
 
@@ -178,7 +178,6 @@ $string['checkstatus'] = 'Check status';
 $string['statuschanged'] = 'Status changed';
 $string['statusnotchanged'] = 'Status not changed';
 
-
 $string['id'] = 'Entry';
 $string['transactionid'] = 'Internal ID';
 $string['itemid'] = 'Item ID';
@@ -186,3 +185,10 @@ $string['username'] = 'User';
 $string['price'] = 'Amount';
 $string['names'] = 'Purchases';
 $string['action'] = 'Action';
+
+// Easy availability feature.
+$string['easyavailability:overbook'] = 'Even if the course is fully booked';
+$string['easyavailability:previouslybooked'] = 'Users who already booked a specific USI course are always allowed to book';
+$string['easyavailability:selectusers'] = 'Selected users are always allowed to book';
+$string['easyavailability:formlocked'] = '<div class="alert alert-warning">You cannot acces this form because this booking option has availability conditions which are incompatible with it.
+ If you need access, please contact a M:USI admin.</div>';

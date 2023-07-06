@@ -536,6 +536,18 @@ class musi_table extends wunderbyte_table {
                 );
                 if ($alloweditavailability) {
                     $data->editavailability = true;
+                    $data->titlewithprefix = $bosettings->get_title_with_prefix();
+                    $data->formlocked = false; // Unlocked by default.
+
+                    // We have to lock the form, if there are conditions not supported by the easy form.
+                    if (!empty($bosettings->availability)) {
+                        $availabilityarray = json_decode($bosettings->availability);
+                        foreach ($availabilityarray as $av) {
+                            if (!in_array($av->id, [BO_COND_JSON_SELECTUSERS, BO_COND_JSON_PREVIOUSLYBOOKED])) {
+                                $data->formlocked = true;
+                            }
+                        }
+                    }
                 }
 
                 $canviewreports = (

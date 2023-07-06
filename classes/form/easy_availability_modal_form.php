@@ -42,36 +42,54 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
      * @see moodleform::definition()
      */
     public function definition() {
-        global $DB;
 
         $mform = $this->_form;
-        $optionid = $this->_ajaxformdata['optionid'];
 
         $mform->addElement('hidden', 'optionid');
         $mform->setType('optionid', PARAM_INT);
 
-        $mform->addElement('date_time_selector', 'bookingopeningtime', get_string('bookingopeningtime', 'mod_booking'));
-        $mform->setType('bookingopeningtime', PARAM_INT);
+        $mform->addElement('hidden', 'formlocked');
+        $mform->setType('formlocked', PARAM_BOOL);
 
-        $mform->addElement('date_time_selector', 'bookingclosingtime', get_string('bookingclosingtime', 'mod_booking'));
-        $mform->setType('bookingclosingtime', PARAM_INT);
+        $optionid = $this->_ajaxformdata['optionid'];
+        $formlocked = $this->_ajaxformdata['formlocked'];
 
-        /* $settings = singleton_service::get_instance_of_booking_option_settings($optionid);
-        $bookingid = $settings->bookingid;
-        $cmid = $settings->cmid;
-        $context = context_module::instance($cmid);
+        if ($formlocked) {
+            // The form is locked because there are incompatible conditions.
+            $mform->addElement('html', get_string('easyavailability:formlocked', 'local_musi'));
+        } else {
+            // The form is not locked and can be used normally.
+            $mform->addElement('date_time_selector', 'bookingopeningtime', get_string('bookingopeningtime', 'mod_booking'));
+            $mform->setType('bookingopeningtime', PARAM_INT);
 
-        $defaultvalues = $DB->get_record('booking_options', ['id' => $optionid]);
+            $mform->addElement('date_time_selector', 'bookingclosingtime', get_string('bookingclosingtime', 'mod_booking'));
+            $mform->setType('bookingclosingtime', PARAM_INT);
 
-        $optionformdummy = new option_form(null, [
-            'bookingid' => $bookingid,
-            'optionid' => $optionid,
-            'cmid' => $cmid,
-            'context' => $context
-        ]);
-        $optionformdummy->set_data($defaultvalues); */
+            // Select users who can override booking_time condition.
+            $mform->addElement('checkbox', 'selectuserscheckbox', get_string('easyavailability:selectusers', 'local_musi'));
 
-        $mform->addElement('html', 'TODO: add form elements here! - optionid ' . $optionid);
+            $mform->addElement('checkbox', 'selectusersoverbookcheckbox', get_string('easyavailability:overbook', 'local_musi'));
+            $mform->hideIf('selectusersoverbookcheckbox', 'selectuserscheckbox', 'notchecked');
+
+            $options = [
+                'multiple' => true,
+                'noselectionstring' => get_string('choose...', 'mod_booking'),
+                'ajax' => 'local_shopping_cart/form_users_selector',
+                'valuehtmlcallback' => function($value) {
+                    global $OUTPUT;
+                    $user = singleton_service::get_instance_of_user((int)$value);
+                    if (!$user || !user_can_view_profile($user)) {
+                        return false;
+                    }
+                    $details = user_get_user_details($user);
+                    return $OUTPUT->render_from_template(
+                            'local_shopping_cart/form-user-selector-suggestion', $details);
+                }
+            ];
+            $mform->addElement('autocomplete', 'bo_cond_selectusers_userids',
+                get_string('bo_cond_selectusers_userids', 'mod_booking'), [], $options);
+            $mform->hideIf('bo_cond_selectusers_userids', 'selectuserscheckbox', 'notchecked');
+        }
     }
 
     /**
@@ -102,9 +120,46 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
     public function set_data_for_dynamic_submission(): void {
 
         $data = new stdClass();
+
+        /* If availability conditions are already in DB, we have to load them
+        and translate them into the easy availability format.
+        If the conditions in DB are somehow not compatible with the easy form,
+        then we have to lock the form. */
+
         $data->optionid = $this->_ajaxformdata['optionid'];
-        $data->bookingopeningtime = $this->_ajaxformdata['bookingopeningtime'];
-        $data->bookingclosingtime = $this->_ajaxformdata['bookingclosingtime'];
+        $data->formlocked = $this->_ajaxformdata['formlocked'];
+
+        // Do nothing if the form is locked!
+        if ($data->formlocked) {
+            $this->set_data($data);
+            return;
+        }
+
+        booking_option::purge_cache_for_option($data->optionid);
+        $settings = singleton_service::get_instance_of_booking_option_settings($data->optionid);
+
+        $data->bookingopeningtime = $settings->bookingopeningtime ?? $this->_ajaxformdata['bookingopeningtime'];
+        $data->bookingclosingtime = $settings->bookingclosingtime ?? $this->_ajaxformdata['bookingclosingtime'];
+
+        if (!empty($settings->availability)) {
+            $availabilityarray = json_decode($settings->availability);
+            foreach ($availabilityarray as $av) {
+                switch ($av->id) {
+                    case BO_COND_JSON_SELECTUSERS:
+                        if (!empty($av->userids)) {
+                            $data->selectuserscheckbox = true;
+                            $data->bo_cond_selectusers_userids = $av->userids;
+                        }
+                        if (in_array(BO_COND_FULLYBOOKED, $av->overrides) && in_array(BO_COND_NOTIFYMELIST, $av->overrides)) {
+                            $data->selectusersoverbookcheckbox = true;
+                        } else {
+                            $data->selectusersoverbookcheckbox = false;
+                        }
+                        break;
+                }
+            }
+        }
+
         $this->set_data($data);
     }
 
@@ -114,10 +169,14 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
         $data = $this->get_data();
         $optionid = $data->optionid;
 
+        // Do nothing if the form is locked!
+        if ($data->formlocked) {
+            return false;
+        }
+
         // Prepare option values.
         booking_option::purge_cache_for_option($optionid);
         $settings = singleton_service::get_instance_of_booking_option_settings($optionid);
-        $bookingid = $settings->bookingid;
         $cmid = $settings->cmid;
         $context = context_module::instance($cmid);
         $optionvalues = $settings->return_settings_as_stdclass();
@@ -128,6 +187,21 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
         $optionvalues->restrictanswerperiodclosing = true;
         $optionvalues->bookingopeningtime = $data->bookingopeningtime;
         $optionvalues->bookingclosingtime = $data->bookingclosingtime;
+
+        if (!empty(($data->bo_cond_selectusers_userids))) {
+            $optionvalues->selectuserscheckbox = $data->selectuserscheckbox;
+            $optionvalues->bo_cond_selectusers_userids = $data->bo_cond_selectusers_userids;
+            $optionvalues->bo_cond_selectusers_overrideconditioncheckbox = true; // Can be hardcoded here.
+            $optionvalues->bo_cond_selectusers_overrideoperator = 'OR'; // Can be hardcoded here.
+            // We always override these 2 conditions, so users are always allowed to book outside time restrictions.
+            $optionvalues->bo_cond_selectusers_overridecondition = [BO_COND_BOOKING_TIME, BO_COND_OPTIONHASSTARTED];
+
+            // If the overbook checkbox has been checked, we also add the conditions so the user(s) can overbook.
+            if (!empty($data->selectusersoverbookcheckbox)) {
+                $optionvalues->bo_cond_selectusers_overridecondition[] = BO_COND_FULLYBOOKED;
+                $optionvalues->bo_cond_selectusers_overridecondition[] = BO_COND_NOTIFYMELIST;
+            }
+        }
 
         if (booking_update_options($optionvalues, $context, UPDATE_OPTIONS_PARAM_REDUCED)) {
             return true;
