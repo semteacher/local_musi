@@ -59,10 +59,12 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
             $mform->addElement('html', get_string('easyavailability:formlocked', 'local_musi'));
         } else {
             // The form is not locked and can be used normally.
-            $mform->addElement('date_time_selector', 'bookingopeningtime', get_string('bookingopeningtime', 'mod_booking'));
+            $mform->addElement('date_time_selector', 'bookingopeningtime',
+                get_string('easyavailability:openingtime', 'local_musi'));
             $mform->setType('bookingopeningtime', PARAM_INT);
 
-            $mform->addElement('date_time_selector', 'bookingclosingtime', get_string('bookingclosingtime', 'mod_booking'));
+            $mform->addElement('date_time_selector', 'bookingclosingtime',
+                get_string('easyavailability:closingtime', 'local_musi'));
             $mform->setType('bookingclosingtime', PARAM_INT);
 
             // Select users who can override booking_time condition.

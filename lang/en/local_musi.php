@@ -192,3 +192,5 @@ $string['easyavailability:previouslybooked'] = 'Users who already booked a speci
 $string['easyavailability:selectusers'] = 'Selected users are always allowed to book';
 $string['easyavailability:formlocked'] = '<div class="alert alert-warning">You cannot acces this form because this booking option has availability conditions which are incompatible with it.
  If you need access, please contact a M:USI admin.</div>';
+ $string['easyavailability:openingtime'] = 'Available from';
+$string['easyavailability:closingtime'] = 'Available until';

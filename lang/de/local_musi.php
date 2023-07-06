@@ -196,3 +196,5 @@ $string['easyavailability:previouslybooked'] = 'Nutzer:innen, die bereits einen 
 $string['easyavailability:selectusers'] = 'Ausgewählte Nutzer:innen dürfen immer buchen';
 $string['easyavailability:formlocked'] = '<div class="alert alert-warning">Sie können dieses Formular nicht bearbeiten, da dieser Kurs Einschränkungen hat, die mit diesem
  Formular nicht kompatibel sind. Wenn Sie dennoch Zugriff benötigen, wenden Sie sich an einen M:USI-Admin.</div>';
+$string['easyavailability:openingtime'] = 'Verfügbar ab';
+$string['easyavailability:closingtime'] = 'Verfügbar bis';
