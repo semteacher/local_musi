@@ -868,6 +868,9 @@ class shortcodes {
     private static function generate_table_for_cards(&$table, $args) {
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
+        // We define it here so we can pass it with the mustache template.
+        $table->add_subcolumns('optionid', ['id']);
+
         $table->add_subcolumns('itemcategory', ['sport']);
         $table->add_subcolumns('cardimage', ['image']);
         $table->add_subcolumns('optioninvisible', ['invisibleoption']);
@@ -923,6 +926,9 @@ class shortcodes {
         $subcolumnsleftside = ['text'];
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
+
+        // We define it here so we can pass it with the mustache template.
+        $table->add_subcolumns('optionid', ['id']);
 
         $table->add_subcolumns('top', ['sport', 'action']);
         $table->add_subcolumns('leftside', ['text']);

@@ -193,8 +193,9 @@ $string['action'] = 'Aktion';
 // Easy availability feature.
 $string['easyavailability:overbook'] = 'Sogar dann, wenn der Kurs <b>ausgebucht</b> ist';
 $string['easyavailability:previouslybooked'] = 'Nutzer:innen, die bereits einen bestimmten USI-Kurs gebucht haben, dürfen immer buchen';
-$string['easyavailability:selectusers'] = 'Ausgewählte Nutzer:innen dürfen immer buchen';
+$string['easyavailability:selectusers'] = 'Ausgewählte Nutzer:innen dürfen außerhalb der Buchungszeiten buchen';
 $string['easyavailability:formlocked'] = '<div class="alert alert-warning">Sie können dieses Formular nicht bearbeiten, da dieser Kurs Einschränkungen hat, die mit diesem
  Formular nicht kompatibel sind. Wenn Sie dennoch Zugriff benötigen, wenden Sie sich an einen M:USI-Admin.</div>';
-$string['easyavailability:openingtime'] = 'Verfügbar ab';
-$string['easyavailability:closingtime'] = 'Verfügbar bis';
+$string['easyavailability:openingtime'] = 'Kann gebucht werden ab';
+$string['easyavailability:closingtime'] = 'Kann gebucht werden bis';
+$string['easyavailability:heading'] = '<div class="alert alert-info">Sie bearbeiten die Verfügbarkeit von "<b>{$a}</b>"</div>';

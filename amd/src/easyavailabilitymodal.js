@@ -30,7 +30,7 @@
  */
 import ModalForm from 'core_form/modalform';
 
-export const init = (optionid, linkSelector, modalTitle, formlocked) => {
+export const init = (optionid, linkSelector, modalTitle) => {
 
     let element = document.querySelector(linkSelector);
 
@@ -42,7 +42,6 @@ export const init = (optionid, linkSelector, modalTitle, formlocked) => {
                 // Add as many arguments as you need, they will be passed to the form:
                 args: {
                     'optionid': optionid,
-                    'formlocked': formlocked,
                 },
                 modalConfig: {title: modalTitle},
                 returnFocus: e.currentTarget
@@ -52,7 +51,8 @@ export const init = (optionid, linkSelector, modalTitle, formlocked) => {
             form.addEventListener(form.events.FORM_SUBMITTED, (e) => {
                 const response = e.detail;
                 // eslint-disable-next-line no-console
-                console.log(response);
+                console.log("easy availability form submitted: " + response);
+                window.location.reload();
             });
 
             form.show();

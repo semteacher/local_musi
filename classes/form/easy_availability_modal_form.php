@@ -17,6 +17,7 @@
 namespace local_musi\form;
 
 use context_module;
+use MoodleQuickForm;
 use mod_booking\booking_option;
 use mod_booking\form\option_form;
 use mod_booking\singleton_service;
@@ -48,13 +49,14 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
         $mform->addElement('hidden', 'optionid');
         $mform->setType('optionid', PARAM_INT);
 
-        $mform->addElement('hidden', 'formlocked');
-        $mform->setType('formlocked', PARAM_BOOL);
-
         $optionid = $this->_ajaxformdata['optionid'];
-        $formlocked = $this->_ajaxformdata['formlocked'];
 
-        if ($formlocked) {
+        $settings = singleton_service::get_instance_of_booking_option_settings($optionid);
+        $titlewithprefix = $settings->get_title_with_prefix();
+
+        $mform->addElement('html', get_string('easyavailability:heading', 'local_musi', $titlewithprefix));
+
+        if (self::form_is_locked($optionid)) {
             // The form is locked because there are incompatible conditions.
             $mform->addElement('html', get_string('easyavailability:formlocked', 'local_musi'));
         } else {
@@ -67,10 +69,14 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
                 get_string('easyavailability:closingtime', 'local_musi'));
             $mform->setType('bookingclosingtime', PARAM_INT);
 
+            $mform->addElement('html', '<hr>');
+
+            // Add the selectusers condition:
             // Select users who can override booking_time condition.
             $mform->addElement('checkbox', 'selectuserscheckbox', get_string('easyavailability:selectusers', 'local_musi'));
 
             $mform->addElement('checkbox', 'selectusersoverbookcheckbox', get_string('easyavailability:overbook', 'local_musi'));
+            $mform->setDefault('selectusersoverbookcheckbox', 'checked');
             $mform->hideIf('selectusersoverbookcheckbox', 'selectuserscheckbox', 'notchecked');
 
             $options = [
@@ -91,7 +97,45 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
             $mform->addElement('autocomplete', 'bo_cond_selectusers_userids',
                 get_string('bo_cond_selectusers_userids', 'mod_booking'), [], $options);
             $mform->hideIf('bo_cond_selectusers_userids', 'selectuserscheckbox', 'notchecked');
+
+            $mform->addElement('html', '<hr>');
+
+            // Add the previouslybooked condition:
+            // Users who previously booked a certain option can override booking_time condition.
+            $mform->addElement('checkbox', 'previouslybookedcheckbox',
+                get_string('easyavailability:previouslybooked', 'local_musi'));
+            $mform->addElement('checkbox', 'previouslybookedoverbookcheckbox',
+                get_string('easyavailability:overbook', 'local_musi'));
+            $mform->setDefault('previouslybookedoverbookcheckbox', 'checked');
+            $mform->hideIf('previouslybookedoverbookcheckbox', 'previouslybookedcheckbox', 'notchecked');
+
+            $previouslybookedoptions = [
+                'tags' => false,
+                'multiple' => false,
+                'noselectionstring' => get_string('choose...', 'mod_booking'),
+                'ajax' => 'mod_booking/form_booking_options_selector',
+                'valuehtmlcallback' => function($value) {
+                    global $OUTPUT;
+                    $optionsettings = singleton_service::get_instance_of_booking_option_settings((int)$value);
+                    $instancesettings = singleton_service::get_instance_of_booking_settings_by_cmid($optionsettings->cmid);
+
+                    $details = (object)[
+                        'id' => $optionsettings->id,
+                        'titleprefix' => $optionsettings->titleprefix,
+                        'text' => $optionsettings->text,
+                        'instancename' => $instancesettings->name,
+                    ];
+                    return $OUTPUT->render_from_template(
+                            'mod_booking/form_booking_options_selector_suggestion', $details);
+                }
+            ];
+            $mform->addElement('autocomplete', 'bo_cond_previouslybooked_optionid',
+                get_string('bo_cond_previouslybooked_optionid', 'mod_booking'), [], $previouslybookedoptions);
+            $mform->setType('bo_cond_previouslybooked_optionid', PARAM_INT);
+            $mform->hideIf('bo_cond_previouslybooked_optionid', 'previouslybookedcheckbox', 'notchecked');
         }
+
+        $mform->addElement('html', '<br><br>');
     }
 
     /**
@@ -129,10 +173,9 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
         then we have to lock the form. */
 
         $data->optionid = $this->_ajaxformdata['optionid'];
-        $data->formlocked = $this->_ajaxformdata['formlocked'];
 
         // Do nothing if the form is locked!
-        if ($data->formlocked) {
+        if (self::form_is_locked($data->optionid)) {
             $this->set_data($data);
             return;
         }
@@ -158,6 +201,17 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
                             $data->selectusersoverbookcheckbox = false;
                         }
                         break;
+                    case BO_COND_JSON_PREVIOUSLYBOOKED:
+                        if (!empty($av->optionid)) {
+                            $data->previouslybookedcheckbox = true;
+                            $data->bo_cond_previouslybooked_optionid = (int)$av->optionid;
+                        }
+                        if (in_array(BO_COND_FULLYBOOKED, $av->overrides) && in_array(BO_COND_NOTIFYMELIST, $av->overrides)) {
+                            $data->previouslybookedoverbookcheckbox = true;
+                        } else {
+                            $data->previouslybookedoverbookcheckbox = false;
+                        }
+                        break;
                 }
             }
         }
@@ -172,7 +226,7 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
         $optionid = $data->optionid;
 
         // Do nothing if the form is locked!
-        if ($data->formlocked) {
+        if (self::form_is_locked($optionid)) {
             return false;
         }
 
@@ -190,18 +244,44 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
         $optionvalues->bookingopeningtime = $data->bookingopeningtime;
         $optionvalues->bookingclosingtime = $data->bookingclosingtime;
 
+        // Select users condition.
         if (!empty(($data->bo_cond_selectusers_userids))) {
             $optionvalues->selectuserscheckbox = $data->selectuserscheckbox;
             $optionvalues->bo_cond_selectusers_userids = $data->bo_cond_selectusers_userids;
             $optionvalues->bo_cond_selectusers_overrideconditioncheckbox = true; // Can be hardcoded here.
             $optionvalues->bo_cond_selectusers_overrideoperator = 'OR'; // Can be hardcoded here.
-            // We always override these 2 conditions, so users are always allowed to book outside time restrictions.
-            $optionvalues->bo_cond_selectusers_overridecondition = [BO_COND_BOOKING_TIME, BO_COND_OPTIONHASSTARTED];
+
+            // We always override these conditions, so users are always allowed to book outside time restrictions.
+            $optionvalues->bo_cond_selectusers_overridecondition = [
+                BO_COND_BOOKING_TIME,
+                BO_COND_OPTIONHASSTARTED,
+                BO_COND_JSON_PREVIOUSLYBOOKED // Even if the other condition blocks, we allow it.
+            ];
 
             // If the overbook checkbox has been checked, we also add the conditions so the user(s) can overbook.
             if (!empty($data->selectusersoverbookcheckbox)) {
                 $optionvalues->bo_cond_selectusers_overridecondition[] = BO_COND_FULLYBOOKED;
                 $optionvalues->bo_cond_selectusers_overridecondition[] = BO_COND_NOTIFYMELIST;
+            }
+        }
+
+        // Previously booked condition.
+        if (!empty(($data->bo_cond_previouslybooked_optionid))) {
+            $optionvalues->previouslybookedcheckbox = $data->previouslybookedcheckbox;
+            $optionvalues->bo_cond_previouslybooked_optionid = $data->bo_cond_previouslybooked_optionid;
+            $optionvalues->bo_cond_previouslybooked_overrideconditioncheckbox = true; // Can be hardcoded here.
+            $optionvalues->bo_cond_previouslybooked_overrideoperator = 'OR'; // Can be hardcoded here.
+            // We always override these 2 conditions, so users are always allowed to book outside time restrictions.
+            $optionvalues->bo_cond_previouslybooked_overridecondition = [
+                BO_COND_BOOKING_TIME,
+                BO_COND_OPTIONHASSTARTED,
+                BO_COND_JSON_SELECTUSERS // Even if the other condition blocks, we allow it.
+            ];
+
+            // If the overbook checkbox has been checked, we also add the conditions so the user(s) can overbook.
+            if (!empty($data->previouslybookedoverbookcheckbox)) {
+                $optionvalues->bo_cond_previouslybooked_overridecondition[] = BO_COND_FULLYBOOKED;
+                $optionvalues->bo_cond_previouslybooked_overridecondition[] = BO_COND_NOTIFYMELIST;
             }
         }
 
@@ -237,5 +317,25 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Helper function to check if form is locked.
+     * @param int $optionid option id
+     * @return bool true if form is locked, else false
+     */
+    private static function form_is_locked(int $optionid) {
+        $settings = singleton_service::get_instance_of_booking_option_settings($optionid);
+        $formlocked = false; // Unlocked by default.
+        // We have to lock the form, if there are conditions not supported by the easy form.
+        if (!empty($settings->availability)) {
+            $availabilityarray = json_decode($settings->availability);
+            foreach ($availabilityarray as $av) {
+                if (!in_array($av->id, [BO_COND_JSON_SELECTUSERS, BO_COND_JSON_PREVIOUSLYBOOKED])) {
+                    $formlocked = true;
+                }
+            }
+        }
+        return $formlocked;
     }
 }
