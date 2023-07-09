@@ -254,8 +254,7 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
             // We always override these conditions, so users are always allowed to book outside time restrictions.
             $optionvalues->bo_cond_selectusers_overridecondition = [
                 BO_COND_BOOKING_TIME,
-                BO_COND_OPTIONHASSTARTED,
-                BO_COND_JSON_PREVIOUSLYBOOKED // Even if the other condition blocks, we allow it.
+                BO_COND_OPTIONHASSTARTED
             ];
 
             // If the overbook checkbox has been checked, we also add the conditions so the user(s) can overbook.
@@ -274,8 +273,7 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
             // We always override these 2 conditions, so users are always allowed to book outside time restrictions.
             $optionvalues->bo_cond_previouslybooked_overridecondition = [
                 BO_COND_BOOKING_TIME,
-                BO_COND_OPTIONHASSTARTED,
-                BO_COND_JSON_SELECTUSERS // Even if the other condition blocks, we allow it.
+                BO_COND_OPTIONHASSTARTED
             ];
 
             // If the overbook checkbox has been checked, we also add the conditions so the user(s) can overbook.
@@ -295,7 +293,10 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
     public function validation($data, $files) {
         $errors = [];
 
-        // TODO: ...
+        if ($data['bookingopeningtime'] >= $data['bookingclosingtime']) {
+            $errors['bookingopeningtime'] = get_string('error:starttime', 'local_musi');
+            $errors['bookingclosingtime'] = get_string('error:endtime', 'local_musi');
+        }
 
         return $errors;
     }

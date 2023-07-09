@@ -46,6 +46,10 @@ $string['editavailability'] = 'Edit availability';
 $string['invisibleoption'] = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
 $string['titleprefix'] = 'Course number';
 
+// Errors.
+$string['error:starttime'] = 'Start has to be before end.';
+$string['error:endtime'] = 'End has to be after start.';
+
 // List of all courses.
 $string['allcourses'] = 'All courses';
 

@@ -46,6 +46,10 @@ $string['editavailability'] = 'Verfügbarkeit bearbeiten';
 $string['invisibleoption'] = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
 $string['titleprefix'] = 'Kursnummer';
 
+// Errors.
+$string['error:starttime'] = 'Start muss vor dem Ende sein.';
+$string['error:endtime'] = 'Ende muss nach dem Start sein.';
+
 // List of all courses.
 $string['allcourses'] = 'Alle Kurse';
 
