@@ -34,7 +34,7 @@ class sap_daily_sums {
      * Helper function to create SAP text files for M:USI.
      *
      * @param string $day formatted day to generate the SAP text file for
-     * @return string the file content
+     * @return array [$content, $errorcontent] file content and content of the error file
      */
     public static function generate_sap_text_file_for_date(string $day) {
         global $DB;
@@ -108,84 +108,127 @@ class sap_daily_sums {
         ];
 
         $content = '';
+        $errorcontent = '';
         if ($records = $DB->get_records_sql($sql, $params)) {
             foreach ($records as $record) {
+
+                $currentline = '';
+
+                // If the SAP line has errors, we need to add it to a separate file.
+                $linehaserrors = false;
+
+                // Kostenstelle.
+                $sqlkostenstelle = "SELECT s1.kst
+                FROM {payments} p
+                JOIN {local_shopping_cart_history} h
+                ON h.identifier = p.itemid
+                JOIN (
+                    SELECT d.instanceid AS optionid, d.value AS kst
+                    FROM {customfield_field} f
+                    JOIN {customfield_category} c
+                    ON c.id = f.categoryid AND c.component = 'mod_booking' AND f.shortname = 'kst'
+                    JOIN {customfield_data} d
+                    ON d.fieldid = f.id
+                ) s1
+                ON s1.optionid = h.itemid
+                WHERE p.itemid = :identifier AND s1.kst <> '' AND s1.kst IS NOT NULL
+                LIMIT 1";
+                $paramskostenstelle = ['identifier' => $record->identifier];
+                $kostenstelle = $DB->get_field_sql($sqlkostenstelle, $paramskostenstelle);
+                // Wenn die Kostenstelle fehlt, wird die Zeile zum Error-File hinzugefügt.
+                if (empty($kostenstelle)) {
+                    $linehaserrors = true;
+                }
+
                 /*
                  * Mandant - 3 Stellen alphanumerisch - immer "101"
                  * Buchungskreis - 4 Stellen alphanumerisch - immer "VIE1"
                  * Währung - 3 Stellen alphanumerisch - immer "EUR"
                  * Belegart - 2 Stellen alphanumerisch - Immer "DR"
                  */
-                $content .= "101#VIE1#EUR#DR#";
+                $currentline .= "101#VIE1#EUR#DR#";
                 // Referenzbelegnummer - 16 Stellen alphanumerisch.
-                $content .= str_pad($record->identifier, 16, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad($record->identifier, 16, " ", STR_PAD_LEFT) . '#';
                 // Buchungsdatum - 10 Stellen.
-                $content .= date('d.m.Y', $record->timemodified) . '#';
+                $currentline .= date('d.m.Y', $record->timemodified) . '#';
                 // Belegdatum - 10 Stellen.
-                $content .= date('d.m.Y', $record->timecreated) . '#';
+                $currentline .= date('d.m.Y', $record->timecreated) . '#';
                 // Belegkopftext - 25 Stellen alphanumerisch - in unserem Fall immer "US".
-                $content .= str_pad('US', 25, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('US', 25, " ", STR_PAD_LEFT) . '#';
                 // Betrag - 14 Stellen alphanumerisch - Netto-Betrag.
                 $renderedprice = (string) $record->price;
                 $renderedprice = str_replace('.', ',', $renderedprice);
-                $content .= str_pad($renderedprice, 14, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad($renderedprice, 14, " ", STR_PAD_LEFT) . '#';
                 // Steuer rechnen - 1 Stelle alphanumerisch - immer "X".
-                $content .= 'X#';
+                $currentline .= 'X#';
                 /* Steuerbetrag - 14 Stellen alphanumerisch - derzeit sind keine Geschäftsfälle mit Umsatzsteuer vorgesehen,
                 daher bleibt das Feld immer leer. */
-                $content .= str_pad('', 14, " ") . '#';
+                $currentline .= str_pad('', 14, " ") . '#';
                 /* Werbeabgabe - 14 Stellen alphanumerisch - kein bekannter Geschäftsfall im Moment,
                 daher bleibt das Feld immer leer. */
-                $content .= str_pad('', 14, " ") . '#';
+                $currentline .= str_pad('', 14, " ") . '#';
                 // Buchungsschlüssel - 2 Stellen alphanumerisch - 50 - bei Rechnungen, 40 - bei Gutschriften
                 // Derzeit können nur Rechnungen geloggt werden, daher immer 50.
-                $content .= '50#';
+                $currentline .= '50#';
                 // Geschäftsfall-Code - 3 Stellen alphanumerisch - immer "US0".
-                $content .= 'US0#';
+                $currentline .= 'US0#';
                 // Zahlungscode - 3 Stellen alphanumerisch.
                 if (!empty($record->paymentbrand)) {
-                    $content .= str_pad($record->paymentbrand, 3, " ", STR_PAD_LEFT) . '#';
+                    $currentline .= str_pad($record->paymentbrand, 3, " ", STR_PAD_LEFT) . '#';
                 } else {
-                    $content .= str_pad('', 3, " ", STR_PAD_LEFT) . '#';
+                    $currentline .= str_pad('', 3, " ", STR_PAD_LEFT) . '#';
                 }
                 // Buchungstext - 50 Stellen alphanumerisch.
                 $buchungstext = " US $record->userid " . self::clean_string_for_sap($record->lastname);
                 if (strlen($buchungstext) > 50) {
                     $buchungstext = substr($buchungstext, 0, 50);
                 }
-                $content .= str_pad($buchungstext, 50, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad($buchungstext, 50, " ", STR_PAD_LEFT) . '#';
                 // Zuordnung - analog "Referenzbelegnummer" - 18 Stellen alphanumerisch.
-                $content .= str_pad($record->identifier, 18, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad($record->identifier, 18, " ", STR_PAD_LEFT) . '#';
+
                 // Kostenstelle - 10 Stellen - leer.
-                $content .= str_pad('', 10, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 10, " ", STR_PAD_LEFT) . '#';
+
                 // Innenauftrag - 12 Stellen - USI Wien immer "ET592002".
-                $content .= str_pad('ET592002', 12, " ", STR_PAD_LEFT) . '#';
+                /* MUSI-350: Dort, wo jetzt immer "ET592002" steht muss der Wert
+                des optionalen Feldes Statistik-Kostenstelle geschrieben werden. */
+                // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+                /* $currentline .= str_pad('ET592002', 12, " ", STR_PAD_LEFT) . '#'; */
+                $currentline .= str_pad($kostenstelle ?? '', 12, " ", STR_PAD_LEFT) . '#';
+
                 // Anrede - 15 Stellen.
-                $content .= str_pad('', 15, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 15, " ", STR_PAD_LEFT) . '#';
                 // Name 1 - 35 Stellen.
-                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
                 // Name 2 - 35 Stellen.
-                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
                 // Name 3 - 35 Stellen.
-                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
                 // Name 4 - 35 Stellen.
-                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
                 // Straße / Hausnummer - 35 Stellen.
-                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
                 // Ort - 35 Stellen.
-                $content .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 35, " ", STR_PAD_LEFT) . '#';
                 // Postleitzahl - 10 Stellen.
-                $content .= str_pad('', 10, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 10, " ", STR_PAD_LEFT) . '#';
                 // Land - 2 Stellen.
-                $content .= str_pad('', 2, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 2, " ", STR_PAD_LEFT) . '#';
                 // Zahlungsbedingung - 4 Stellen.
-                $content .= str_pad('', 4, " ", STR_PAD_LEFT) . '#';
+                $currentline .= str_pad('', 4, " ", STR_PAD_LEFT) . '#';
                 // ENDE: Zeilenumbruch.
-                $content .= "\r\n";
+                $currentline .= "\n"; // Needs to be LF, not CRLF, so we use \n.
+
+                if (!$linehaserrors) {
+                    $content .= $currentline;
+                } else {
+                    $errorcontent .= $currentline;
+                }
             }
         }
 
-        return $content;
+        return [$content, $errorcontent];
     }
 
     /**

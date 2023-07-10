@@ -85,18 +85,43 @@ while ($starttimestamp <= $yesterday) {
             'filename' => $filename
         );
 
-        $content = sap_daily_sums::generate_sap_text_file_for_date(date('Y-m-d', $starttimestamp));
+        list($content, $errorcontent) = sap_daily_sums::generate_sap_text_file_for_date(date('Y-m-d', $starttimestamp));
         $fs->create_file_from_string($fileinfo, $content);
+
+        // If we have error content, we create an error file.
+        if (!empty($errorcontent)) {
+            $errorfilename = 'SAP_USI_' . date('Ymd', $starttimestamp) . '_errors.txt';
+            $errorfile = $fs->get_file($contextid, $component, $filearea, $itemid, $filepath, $errorfilename);
+            if (!$errorfile) {
+                $errorfileinfo = array(
+                    'contextid' => $contextid,
+                    'component' => $component,
+                    'filearea' => $filearea,
+                    'itemid' => $itemid,
+                    'filepath' => $filepath,
+                    'filename' => $errorfilename
+                );
+                $fs->create_file_from_string($errorfileinfo, $errorcontent);
+            }
+
+        }
     }
     $starttimestamp = strtotime('+1 day', $starttimestamp);
 }
 
 // List all existing files as links.
 $files = $fs->get_area_files($context->id, 'local_musi', 'musi_sap_dailysums');
+
+$dataforsapfiletemplate = [];
 foreach ($files as $file) {
-    if ($file->get_filename() == '.') {
+    $filename = $file->get_filename();
+    if ($filename == '.') {
         continue;
     }
+    $filenamearr = explode('_', $filename);
+    $datepart = trim($filenamearr[2], '.txt');
+    $year = substr($datepart, 0, 4);
+    $month = substr($datepart, 4, 2);
 
     $url = moodle_url::make_pluginfile_url(
         $contextid,
@@ -104,14 +129,85 @@ foreach ($files as $file) {
         $filearea,
         $itemid,
         $filepath,
-        $file->get_filename(),
+        $filename,
         true // Force download of the file.
     );
-    echo html_writer::link($url, $file->get_filename());
-    echo '<br/>';
+    $currentlink = html_writer::link($url, $filename);
+    //echo html_writer::link($url, $filename);
+    //echo '<br/>';
+
+    // We collect all links per month, so we can show it in a nice way.
+
+    // It's a new year.
+    if (!isset($dataforsapfiletemplate['year'])) {
+        $dataforsapfiletemplate = ['year' => [$year => ['month' => [$month => ['link' => [$currentlink]]]]]];
+    } else if (!isset($dataforsapfiletemplate['year'][$year]['month'])) {
+        // It's a new month.
+        $dataforsapfiletemplate['year'][$year] = ['month' => [$month => ['link' => [$currentlink]]]];
+    } else {
+        // Else we can just add the link to the existing link array.
+        $dataforsapfiletemplate['year'][$year]['month'][$month]['link'][] = $currentlink;
+    }
 
     // If we want to delete all files, we can use this line.
     // $file->delete(); // Workaround: delete files.
 }
 
+echo build_sapfiles_accordion($dataforsapfiletemplate);
 echo $OUTPUT->footer();
+
+/**
+ * Helper function to build the SAP files accordion.
+ * @param array $dataforsapfiletemplate
+ * @return string the html
+ */
+function build_sapfiles_accordion(array $dataforsapfiletemplate) {
+
+    $html = '';
+    $html .=
+    '<div id="sapfiles-years-accordion">
+        <div class="sapfiles-year">';
+
+    foreach ($dataforsapfiletemplate['year'] as $y => $val) {
+        $html .=
+        '<div class="card-header" id="heading' . $y . '}">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse' . $y . '" aria-expanded="true"
+                    aria-controls="collapse' . $y . '">
+                    ' . $y . '
+                </button>
+            </h5>
+        </div>
+        <div id="collapse' . $y . '" class="collapse show" aria-labelledby="heading' . $y .
+            '" data-parent="#sapfiles-years-accordion">
+            <div class="card-body">';
+
+        $html .=
+        '<div id="sapfiles-' . $y . '-months-accordion">
+            <div class="sapfiles-month">';
+
+        foreach ($dataforsapfiletemplate['year'][$y]['month'] as $m => $val) {
+            $html .= '<div class="card-header" id="heading' . "$y-$m" . '}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse' . "$y-$m" . '" aria-expanded="true"
+                        aria-controls="collapse' . "$y-$m" . '">
+                        ' . "$m" . '
+                    </button>
+                </h5>
+            </div>
+            <div id="collapse' . "$y-$m" . '" class="collapse show" aria-labelledby="heading' . "$y-$m" .
+                '" data-parent="#sapfiles-' . "$y-$m" . '-months-accordion">
+                <div class="card-body">';
+
+            $html .= 'month content...'; // TODO: Links!
+
+            $html .= '</div></div>';
+        }
+
+        $html .= '</div></div></div></div>';
+    }
+
+    $html .= '</div></div>';
+
+    return $html;
+}
