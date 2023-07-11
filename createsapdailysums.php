@@ -71,7 +71,7 @@ $filepath = '/';
 
 $starttimestamp = $dateoneyearago;
 while ($starttimestamp <= $yesterday) {
-    $filename = 'SAP_USI_' . date('Ymd', $starttimestamp) . '.txt';
+    $filename = 'SAP_USI_' . date('Ymd', $starttimestamp);
 
     // Retrieve the file from the Files API.
     $file = $fs->get_file($contextid, $component, $filearea, $itemid, $filepath, $filename);
@@ -90,7 +90,7 @@ while ($starttimestamp <= $yesterday) {
 
         // If we have error content, we create an error file.
         if (!empty($errorcontent)) {
-            $errorfilename = 'SAP_USI_' . date('Ymd', $starttimestamp) . '_errors.txt';
+            $errorfilename = 'SAP_USI_' . date('Ymd', $starttimestamp) . '_errors';
             $errorfile = $fs->get_file($contextid, $component, $filearea, $itemid, $filepath, $errorfilename);
             if (!$errorfile) {
                 $errorfileinfo = array(
@@ -110,7 +110,8 @@ while ($starttimestamp <= $yesterday) {
 }
 
 // List all existing files as links.
-$files = $fs->get_area_files($context->id, 'local_musi', 'musi_sap_dailysums');
+// Revert the order, so we have the newest files on top.
+$files = array_reverse($fs->get_area_files($context->id, 'local_musi', 'musi_sap_dailysums'));
 
 $dataforsapfiletemplate = [];
 foreach ($files as $file) {
@@ -119,7 +120,7 @@ foreach ($files as $file) {
         continue;
     }
     $filenamearr = explode('_', $filename);
-    $datepart = trim($filenamearr[2], '.txt');
+    $datepart = $filenamearr[2];
     $year = substr($datepart, 0, 4);
     $month = substr($datepart, 4, 2);
 
@@ -133,8 +134,6 @@ foreach ($files as $file) {
         true // Force download of the file.
     );
     $currentlink = html_writer::link($url, $filename);
-    //echo html_writer::link($url, $filename);
-    //echo '<br/>';
 
     // We collect all links per month, so we can show it in a nice way.
 
@@ -150,6 +149,7 @@ foreach ($files as $file) {
     }
 
     // If we want to delete all files, we can use this line.
+    // Important: Only comment this in on testing environments!
     // $file->delete(); // Workaround: delete files.
 }
 
@@ -163,51 +163,67 @@ echo $OUTPUT->footer();
  */
 function build_sapfiles_accordion(array $dataforsapfiletemplate) {
 
+    // Unfortunately, the nested array did not work properly with mustache.
+    // So we build the HTML with this function.
+
     $html = '';
     $html .=
     '<div id="sapfiles-years-accordion">
         <div class="sapfiles-year">';
 
-    foreach ($dataforsapfiletemplate['year'] as $y => $val) {
-        $html .=
-        '<div class="card-header" id="heading' . $y . '}">
-            <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse' . $y . '" aria-expanded="true"
-                    aria-controls="collapse' . $y . '">
-                    ' . $y . '
-                </button>
-            </h5>
-        </div>
-        <div id="collapse' . $y . '" class="collapse show" aria-labelledby="heading' . $y .
-            '" data-parent="#sapfiles-years-accordion">
-            <div class="card-body">';
+    if (!empty($dataforsapfiletemplate['year'])) {
+        foreach ($dataforsapfiletemplate['year'] as $y => $val) {
+            $html .=
+                '<div class="card-header" id="heading' . $y . '}">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse' . $y . '" aria-expanded="true"
+                            aria-controls="collapse' . $y . '">
+                            ' . $y . '
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapse' . $y . '" class="collapse" aria-labelledby="heading' . $y .
+                    '" data-parent="#sapfiles-years-accordion">
+                    <div class="card-body">';
 
-        $html .=
-        '<div id="sapfiles-' . $y . '-months-accordion">
-            <div class="sapfiles-month">';
+            $html .=
+                        '<div id="sapfiles-' . $y . '-months-accordion">
+                            <div class="sapfiles-month">';
 
-        foreach ($dataforsapfiletemplate['year'][$y]['month'] as $m => $val) {
-            $html .= '<div class="card-header" id="heading' . "$y-$m" . '}">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse' . "$y-$m" . '" aria-expanded="true"
-                        aria-controls="collapse' . "$y-$m" . '">
-                        ' . "$m" . '
-                    </button>
-                </h5>
-            </div>
-            <div id="collapse' . "$y-$m" . '" class="collapse show" aria-labelledby="heading' . "$y-$m" .
-                '" data-parent="#sapfiles-' . "$y-$m" . '-months-accordion">
-                <div class="card-body">';
+            foreach ($dataforsapfiletemplate['year'][$y]['month'] as $m => $val) {
+                $html .=
+                                '<div class="h5" id="heading' . "$y-$m" . '}">
+                                    <h6 class="mb-0">
+                                        <div class="btn btn-link" data-toggle="collapse" data-target="#collapse' . "$y-$m" .
+                                        '" aria-expanded="true" aria-controls="collapse' . "$y-$m" . '">
+                                            ' . "$y-$m" . '
+                                        </div>
+                                    </h6>
+                                </div>
+                                <div id="collapse' . "$y-$m" . '" class="collapse" aria-labelledby="heading' . "$y-$m" .
+                                    '" data-parent="#sapfiles-' . $y . '-months-accordion">
+                                    <div class="card-body">';
 
-            $html .= 'month content...'; // TODO: Links!
+                // Now we add all the links.
+                foreach ($dataforsapfiletemplate['year'][$y]['month'][$m]['link'] as $l) {
+                                        $html .= $l . '<br>';
+                }
 
-            $html .= '</div></div>';
+                $html .=
+                                    '</div>
+                                </div>';
+            }
+
+            $html .=
+                            '</div>
+                        </div>
+                    </div>
+                </div>';
         }
-
-        $html .= '</div></div></div></div>';
+        $html .=
+            '</div>
+        </div>';
     }
-
-    $html .= '</div></div>';
 
     return $html;
 }

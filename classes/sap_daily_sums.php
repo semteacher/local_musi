@@ -87,8 +87,6 @@ class sap_daily_sums {
             $gatewayspart = "JOIN ($colselectsstring) pgw ON p.id = pgw.paymentid";
         }
 
-        // SQL query. The subselect will fix the "Did you remember to make the first column something...
-        // ...unique in your call to get_records?" bug.
         $sql = "SELECT
                     p.id, p.itemid AS identifier, p.amount AS price, p.currency,
                     p.userid, u.lastname, u.firstname, u.email,
