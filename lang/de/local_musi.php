@@ -134,7 +134,6 @@ die im "Meine Kurse"-Archiv aufscheinen sollen.';
 
 $string['archive'] = '<i class="fa fa-archive" aria-hidden="true"></i> Archiv';
 $string['mycourses'] = 'Meine Kurse';
-$string['gotocoursematerial'] = 'Zu den Kursmaterialien';
 $string['coursesibooked'] = '<i class="fa fa-ticket" aria-hidden="true"></i> Kurse, die ich im aktuellen Semester gebucht habe:';
 $string['coursesibookedarchive'] = 'Kurse, die ich in vergangenen Semestern gebucht habe:';
 $string['coursesiteach'] = '<i class="fa fa-graduation-cap" aria-hidden="true"></i> Kurse, die ich im aktuellen Semester unterrichte:';
@@ -167,7 +166,7 @@ $string['editcontractformula'] = 'Vertragsformel bearbeiten';
 $string['userinformation'] = 'Benutzer-Information';
 
 // My Courses List.
-$string['tocoursecontent'] = 'zu den Kursmaterialien';
+$string['tocoursecontent'] = 'Zu den Kursmaterialien';
 
 // Shortlist section information.
 $string['dayofweekalt'] = 'Wochentag und Termin, an dem eine Kurseinheit stattfindet';

@@ -364,17 +364,32 @@ class musi_table extends wunderbyte_table {
      * @throws coding_exception
      */
     public function col_course($values) {
+        global $USER;
 
         $settings = singleton_service::get_instance_of_booking_option_settings($values->id, $values);
+        $ret = '';
 
-        if (empty($settings->courseid)) {
-            $ret = '';
-        } else {
-            $moodleurl = new moodle_url('/course/view.php', ['id' => $settings->courseid]);
-            $courseurl = $moodleurl->out(false);
-            $gotocoursematerial = get_string('gotocoursematerial', 'local_musi');
+        $moodleurl = new moodle_url('/course/view.php', ['id' => $settings->courseid]);
+        $courseurl = $moodleurl->out(false);
+        // If we download, we want to return the plain URL.
+        if ($this->is_downloading()) {
+            return $courseurl;
+        }
+
+        $answersobject = singleton_service::get_instance_of_booking_answers($settings);
+        $status = $answersobject->user_status($USER->id);
+
+        $isteacherofthisoption = booking_check_if_teacher($values);
+
+        if (!empty($settings->courseid) && (
+                $status == STATUSPARAM_BOOKED ||
+                has_capability('mod/booking:updatebooking', $this->context) ||
+                (has_capability('mod/booking:addeditownoption', $this->context) && $isteacherofthisoption) ||
+                (has_capability('mod/booking:limitededitownoption', $this->context) && $isteacherofthisoption)
+        )) {
+            $gotomoodlecourse = get_string('tocoursecontent', 'local_musi');
             $ret = "<a href='$courseurl' target='_self' class='btn btn-primary mt-2 mb-2 w-100'>
-                <i class='fa fa-graduation-cap' aria-hidden='true'></i>&nbsp;&nbsp;$gotocoursematerial
+                <i class='fa fa-graduation-cap fa-fw' aria-hidden='true'></i>&nbsp;&nbsp;$gotomoodlecourse
             </a>";
         }
 
@@ -602,27 +617,6 @@ class musi_table extends wunderbyte_table {
 
         $output = singleton_service::get_renderer('local_musi');
         return $output->render_musi_bookingoption_menu($data);
-    }
-
-    /**
-     * This function is called for each data row to allow processing of the
-     * courseid value.
-     *
-     * @param object $values Contains object with all the values of record.
-     * @return string Link to connected Moodle course styled as button.
-     * @throws moodle_exception
-     * @throws coding_exception
-     */
-    public function col_courseid($values) {
-
-        if ($values->courseid != null && $values->courseid != 0) {
-            $url = new moodle_url('/course/view.php', ['id' => $values->courseid]);
-            $rethtml = html_writer::tag('i', '', ['class' => 'fa fa-graduation-cap']) . ' ' .
-                get_string('tocoursecontent', 'local_musi');
-            return html_writer::tag('a', $rethtml, ['href' => $url->out(false), 'class' => 'btn btn-info']);
-        }
-
-        return "";
     }
 
     /**

@@ -910,7 +910,7 @@ class shortcodes {
         $table->add_classes_to_subcolumns('cardlist', ['columnalt' => get_string('bookingsalt', 'local_musi')], ['bookings']);
         $table->add_classes_to_subcolumns('cardimage', ['cardimagealt' => get_string('imagealt', 'local_musi')], ['image']);
 
-        $table->add_subcolumns('cardfooter', ['price']);
+        $table->add_subcolumns('cardfooter', ['course', 'price']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('cardfooter', ['columnclass' => 'theme-text-color bold '], ['price']);
         $table->set_tableclass('cardimageclass', 'w-100');
@@ -923,7 +923,6 @@ class shortcodes {
         if (!empty($args['showminanswers'])) {
             $subcolumnsinfo[] = 'minanswers';
         }
-        $subcolumnsleftside = ['text'];
 
         $table->define_cache('mod_booking', 'bookingoptionstable');
 
@@ -935,13 +934,11 @@ class shortcodes {
         $table->add_subcolumns('info', $subcolumnsinfo);
         // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
         /* $table->add_subcolumns('footer', ['botags']); */
-        $table->add_subcolumns('rightside', ['botags', 'price']);
-        $table->add_subcolumns('leftside', $subcolumnsleftside);
 
         $table->add_subcolumns('info', $subcolumnsinfo);
         // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
         /* $table->add_subcolumns('footer', ['botags']); */
-        $table->add_subcolumns('rightside', ['botags', 'invisibleoption', 'price']);
+        $table->add_subcolumns('rightside', ['botags', 'invisibleoption', 'course', 'price']);
 
         $table->add_classes_to_subcolumns('top', ['columnkeyclass' => 'd-none']);
         $table->add_classes_to_subcolumns('top', ['columnclass' => 'text-left col-md-8'], ['sport']);
