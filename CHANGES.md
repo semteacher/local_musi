@@ -1,3 +1,18 @@
+## Version 0.5.6 (2023071200)
+**New features:**
+* New feature: Easy availability form for M:USI.
+* New feature: Better overview and accordion for SAP files.
+* New feature: Send direct mails via mail client to all booked users.
+
+**Improvements:**
+* Improvement: Move option menu from mod_booking to local_musi and rename it to musi_bookingoption_menu.
+* Improvement: Code quality - capabilities in musi_table.
+* Improvement: MUSI-350 changes to SAP files.
+
+**Bugfixes:**
+* Bugfix: Make sure to only book for others if on cashier.php - else we always want to book for ourselves.
+* Bugfix: Fixed link to connected Moodle course with shortcodes (cards and list).
+
 ## Version 0.5.5 (2023062300)
 **Improvements:**
 * Improvement: Nicer MUSI button (light instead of secondary).
