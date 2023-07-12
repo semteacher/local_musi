@@ -30,6 +30,7 @@ use local_wunderbyte_table\wunderbyte_table;
 use mod_booking\bo_availability\bo_info;
 use mod_booking\booking;
 use mod_booking\booking_bookit;
+use mod_booking\booking_option;
 use mod_booking\dates_handler;
 use mod_booking\output\col_availableplaces;
 use mod_booking\output\col_teacher;
@@ -540,6 +541,22 @@ class musi_table extends wunderbyte_table {
                     }
                 }
 
+                // Send e-mail to all booked users menu entry.
+                $allowsendmailtoallbookedusers = (
+                    get_config('booking', 'teachersallowmailtobookedusers') && (
+                        has_capability('mod/booking:updatebooking', $this->context) ||
+                        (has_capability('mod/booking:addeditownoption', $this->context) && booking_check_if_teacher($values)) ||
+                        (has_capability('mod/booking:limitededitownoption', $this->context) && booking_check_if_teacher($values))
+                    )
+                );
+                if ($allowsendmailtoallbookedusers) {
+                    $mailtolink = booking_option::get_mailto_link_for_partipants($values->id);
+                    if (!empty($mailtolink)) {
+                        $data->sendmailtoallbookedusers = true;
+                        $data->mailtobookeduserslink = $mailtolink;
+                    }
+                }
+
                 // The simplified availability menu.
                 $alloweditavailability = (
                     // Admin capability.
@@ -547,6 +564,7 @@ class musi_table extends wunderbyte_table {
                     // Or: Everyone with the M:USI editavailability capability.
                     has_capability('local/musi:editavailability', $this->context) ||
                     // Or: Teachers can edit the availability of their own option.
+                    (has_capability('mod/booking:addeditownoption', $this->context) && booking_check_if_teacher($values)) ||
                     (has_capability('mod/booking:limitededitownoption', $this->context) && booking_check_if_teacher($values))
                 );
                 if ($alloweditavailability) {

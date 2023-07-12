@@ -52,8 +52,13 @@
         <i class="fa fa-edit fa-fw" aria-hidden="true"></i> {{#str}} editbookingoption, mod_booking {{/str}}
       </a>
       {{/editoptionurl}}
+      {{#sendmailtoallbookedusers}}
+      <a class="dropdown-item sendmailtoallbookedusers" href="{{mailtobookeduserslink}}" target="_self">
+        <i class="fa fa-envelope fa-fw" aria-hidden="true"></i> {{#str}} sendmailtoallbookedusers, mod_booking {{/str}}
+      </a>
+      {{/sendmailtoallbookedusers}}
       {{#editavailability}}
-      <a class="dropdown-item editavailability" href="#" target="_self" data-optionid="{{optionid}}">
+      <a class="dropdown-item sendmailtobookedusers" href="#" target="_self" data-optionid="{{optionid}}">
         <i class="fa fa-unlock-alt fa-fw" aria-hidden="true"></i> {{#str}} editavailability, local_musi {{/str}}
       </a>
       {{/editavailability}}
