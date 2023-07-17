@@ -1,3 +1,7 @@
+## Version 0.5.7 (2023071700)
+**Bugfixes:**
+* Bugfix: Wrong class for editavailability dropdown item.
+
 ## Version 0.5.6 (2023071200)
 **New features:**
 * New feature: Easy availability form for M:USI.
