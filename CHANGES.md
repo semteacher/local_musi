@@ -1,3 +1,7 @@
+## Version 0.5.8 (2023072100)
+**Improvements:**
+* Improvement: Decision: we only show entity full name in location field.
+
 ## Version 0.5.7 (2023071700)
 **Bugfixes:**
 * Bugfix: Wrong class for editavailability dropdown item.
