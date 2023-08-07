@@ -1,3 +1,7 @@
+## Version 0.5.9 (2023080700)
+**Bugfixes:**
+* Bugfix: Refactor: new location of dates_handler.
+
 ## Version 0.5.8 (2023072100)
 **Improvements:**
 * Improvement: Decision: we only show entity full name in location field.
