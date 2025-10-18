@@ -21,11 +21,13 @@ use plugin_renderer_base;
  * A custom renderer class that extends the plugin_renderer_base and is used by the booking module.
  *
  * @package local_musi
- * @copyright 2022 Georg Maißer
+ * @copyright 2022 Wunderbyte GmbH <info@wunderbyte.at>
+ * @author Georg Maißer
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class renderer extends plugin_renderer_base {
-    /** Function to render the dashboard
+    /**
+     * Function to render the dashboard
      * @param dashboard $data
      * @return string
      */
@@ -36,7 +38,8 @@ class renderer extends plugin_renderer_base {
         return $o;
     }
 
-    /** Function to render the card_content_stats1
+    /**
+     * Function to render the card_content_stats1
      * @param mixed $data
      * @return string
      */
@@ -47,8 +50,9 @@ class renderer extends plugin_renderer_base {
         return $o;
     }
 
-    /** Function to render the cards table
-     * @param any $data
+    /**
+     * Function to render the cards table
+     * @param mixed $data
      * @param string $data
      * @return string
      */
@@ -59,7 +63,15 @@ class renderer extends plugin_renderer_base {
         return $o;
     }
 
-    public function render_col_availableplaces($data) {
+    /**
+     * Render col_availableplaces
+     *
+     * @param mixed $data
+     *
+     * @return string
+     *
+     */
+    public function render_col_availableplaces($data): string {
         $o = '';
         $templatedata = $data->export_for_template($this);
         $templatedata['showmaxanswers'] = $data->showmaxanswers;
@@ -67,30 +79,33 @@ class renderer extends plugin_renderer_base {
         return $o;
     }
 
-    /** Function to render the teacher column.
-     * @param any $data
+    /**
+     * Function to render the teacher column.
+     * @param mixed $data
      * @return string
      */
-    public function render_col_teacher($data) {
+    public function render_col_teacher($data): string {
         $o = '';
         $data = $data->export_for_template($this);
         $o .= $this->render_from_template('local_musi/col_teacher', $data);
         return $o;
     }
 
-    /** Function to render the overview cards in user dashboard
-     * @param any $data
+    /**
+     * Function to render the overview cards in user dashboard
+     * @param mixed $data
      * @param string $data
      * @return string
      */
-    public function render_user_dashboard_overview($data) {
+    public function render_user_dashboard_overview($data): string {
         $o = '';
         $o .= $this->render_from_template('local_musi/userdashboardoverview', $data);
         return $o;
     }
 
-    /** Function to render the transactions list.
-     * @param any $data
+    /**
+     * Function to render the transactions list.
+     * @param mixed $data
      * @return string
      */
     public function render_transactions_list($page): string {
@@ -102,7 +117,7 @@ class renderer extends plugin_renderer_base {
 
     /**
      * Function to render booking option menu for local_musi.
-     * @param any $data
+     * @param mixed $data
      * @return string
      */
     public function render_musi_bookingoption_menu($data): string {

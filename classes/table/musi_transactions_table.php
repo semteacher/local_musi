@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Definitions for transactionstable iteration of wb_table
+ * @package    local_musi
+ * @author     Stephan Lorbek
+ * @copyright  2024 Wunderbyte GmbH <info@wunderbyte.at>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace local_musi\table;
 
 defined('MOODLE_INTERNAL') || die();
@@ -33,6 +41,13 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Definitions for transactionstable iteration of wb_table
  * @package local_musi
+ */
+/**
+ * Class for definitions for transactionstable iteration of wb_table
+ * @package    local_musi
+ * @author     Stephan Lorbek
+ * @copyright  2024 Wunderbyte GmbH <info@wunderbyte.at>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class musi_transactions_table extends wunderbyte_table {
     /**

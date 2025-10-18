@@ -18,6 +18,7 @@
  * Add dates to option.
  *
  * @package     local_musi
+ * @copyright   2022 Wunderbyte GmbH <info@wunderbyte.at>
  * @author      Stephan Lorbek <stephan.lorbek@uni-graz.at
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

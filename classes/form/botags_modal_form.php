@@ -17,6 +17,7 @@
 namespace local_musi\form;
 
 use context_module;
+use core_form\dynamic_form;
 use stdClass;
 
 /**
@@ -26,7 +27,11 @@ use stdClass;
  * @copyright   2022 Wunderbyte GmbH <info@wunderbyte.at>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class botags_modal_form extends \core_form\dynamic_form {
+class botags_modal_form extends dynamic_form {
+    /**
+     * {@inheritdoc}
+     * @see dynamic_form::get_context_for_dynamic_submission()
+     */
     protected function get_context_for_dynamic_submission(): \context {
         return \context_system::instance();
     }
@@ -66,6 +71,10 @@ class botags_modal_form extends \core_form\dynamic_form {
         require_capability('local/musi:canedit', $this->get_context_for_dynamic_submission());
     }
 
+    /**
+     * {@inheritdoc}
+     * @see dynamic_form::set_data_for_dynamic_submission()
+     */
     public function set_data_for_dynamic_submission(): void {
         global $DB;
 
@@ -76,6 +85,10 @@ class botags_modal_form extends \core_form\dynamic_form {
         $this->set_data($data);
     }
 
+    /**
+     * {@inheritdoc}
+     * @see dynamic_form::process_dynamic_submission()
+     */
     public function process_dynamic_submission() {
         global $DB;
 
@@ -98,11 +111,19 @@ class botags_modal_form extends \core_form\dynamic_form {
         return $data;
     }
 
+    /**
+     * {@inheritdoc}
+     * @see moodleform::validation()
+     */
     public function validation($data, $files) {
         $errors = [];
         return $errors;
     }
 
+    /**
+     * {@inheritdoc}
+     * @see dynamic_form::get_page_url_for_dynamic_submission()
+     */
     protected function get_page_url_for_dynamic_submission(): \moodle_url {
         return new \moodle_url('/local/musi/dashboard.php');
     }

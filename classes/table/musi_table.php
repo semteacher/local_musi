@@ -967,7 +967,11 @@ class musi_table extends wunderbyte_table {
                 $context = context_module::instance($bosettings->cmid);
 
                 // ONLY users with the mod/booking:updatebooking capability can edit options or designaated teachers.
-                $allowedit = has_capability('mod/booking:updatebooking', $context) || (has_capability('mod/booking:addeditownoption', $context) && booking_check_if_teacher($values)) || (has_capability('mod/booking:limitededitownoption', $context) && booking_check_if_teacher($values));
+                $allowedit = has_capability('mod/booking:updatebooking', $context)
+                    || (has_capability('mod/booking:addeditownoption', $context)
+                    && booking_check_if_teacher($values))
+                    || (has_capability('mod/booking:limitededitownoption', $context)
+                    && booking_check_if_teacher($values));
                 if ($allowedit) {
                     if (isset($bosettings->editoptionurl)) {
                         // Get the URL to edit the option.

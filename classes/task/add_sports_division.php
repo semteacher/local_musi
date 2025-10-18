@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Scheduled task creates SAP files in Moodle data directory.
+ * @package    local_musi
+ * @author     Stephan Lorbek
+ * @copyright  2024 Wunderbyte GmbH <info@wunderbyte.at>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace local_musi\task;
 
 use cache_helper;
@@ -22,8 +30,11 @@ use local_musi\sports;
 use mod_booking\customfield\booking_handler;
 
 /**
- * Scheduled task creates SAP files in Moodle data directory.
- * @package local_musi
+ * Class for scheduled task creates SAP files in Moodle data directory.
+ * @package    local_musi
+ * @author     Stephan Lorbek
+ * @copyright  2024 Wunderbyte GmbH <info@wunderbyte.at>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class add_sports_division extends scheduled_task {
     /**

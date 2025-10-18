@@ -109,7 +109,6 @@ class shortcodes {
 
         $table = self::inittableforcourses();
 
-
         $bookingids = [];
         foreach ($bookings as $booking) {
             if (!empty($booking->id)) {

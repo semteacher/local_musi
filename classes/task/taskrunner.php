@@ -15,16 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *
+ * Class for running scheduled tasks.
  * @package    local_musi
  * @author     Stephan Lorbek
- * @copyright  2024 Stephan Lorbek
+ * @copyright  2024 Wunderbyte GmbH <info@wunderbyte.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_musi\task;
-
-defined('MOODLE_INTERNAL') || die();
 
 use coding_exception;
 use core\task\scheduled_task;
@@ -33,6 +31,13 @@ use dml_exception;
 use local_musi\event\parsing_failed;
 use local_musi\event\task_executed;
 
+/**
+ * Class for running scheduled tasks.
+ * @package    local_musi
+ * @author     Stephan Lorbek
+ * @copyright  2024 Wunderbyte GmbH <info@wunderbyte.at>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class taskrunner extends scheduled_task {
     /**
      * get_name function

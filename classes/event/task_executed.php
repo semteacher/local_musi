@@ -21,6 +21,13 @@ use core\event\base;
 use moodle_url;
 use function get_string;
 
+/**
+ * Class to process task execution for an event.
+ *
+ * @package     local_musi
+ * @copyright   2024 Wunderbyte GmbH <info@wunderbyte.at>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class task_executed extends base {
     /**
      * init function

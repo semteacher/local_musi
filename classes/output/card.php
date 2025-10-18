@@ -18,7 +18,8 @@
  * This file contains the definition for the renderable classes for the booking instance
  *
  * @package   local_musi
- * @copyright 2021 Georg Maißer {@link http://www.wunderbyte.at}
+ * @copyright 2022 Wunderbyte GmbH <info@wunderbyte.at>
+ * @author Georg Maißer
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,12 +29,14 @@ use renderer_base;
 use renderable;
 use stdClass;
 use templatable;
+use moodle_url;
 
 /**
  * This class prepares data for displaying a booking option instance
  *
  * @package local_musi
- * @copyright 2021 Georg Maißer {@link http://www.wunderbyte.at}
+ * @copyright 2022 Wunderbyte GmbH <info@wunderbyte.at>
+ * @author Georg Maißer
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class card implements renderable, templatable {
@@ -46,10 +49,10 @@ class card implements renderable, templatable {
     /** @var string $footer */
     public $footer = null;
 
-     /** @var modle_url $img */
+     /** @var moodle_url $img */
      public $img = null;
 
-     /** @var modle_url $img */
+     /** @var moodle_url $img */
      public $link = null;
 
      /** @var string $headerbgcolor */
@@ -67,6 +70,7 @@ class card implements renderable, templatable {
     }
 
     /**
+     * Export for template
      * @param renderer_base $output
      * @return array
      */

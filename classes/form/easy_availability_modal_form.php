@@ -171,11 +171,26 @@ class easy_availability_modal_form extends \core_form\dynamic_form {
         }
     }
 
-    public function validation($data, $files) {
+    /**
+     * Form validation
+     *
+     * @param array $data
+     * @param array $files
+     *
+     * @return array
+     *
+     */
+    public function validation($data, $files): array {
         $errors = [];
         return $errors;
     }
 
+    /**
+     * Get page url for dynamic submission
+     *
+     * @return \moodle_url
+     *
+     */
     protected function get_page_url_for_dynamic_submission(): \moodle_url {
         return new \moodle_url('/local/musi/dashboard.php');
     }

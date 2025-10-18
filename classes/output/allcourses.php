@@ -18,7 +18,8 @@
  * This file contains the definition for the renderable classes for the booking instance
  *
  * @package   local_musi
- * @copyright 2021 Georg Maißer {@link http://www.wunderbyte.at}
+ * @copyright 2022 Wunderbyte GmbH <info@wunderbyte.at>
+ * @author Georg Maißer
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -33,7 +34,8 @@ use templatable;
  * This class prepares data for displaying a booking option instance
  *
  * @package local_musi
- * @copyright 2021 Georg Maißer {@link http://www.wunderbyte.at}
+ * @copyright 2022 Wunderbyte GmbH <info@wunderbyte.at>
+ * @author Georg Maißer
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class allcourses implements renderable, templatable {
@@ -53,6 +55,7 @@ class allcourses implements renderable, templatable {
     }
 
     /**
+     * Export for template
      * @param renderer_base $output
      * @return array
      */
