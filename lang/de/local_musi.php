@@ -26,6 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['dashboard'] = 'Dashboard';
+$string['freeplaces'] = 'Freie Plätze';
 $string['messageprovider:sendmessages'] = 'Verschicke Nachrichten';
 $string['musi:cansendmessages'] = 'Kann Nachrichten schicken.';
 $string['musi:editavailability'] = 'Kann die Verfügbarkeit von Buchungsoptionen ändern und Vorreservierungen anlegen';
@@ -35,7 +36,6 @@ $string['pluginname'] = 'M:USI Plugin';
 
 $string['substitutionspoolshowphonenumbers'] = 'Telefonnummern der Trainer:innen im Vertretungspool anzeigen';
 
-$string['freeplaces'] = 'Freie Plätze';
 
 // Caches.
 $string['cachedef_cachedpaymenttable'] = 'Zahlungstransaktionen (Cache)';

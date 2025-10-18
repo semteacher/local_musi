@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Add dates to option.
  *
@@ -53,7 +54,7 @@ $table->colclasses = ['leftalign', 'leftalign', 'leftalign', 'leftalign'];
 $table->attributes['class'] = 'admintable generaltable';
 $table->id = 'roles';
 
-switch($action) {
+switch ($action) {
     case 'view':
         $PAGE->set_heading($title . ' - ' . $roles[$roleid]->localname);
         $assignments = $DB->get_records_sql('
@@ -69,8 +70,8 @@ switch($action) {
         ];
         foreach ($assignments as $assignment) {
             $table->data[] = [
-                '<a href="'.new moodle_url("/user/view.php", ["id" => $assignment->userid]).'">'.
-                    $assignment->firstname . ' ' . $assignment->lastname.
+                '<a href="' . new moodle_url("/user/view.php", ["id" => $assignment->userid]) . '">' .
+                    $assignment->firstname . ' ' . $assignment->lastname .
                 '</a>',
                 $assignment->email,
                 $assignment->affiliation,
@@ -88,7 +89,7 @@ switch($action) {
         foreach ($roles as $role) {
             $url = new moodle_url($PAGE->url, ["id" => $role->id]);
             $table->data[] = [
-                '<a href="' . $PAGE->url . '?action=view&amp;roleid=' . $role->id . '">'.$role->localname.'</a>',
+                '<a href="' . $PAGE->url . '?action=view&amp;roleid=' . $role->id . '">' . $role->localname . '</a>',
                 role_get_description($role),
                 $role->shortname,
             ];
