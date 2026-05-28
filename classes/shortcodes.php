@@ -58,6 +58,7 @@ class shortcodes {
      *
      * @param string $shortcode
      * @param array $args
+     * @param string $suffix Optional table-name suffix.
      * @param string|null $content
      * @param object $env
      * @param Closure $next
@@ -673,6 +674,7 @@ class shortcodes {
      * Initiates table of courses.
      *
      * @param array $args
+     * @param string $suffix Optional table-name suffix.
      *
      * @return musi_table $table
      *
@@ -1213,7 +1215,7 @@ class shortcodes {
 
     /**
      * Helper function to remove quotation marks from args.
-     * @param array &$args reference to arguments array
+     * @param array $args reference to arguments array
      */
     private static function fix_args(array &$args) {
         foreach ($args as $key => &$value) {

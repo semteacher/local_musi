@@ -107,7 +107,7 @@ class renderer extends plugin_renderer_base {
     /**
      * Render the transactions list.
      *
-     * @param any $data
+     * @param transactionslist $page
      * @return string
      */
     public function render_transactions_list($page): string {
