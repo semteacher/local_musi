@@ -163,6 +163,8 @@ class dashboard implements renderable, templatable {
     }
 
     /**
+     * Export dashboard cards for template rendering.
+     *
      * @param renderer_base $output
      * @return array
      */

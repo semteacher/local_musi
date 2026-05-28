@@ -24,8 +24,6 @@
 
 namespace local_musi\task;
 
-defined('MOODLE_INTERNAL') || die();
-
 use coding_exception;
 use core\task\scheduled_task;
 use DateTime;
@@ -34,6 +32,9 @@ use local_musi\event\parsing_failed;
 use local_musi\event\task_executed;
 
 class taskrunner extends scheduled_task {
+    /**
+     * Scheduled task that applies configured local_musi setting changes.
+     */
     /**
      * get_name function
      * @return string

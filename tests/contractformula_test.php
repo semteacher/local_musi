@@ -55,3 +55,11 @@ echo "<p>Gesetzte userid: $userid</p>";
 echo "Stundensatz: " . contractmanager::get_hourrate($userid);
 
 echo $OUTPUT->footer();
+
+/**
+ * Basic PHPUnit testcase declaration for this file.
+ *
+ * @package local_musi
+ */
+class local_musi_contractformula_test extends advanced_testcase {
+}

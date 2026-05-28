@@ -67,6 +67,8 @@ class card implements renderable, templatable {
     }
 
     /**
+     * Export card data for template rendering.
+     *
      * @param renderer_base $output
      * @return array
      */
