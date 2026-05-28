@@ -53,6 +53,8 @@ class allcourses implements renderable, templatable {
     }
 
     /**
+     * Export all-courses cards for template rendering.
+     *
      * @param renderer_base $output
      * @return array
      */
