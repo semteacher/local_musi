@@ -60,7 +60,7 @@
     }
 }}
 
-<div class="card border py-1 px-3 sk-fade ml-0 mr-0 mb-2 flex-md-row align-items-center row gx-0 shadow-sm" {{#datafields}} data-{{key}}="{{value}}" {{/datafields}}>
+<div class="card border py-1 px-3 sk-fade ms-0 me-0 mb-2 flex-md-row align-items-center row gx-0 shadow-sm" {{#datafields}} data-{{key}}="{{value}}" {{/datafields}}>
   <div class="content w-100">
 
     <div class="row foroptionid-{{#optionid}}{{#value}}{{.}}{{/value}}{{/optionid}}" {{#cardimage}}style="margin-right: -55px;"{{/cardimage}}>
@@ -72,10 +72,10 @@
                 {{/value}}
             {{/cardimage}}
         </div>
-        <div class="col-md-10 row pr-0">
+        <div class="col-md-10 row pe-0">
     {{/cardimage}}
-    <div class="col-md-9 row pr-0">
-        <div class="col-md-12 row pr-0">
+    <div class="col-md-9 row pe-0">
+        <div class="col-md-12 row pe-0">
             {{#top}}
                 {{#columnclass}}<div class="{{.}} {{key}}">{{/columnclass}}
                 <span {{^value}} style="display:none" {{/value}}>
@@ -133,11 +133,11 @@
           <div class="d-block col-md-auto">
               <ul class="nav mb-2">
               {{#info}}
-                  <li class="nav-item pr-3" {{^value}} style="display:none" {{/value}}>
+                  <li class="nav-item pe-3" {{^value}} style="display:none" {{/value}}>
                     <div class="d-flex align-items-center" {{#columnalt}}title="{{.}}"{{/columnalt}}>
-                      <div class="mr-2 d-flex text-body font-size-m icon-uxs align-middle">
+                      <div class="me-2 d-flex text-body font-size-m icon-uxs align-middle">
                         {{#columniclassbefore}}
-                            <i class="{{.}}  mt-auto mb-auto mr-1 fa-fw" aria-hidden="true" aria-label="
+                            <i class="{{.}}  mt-auto mb-auto me-1 fa-fw" aria-hidden="true" aria-label="
                               {{^keystring}}
                                 {{{key}}}
                             {{/keystring}}
