@@ -18,7 +18,7 @@
  *
  * @package    local_musi
  * @author     Stephan Lorbek
- * @copyright  2024 Stephan Lorbek
+ * @copyright  2024 Wunderbyte GmbH <info@wunderbyte.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,6 +31,14 @@ use dml_exception;
 use local_musi\event\parsing_failed;
 use local_musi\event\task_executed;
 
+/**
+ * Task runner class.
+ *
+ * @package    local_musi
+ * @author     Stephan Lorbek
+ * @copyright  2024 Wunderbyte GmbH <info@wunderbyte.at>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class taskrunner extends scheduled_task {
     /**
      * Scheduled task that applies configured local_musi setting changes.
