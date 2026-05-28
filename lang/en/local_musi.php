@@ -93,6 +93,7 @@ $string['easyavailability:closingtime'] = 'Can be booked until';
 $string['easyavailability:formincompatible'] = '<div class="alert alert-warning">This form uses availability conditions
  that are incompatible with this form. Please contact a M:USI admin.</div>';
 $string['easyavailability:heading'] = '<div class="alert alert-info">You are editing the availability of "<b>{$a}</b>"</div>';
+$string['easyavailability:openingtime'] = 'Can be booked from';
 $string['easyavailability:overbook'] = 'Even if the course is fully booked';
 $string['easyavailability:previouslybooked'] = 'Users who already booked a specific USI course are always allowed to book';
 $string['easyavailability:selectusers'] = 'Selected users are allowed to book outside normal booking times';
@@ -225,7 +226,6 @@ $string['substitutionspool'] = 'Substitutions pool for {$a}';
 $string['substitutionspool:copypastemails'] = 'You can copy the emails manually and paste them into the BCC of your mail client:';
 $string['substitutionspool:infotext'] = 'Teachers allowed to substitute <b>{$a}</b>:';
 $string['substitutionspool:mailproblems'] = 'Click here if you have problems with sending emails...';
-$string['easyavailability:openingtime'] = 'Can be booked from';
 $string['substitutionspoolshowphonenumbers'] = 'Show phone numbers in substitutions pool';
 $string['task_executed'] = 'Task execution (MUSI scheduler extension)';
 $string['taskrunner'] = 'Task runner';
