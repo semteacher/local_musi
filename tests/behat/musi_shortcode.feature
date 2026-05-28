@@ -1,5 +1,5 @@
 @local @local_musi @local_musi_shortcode
-Feature: As admin - apply a shortcode for processing a column in wb_table.
+Feature: As admin - apply a shortcode for managing the booking options list.
 
   Background:
     Given the following "users" exist:
@@ -68,6 +68,7 @@ Feature: As admin - apply a shortcode for processing a column in wb_table.
       | Set the booking instance which should be used by default | BookingCMP |
     And I log out
     And I am on the "wb_shortcode2" Activity page logged in as student1
+    And I wait until the page is ready
     ## Verify options visibility along with customfields
     And I should see "0001 - Option01-t"
     And I should see "0005 - Option10-t"
