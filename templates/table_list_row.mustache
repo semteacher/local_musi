@@ -12,7 +12,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template local_musi/table
+    @template local_musi/table_list_row
     Template which defines a mooduell view page.
     Classes required for JS:
     * none
@@ -62,7 +62,7 @@
       ],
       "cardimage": [
         {
-          "value": "value"
+          "value": "https://moodle.example.com/images/slide-bg.jpg"
         }
       ]
     }
@@ -76,7 +76,7 @@
         <div class="{{cardimageclass}} col-md-2">
             {{#cardimage}}
                 {{#value}}
-                    <img class="img-fluid rounded list-img" src="{{{value}}}">
+                    <img class="img-fluid rounded list-img" src="{{{value}}}" alt="Card image">
                 {{/value}}
             {{/cardimage}}
         </div>

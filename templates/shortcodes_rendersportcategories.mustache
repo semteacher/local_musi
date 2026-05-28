@@ -12,7 +12,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template local_musi/table
+    @template local_musi/shortcodes_rendersportcategories
     Template which defines a mooduell view page.
     Classes required for JS:
     * none
@@ -28,8 +28,95 @@
     {
       "categories": [
         {
-          "name": "myname",
-          "table": "myrenderedtable"
+          "categoryid": 1,
+          "name": "Team Sports",
+          "summary": "<p>Available team sports and related substitution pools.</p>",
+          "categorydata": {
+            "id": 1,
+            "name": "Team Sports",
+            "viewsubstitutionspool": true,
+            "mailtolink": "mailto:substitutes-team@example.com",
+            "emailstring": "anna.coach@example.com; peter.trainer@example.com",
+            "substitutionteachers": [
+              {
+                "firstname": "Anna",
+                "lastname": "Coach",
+                "email": "anna.coach@example.com",
+                "phone1": "+431234567",
+                "phone2": "+436601234567"
+              },
+              {
+                "firstname": "Peter",
+                "lastname": "Trainer",
+                "email": "peter.trainer@example.com",
+                "phone1": "+431111222",
+                "phone2": ""
+              }
+            ]
+          },
+          "sports": [
+            {
+              "id": 11,
+              "categoryid": 1,
+              "name": "Football",
+              "editsubstitutionspool": true,
+              "viewsubstitutionspool": true,
+              "mailtolink": "mailto:football-substitutes@example.com",
+              "emailstring": "football.coach@example.com; assistant@example.com",
+              "substitutionteachers": [
+                {
+                  "firstname": "Mark",
+                  "lastname": "Miller",
+                  "email": "football.coach@example.com",
+                  "phone1": "+431555100",
+                  "phone2": "+43660155100"
+                }
+              ],
+              "description": "<p>Training groups for beginners and advanced players.</p>",
+              "table": "<table class=\"table table-striped\"><thead><tr><th>Course</th><th>Time</th><th>Places</th></tr></thead><tbody><tr><td>Football Basics</td><td>Monday 16:00</td><td>12</td></tr></tbody></table>"
+            },
+            {
+              "id": 12,
+              "categoryid": 1,
+              "name": "Basketball",
+              "editsubstitutionspool": false,
+              "viewsubstitutionspool": true,
+              "mailtolink": "mailto:basketball-substitutes@example.com",
+              "emailstring": "",
+              "substitutionteachers": [
+                {
+                  "firstname": "Julia",
+                  "lastname": "Brown",
+                  "email": "julia.brown@example.com",
+                  "phone1": "",
+                  "phone2": "+43660111222"
+                }
+              ],
+              "description": "<p>Weekly basketball sessions in the main sports hall.</p>",
+              "table": "<table class=\"table table-sm\"><tbody><tr><td>Basketball Training</td><td>Wednesday 18:00</td></tr></tbody></table>"
+            }
+          ]
+        },
+        {
+          "categoryid": 2,
+          "name": "Individual Sports",
+          "summary": "<p>Individual sports courses and training options.</p>",
+          "categorydata": {
+            "id": 2,
+            "name": "Individual Sports",
+            "viewsubstitutionspool": false
+          },
+          "sports": [
+            {
+              "id": 21,
+              "categoryid": 2,
+              "name": "Tennis",
+              "editsubstitutionspool": true,
+              "viewsubstitutionspool": false,
+              "description": "<p>Tennis courses for different skill levels.</p>",
+              "table": "<table class=\"table\"><thead><tr><th>Course</th><th>Trainer</th></tr></thead><tbody><tr><td>Tennis Beginners</td><td>Maria Novak</td></tr></tbody></table>"
+            }
+          ]
         }
       ]
     }
