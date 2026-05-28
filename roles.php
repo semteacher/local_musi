@@ -18,7 +18,8 @@
  * Add dates to option.
  *
  * @package     local_musi
- * @author      Stephan Lorbek <stephan.lorbek@uni-graz.at
+ * @author      Stephan Lorbek <stephan.lorbek@uni-graz.at>
+ * @copyright   2026 Stephan Lorbek
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
