@@ -42,6 +42,8 @@ class allcourses implements renderable, templatable {
 
     /**
      * Constructor.
+     *
+     * @param card|null $card Initial card.
      */
     public function __construct($card = null) {
 

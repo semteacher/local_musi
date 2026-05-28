@@ -42,8 +42,6 @@ class dashboard implements renderable, templatable {
 
     /**
      * Constructor
-     *
-     * @param card|null $card
      */
     public function __construct() {
 

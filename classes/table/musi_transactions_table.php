@@ -165,8 +165,8 @@ class musi_transactions_table extends wunderbyte_table {
     /**
      * Tries to verify a transaction and delivers order if successful
      *
-     * @param integer $id
-     * @param string $data
+     * @param int $id Transaction id.
+     * @param string $data JSON-encoded transaction payload.
      * @return array
      */
     public function action_update_status(int $id, string $data): array {

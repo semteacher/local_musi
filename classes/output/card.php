@@ -57,6 +57,11 @@ class card implements renderable, templatable {
 
     /**
      * Constructor.
+     *
+     * @param string|null $title Card title.
+     * @param string|null $content Card body content.
+     * @param string|null $footer Card footer content.
+     * @param string $headerbgcolor Header background class.
      */
     public function __construct($title = null, $content = null, $footer = null, $headerbgcolor = "bg-primary") {
 
