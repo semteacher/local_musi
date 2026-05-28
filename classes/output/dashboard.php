@@ -154,7 +154,7 @@ class dashboard implements renderable, templatable {
      * @param card|null $card
      * @return void
      */
-    public function add_card(card $card = null) {
+    public function add_card(?card $card = null) {
         if ($card) {
             $this->cards[] = $card;
         } else {
