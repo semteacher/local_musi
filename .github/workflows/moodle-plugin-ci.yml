@@ -17,6 +17,7 @@ jobs:
         moodle-plugin-ci add-plugin --branch MOODLE_405_DEV Wunderbyte-GmbH/moodle-mod_booking
         moodle-plugin-ci add-plugin --branch MOODLE_405_DEV Wunderbyte-GmbH/moodle-local_wunderbyte_table
         moodle-plugin-ci add-plugin --branch MOODLE_405_DEV Wunderbyte-GmbH/moodle-local_shopping_cart
+        moodle-plugin-ci add-plugin --branch MOODLE_405_ACCESSIBILITY Wunderbyte-GmbH/moodle-theme_musi
         moodle-plugin-ci add-plugin --branch main Wunderbyte-GmbH/moodle-local_entities
         moodle-plugin-ci add-plugin --branch master branchup/moodle-filter_shortcodes
         moodle-plugin-ci add-plugin --branch main Wunderbyte-GmbH/moodle-tool_mocktesttime
@@ -82,6 +83,7 @@ jobs:
         moodle-plugin-ci add-plugin --branch MOODLE_405_DEV Wunderbyte-GmbH/moodle-mod_booking
         moodle-plugin-ci add-plugin --branch MOODLE_405_DEV Wunderbyte-GmbH/moodle-local_shopping_cart
         moodle-plugin-ci add-plugin --branch MOODLE_405_DEV Wunderbyte-GmbH/moodle-local_wunderbyte_table
+        moodle-plugin-ci add-plugin --branch MOODLE_405_ACCESSIBILITY Wunderbyte-GmbH/moodle-theme_musi
         moodle-plugin-ci add-plugin --branch main Wunderbyte-GmbH/moodle-local_entities
         moodle-plugin-ci add-plugin --branch master branchup/moodle-filter_shortcodes
         moodle-plugin-ci add-plugin --branch main Wunderbyte-GmbH/moodle-tool_mocktesttime
