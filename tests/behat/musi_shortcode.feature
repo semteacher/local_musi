@@ -55,7 +55,12 @@ Feature: As admin - apply a shortcode for managing the booking options list.
 
   @javascript @accessibility
   Scenario: Musi shortcodes: create a shortcode for visualization of list of booking options
-    Given the following "activity" exists:
+    Given the following config values are set as admin:
+      | config        | value    | plugin     |
+      | theme         | musi     |            |
+      | preset        | usi_graz | theme_musi |
+      | logoplacement | embedded | theme_musi |
+    And the following "activity" exists:
       | activity       | page                               |
       | course         | C1                                 |
       | idnumber       | wb_shortcode2                      |
