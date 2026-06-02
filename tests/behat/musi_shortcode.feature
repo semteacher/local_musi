@@ -80,4 +80,4 @@ Feature: As admin - apply a shortcode for managing the booking options list.
     And I should not see "Option11-f"
     And I should not see "Option12-y"
     ## Validate accessibility of booking options table before booking (disabled due to 1 violation in Moodle core)
-    ##And the page should meet accessibility standards
+    And the page should meet accessibility standards
